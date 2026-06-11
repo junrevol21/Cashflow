@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Finance App</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans p-4 antialiased">
+
+    <div id="loginPage" class="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 mt-10 space-y-6">
+        <div class="text-center">
+            <h1 class="text-2xl font-bold text-gray-800">Family Finance</h1>
+            <p class="text-sm text-gray-500">Masuk ke Akun Keluarga Anda</p>
+        </div>
+        <form id="formLogin" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Email Anggota Keluarga</label>
+                <input type="email" id="loginEmail" class="mt-1 block w-full rounded-xl border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="nama@email.com" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl text-sm px-5 py-3 text-center shadow-md transition">
+                Masuk Aplikasi
+            </button>
+        </form>
+    </div>
+
+    <div id="dashboardPage" class="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-6 space-y-6 hidden">
+        <div class="flex justify-between items-center border-b border-gray-100 pb-4">
+            <div>
+                <h2 class="text-lg font-bold text-gray-800" id="userGreeting">Halo, User</h2>
+                <p class="text-xs bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full inline-block font-semibold mt-1" id="userRole">Parent</p>
+            </div>
+            <button onclick="logout()" class="text-xs text-red-500 font-medium hover:underline">Keluar</button>
+        </div>
+
+        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl p-4 shadow-md">
+            <p class="text-xs text-blue-200 uppercase font-bold tracking-wider">Estimasi Sisa Uang Anda</p>
+            <h3 class="text-2xl font-black mt-1" id="txtSisaUang">Rp 0</h3>
+            <p class="text-xs text-indigo-100 mt-2 bg-indigo-800/40 p-2 rounded-lg" id="txtRekomendasi">
+                💡 Muat ulang dashboard untuk melihat ringkasan keuangan dan tips hemat bulanan.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3" id="menuGrid">
+            <button onclick="switchTab('tabTransaksi')" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-center border border-gray-200">
+                <span class="block text-lg">💰</span>
+                <span class="text-xs font-semibold text-gray-700">Catat Transaksi</span>
+            </button>
+            <button onclick="switchTab('tabUtang')" id="btnMenuUtang" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-center border border-gray-200">
+                <span class="block text-lg">🤝</span>
+                <span class="text-xs font-semibold text-gray-700">Cicilan Utang</span>
+            </button>
+            <button onclick="switchTab('tabTelur')" id="btnMenuTelur" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-center border border-gray-200">
+                <span class="block text-lg">🥚</span>
+                <span class="text-xs font-semibold text-gray-700">Bisnis Telur</span>
+            </button>
+            <button onclick="muatDataDashboard()" class="p-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-center border border-gray-200">
+                <span class="block text-lg">🔄</span>
+                <span class="text-xs font-semibold text-gray-700">Refresh Data</span>
+            </button>
+        </div>
+
+        <div id="tabTransaksi" class="tab-content space-y-4 hidden">
+            <h4 class="font-bold text-gray-800 text-sm border-l-4 border-blue-500 pl-2">Input Transaksi Baru</h4>
+            
+            <div id="boxTemplate" class="space-y-1.5">
+                <label class="block text-xs font-medium text-gray-500">Panggil Template Pengeluaran:</label>
+                <select id="selectTemplate" onchange="pilihTemplate()" class="block w-full rounded-lg border border-gray-300 p-2 text-xs bg-gray-50">
+                    <option value="">-- Pilih Template Rutin --</option>
+                    <option value="T001" data-nama="Listrik Bulanan" data-harga="500000" data-pos="P001">Listrik Bulanan (Rp 500k)</option>
+                    <option value="T002" data-nama="Sembako" data-harga="1000000" data-pos="P001">Sembako (Rp 1jt)</option>
+                    <option value="T003" data-nama="Pakan Ayam Omega" data-harga="300000" data-pos="P005">Pakan Ayam Omega (Rp 300k)</option>
+                </select>
+            </div>
+
+            <form id="formTransaksi" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-medium text-gray-700">Jenis Transaksi</label>
+                    <select id="txJenis" class="mt-1 block w-full rounded-lg border border-gray-300 p-2">
+                        <option value="Pengeluaran">💸 Pengeluaran</option>
+                        <option value="Pemasukan">📥 Pemasukan (Gaji / Pendapatan)</option>
+                        <option value="Transfer">🔄 Transfer Antar Pos / Tabungan</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700">Komponen Gaji (Kosongkan jika bukan gaji)</label>
+                    <input type="text" id="txGaji" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" placeholder="Gaji Pokok / Tunjangan / Insentif">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-medium text-gray-700">Sumber Pos (Uang Berkurang)</label>
+                        <select id="txSumber" class="mt-1 block w-full rounded-lg border border-gray-300 p-2">
+                            <option value="P001">Dompet Utama</option>
+                            <option value="P002">Tabungan Utama</option>
+                            <option value="P003">Tabungan Anak</option>
+                            <option value="P004">Tabungan Haji/Umrah</option>
+                            <option value="P005">Bisnis Telur Omega</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-gray-700">Tujuan Pos (Uang Masuk)</label>
+                        <select id="txTujuan" class="mt-1 block w-full rounded-lg border border-gray-300 p-2">
+                            <option value="">-- Hanya untuk Transfer/Pemasukan --</option>
+                            <option value="P001">Dompet Utama</option>
+                            <option value="P002">Tabungan Utama</option>
+                            <option value="P003">Tabungan Anak</option>
+                            <option value="P004">Tabungan Haji/Umrah</option>
+                            <option value="P005">Bisnis Telur Omega</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700">Keterangan / Nama Item (Bisa Diedit Sesuai Kebutuhan)</label>
+                    <input type="text" id="txKeterangan" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" required>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700">Jumlah Nominal (Rp) (Bisa Disesuaikan Kembali)</label>
+                    <input type="number" id="txJumlah" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" required>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700">Link URL Bukti Transfer / SS</label>
+                    <input type="url" id="txBukti" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" placeholder="https://drive.google.com/...">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white font-medium p-2.5 rounded-lg hover:bg-blue-700">Simpan Catatan Transaksi</button>
+            </form>
+        </div>
+
+        <div id="tabUtang" class="tab-content space-y-4 hidden">
+            <h4 class="font-bold text-gray-800 text-sm border-l-4 border-indigo-500 pl-2">Pencatatan Cicilan Utang</h4>
+            <form id="formCicilan" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-medium text-gray-700">Pilih Master Pinjaman</label>
+                    <select id="utangId" class="mt-1 block w-full rounded-lg border border-gray-300 p-2">
+                        <option value="U001">U001 - Utang Ke Orang Tua</option>
+                        <option value="U002">U002 - Pinjam Tabungan Anak (Hutang Ke Anak)</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-medium text-gray-700">Cicilan Ke-</label>
+                        <input type="number" id="utangCicilanKe" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" placeholder="1" required>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-gray-700">Jumlah Bayar (Rp)</label>
+                        <input type="number" id="utangJumlahBayar" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" required>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700">Sisa Skuad/Sisa Utang Saat Ini (Rp)</label>
+                    <input type="number" id="utangSisa" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" placeholder="Sisa setelah pembayaran ini" required>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700">Link Bukti SS Transfer (Wajib Diisi)</label>
+                    <input type="url" id="utangBukti" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" placeholder="https://..." required>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white font-medium p-2.5 rounded-lg hover:bg-indigo-700">Simpan & Update Status Utang</button>
+            </form>
+        </div>
+
+        <div id="tabTelur" class="tab-content space-y-4 hidden">
+            <h4 class="font-bold text-gray-800 text-sm border-l-4 border-green-500 pl-2">Pencatatan Penjualan Telur Ayam Omega</h4>
+            <form id="formTelur" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-medium text-gray-700">Nama Pembeli Telur</label>
+                    <input type="text" id="tlrPembeli" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" placeholder="Nama pelanggan" required>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-medium text-gray-700">Jumlah Telur (Butir/Pax)</label>
+                        <input type="number" id="tlrJumlah" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" placeholder="0" required>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-gray-700">Total Harga (Rp)</label>
+                        <input type="number" id="tlrTotal" class="mt-1 block w-full rounded-lg border border-gray-300 p-2" placeholder="0" required>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-medium text-gray-700">Status Pembayaran</label>
+                        <select id="tlrStatus" class="mt-1 block w-full rounded-lg border border-gray-300 p-2">
+                            <option value="Lunas">🟢 Lunas (Uang Masuk Pos)</option>
+                            <option value="Piutang">🔴 Belum Bayar (Piutang)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-gray-700">Alokasi Pos Keuangan</label>
+                        <select id="tlrPos" class="mt-1 block w-full rounded-lg border border-gray-300 p-2">
+                            <option value="P005">P005 - Bisnis Telur Omega</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white font-medium p-2.5 rounded-lg hover:bg-green-700">Simpan Data Omset Jualan</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        // MENGGUNAKAN URL GOOGLE APPS SCRIPT ANDA
+        const API_URL = "https://script.google.com/macros/s/AKfycbwU-BDTK3uM54KBPvXJzaVVyB85wNFYU8j_LyGMoUfGz8u0kU7ASYIXq8i0EiMfIFBY/exec";
+        
+        let currentUser = null;
+
+        // FUNGSI SUBMIT LOGIN
+        document.getElementById('formLogin').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            
+            showLoading(true);
+            fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'login', email: email })
+            })
+            .then(res => res.json())
+            .then(data => {
+                showLoading(false);
+                if(data.status === 'success') {
+                    currentUser = data;
+                    handleSessionLogin();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => { showLoading(false); alert("Gagal terhubung ke database. Periksa koneksi internet Anda."); });
+        });
+
+        // HANDLE HAK AKSES TAMPILAN SETELAH LOGIN
+        function handleSessionLogin() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('dashboardPage').classList.remove('hidden');
+            document.getElementById('userGreeting').innerText = "Halo, " + currentUser.nama;
+            document.getElementById('userRole').innerText = currentUser.role;
+
+            // Batasan Hak Akses Akun Anak (Child)
+            if(currentUser.role === 'Child') {
+                document.getElementById('boxTemplate').classList.add('hidden');
+                document.getElementById('btnMenuUtang').classList.add('hidden');
+                document.getElementById('btnMenuTelur').classList.add('hidden');
+                document.getElementById('txJenis').innerHTML = '<option value="Pengeluaran">💸 Pengeluaran</option>';
+                document.getElementById('txSumber').innerHTML = '<option value="P003">Tabungan Anak</option>';
+                document.getElementById('txTujuan').classList.add('hidden');
+            } else {
+                document.getElementById('boxTemplate').classList.remove('hidden');
+                document.getElementById('btnMenuUtang').classList.remove('hidden');
+                document.getElementById('btnMenuTelur').classList.remove('hidden');
+            }
+            switchTab('tabTransaksi');
+            muatDataDashboard();
+        }
+
+        // FUNGSI MEMANGGIL TEMPLATE RUTIN & BISA DIEDIT KEMBALI
+        function pilihTemplate() {
+            const select = document.getElementById('selectTemplate');
+            const option = select.options[select.selectedIndex];
+            if(!option.value) return;
+
+            document.getElementById('txKeterangan').value = option.getAttribute('data-nama');
+            document.getElementById('txJumlah').value = option.getAttribute('data-harga');
+            document.getElementById('txSumber').value = option.getAttribute('data-pos');
+            document.getElementById('txJenis').value = "Pengeluaran";
+        }
+
+        // AMBIL REAL-TIME DATA SALDO DARI SPREADSHEET VIA GET METHOD
+        function muatDataDashboard() {
+            fetch(API_URL + "?action=get_dashboard")
+            .then(res => res.json())
+            .then(data => {
+                let totalSaldoUtama = 0;
+                data.pos.forEach(p => {
+                    if(p.ID_Pos === 'P001' || p.ID_Pos === 'P002') {
+                        totalSaldoUtama += Number(p.Saldo_Saat_Ini);
+                    }
+                });
+                document.getElementById('txtSisaUang').innerText = "Rp " + totalSaldoUtama.toLocaleString('id-ID');
+                
+                // Rekomendasi Penghematan Otomatis Sederhana
+                if(totalSaldoUtama < 1000000) {
+                    document.getElementById('txtRekomendasi').innerText = "⚠️ Sisa dompet kritis. Batasi pengeluaran non-primer dan tunda jajan minggu ini!";
+                } else {
+                    document.getElementById('txtRekomendasi').innerText = "💡 Keuangan dalam kondisi aman. Jangan lupa sisihkan alokasi khusus untuk Tabungan Haji & Anak.";
+                }
+            });
+        }
+
+        // KIRIM FORM INPUT TRANSAKSI (GAJI & PENGELUARAN)
+        document.getElementById('formTransaksi').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showLoading(true);
+            const payload = {
+                action: 'add_transaksi',
+                tanggal: new Date().toISOString().split('T')[0],
+                jenis: document.getElementById('txJenis').value,
+                komponen_gaji: document.getElementById('txGaji').value,
+                sumber_pos: document.getElementById('txSumber').value,
+                tujuan_pos: document.getElementById('txTujuan').value,
+                jumlah: document.getElementById('txJumlah').value,
+                keterangan: document.getElementById('txKeterangan').value,
+                bukti_transfer: document.getElementById('txBukti').value
+            };
+            kirimKeAppsScript(payload, 'formTransaksi');
+        });
+
+        // KIRIM FORM CICILAN UTANG
+        document.getElementById('formCicilan').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showLoading(true);
+            const payload = {
+                action: 'add_cicilan',
+                id_utang: document.getElementById('utangId').value,
+                cicilan_ke: document.getElementById('utangCicilanKe').value,
+                tanggal_bayar: new Date().toISOString().split('T')[0],
+                jumlah_bayar: document.getElementById('utangJumlahBayar').value,
+                sisa_utang: document.getElementById('utangSisa').value,
+                bukti_ss_transfer: document.getElementById('utangBukti').value
+            };
+            kirimKeAppsScript(payload, 'formCicilan');
+        });
+
+        // KIRIM FORM JUALAN TELUR OMEGA
+        document.getElementById('formTelur').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showLoading(true);
+            const payload = {
+                action: 'add_penjualan_telur',
+                tanggal: new Date().toISOString().split('T')[0],
+                nama_pembeli: document.getElementById('tlrPembeli').value,
+                jumlah_telur: document.getElementById('tlrJumlah').value,
+                total_harga: document.getElementById('tlrTotal').value,
+                status_bayar: document.getElementById('tlrStatus').value,
+                pos_masuk: document.getElementById('tlrPos').value
+            };
+            kirimKeAppsScript(payload, 'formTelur');
+        });
+
+        // REUSABLE FUNCTION UNTUK POST DATA
+        function kirimKeAppsScript(payload, formId) {
+            fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                showLoading(false);
+                if(data.status === 'success') {
+                    alert('Data sukses masuk ke Spreadsheet!');
+                    document.getElementById(formId).reset();
+                    muatDataDashboard();
+                } else {
+                    alert('Gagal mencatat: ' + data.message);
+                }
+            })
+            .catch(err => { showLoading(false); alert('Koneksi bermasalah: ' + err); });
+        }
+
+        // FUNGSI NAVIGASI TAB MENU
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('dashboardPage').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('formLogin').reset();
+        }
+
+        function showLoading(state) {
+            if(state) {
+                console.log("Memproses data ke sistem...");
+            }
+        }
+    </script>
+</body>
+</html>
