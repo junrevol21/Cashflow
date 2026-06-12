@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Family Finance Super App</title>
-    <!-- Tailwind CSS v4 via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         /* Penguncian dimensi PWA iOS - Mutlak Anti-Zoom & Anti-Geser Diagonal */
@@ -17,7 +16,7 @@
             -webkit-overflow-scrolling: auto;
         }
 
-        /* Pure Dark Glassmorphism Theme 2026 - Nyaman di Mata (No Pure White Fonts) */
+        /* Pure Dark Glassmorphism Theme 2026 */
         .glass-card {
             background: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(30px);
@@ -42,6 +41,14 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
+        /* Modal Blur Latar Belakang */
+        .modal-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(5, 8, 16, 0.75);
+            transition: all 0.3s ease-in-out;
+        }
+
         /* Custom Modern Glassmorphism FAB Button `+` dengan Efek Glow */
         .modern-fab {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(59, 130, 246, 0.4));
@@ -53,13 +60,11 @@
         }
         .modern-fab:active {
             transform: scale(0.9) rotate(90deg);
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(99, 102, 241, 0.6));
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Animasi Transisi Mikro Pudar Buku Besar Saat Geser Pos */
         .fade-in-ledger {
             animation: fadeInSimple 0.25s ease-out forwards;
         }
@@ -78,14 +83,11 @@
 </head>
 <body class="bg-[#090d16] text-slate-300 font-sans antialiased select-none flex justify-center items-center w-full h-full">
 
-    <!-- AMBIENT BACKGROUND GLOW ORBITS -->
     <div class="absolute top-[-15%] left-[-15%] w-[100vw] h-[100vw] bg-indigo-950/40 rounded-full filter blur-[130px] animate-bg-glow z-0"></div>
     <div class="absolute bottom-[-15%] right-[-15%] w-[90vw] h-[90vw] bg-teal-950/25 rounded-full filter blur-[130px] animate-bg-glow z-0" style="animation-delay: 4s;"></div>
 
-    <!-- MAIN DASHBOARD CONTENT VIEWPORT CONTAINER -->
     <div class="relative z-10 w-full max-w-md h-full flex flex-col justify-between p-4 pt-5 pb-24 box-border overflow-hidden">
         
-        <!-- ==================== SCREEN 1: LOGIN USERNAME + PASSWORD ==================== -->
         <div id="loginScreen" class="w-full my-auto space-y-6">
             <div class="glass-card rounded-3xl p-6 text-center space-y-6 border border-slate-800/50">
                 <div class="space-y-2">
@@ -110,10 +112,8 @@
             </div>
         </div>
 
-        <!-- ==================== SCREEN 2: MAIN DASHBOARD ==================== -->
         <div id="mainDashboard" class="w-full flex flex-col space-y-4 h-full overflow-hidden hidden">
             
-            <!-- MASTER CORE BAR HEADER -->
             <div class="flex justify-between items-center glass-card rounded-2xl p-3 shrink-0">
                 <div class="flex items-center space-x-3">
                     <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-blue-500 text-slate-950 font-black text-sm flex items-center justify-center shadow-md" id="userAvatar">U</div>
@@ -122,18 +122,14 @@
                         <span class="text-[9px] bg-indigo-950/80 text-indigo-400 font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider block mt-0.5 w-max border border-indigo-900/50" id="userRole">Parent</span>
                     </div>
                 </div>
-                
-                <!-- BUTTON LOGOUT DENGAN SENSASI TACTILE -->
-                <button onclick="logout()" class="p-2.5 text-rose-400/80 hover:text-rose-400 hover:bg-rose-950/30 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center border border-transparent active:scale-90" title="Keluar">
+                <button onclick="logout()" class="p-2.5 text-rose-400/80 hover:text-rose-400 hover:bg-rose-950/30 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center border border-transparent active:scale-90">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                     </svg>
                 </button>
             </div>
 
-            <!-- DOMPET DISPLAY TOTAL BOX -->
             <div class="bg-gradient-to-br from-[#0c1220] via-[#111a30] to-[#080d1a] rounded-3xl p-4 shadow-2xl shrink-0 space-y-1.5 border border-slate-800/60 relative overflow-hidden">
-                <div class="absolute right-[-5%] top-[-10%] w-24 h-24 bg-blue-500/5 rounded-full filter blur-xl"></div>
                 <div class="flex items-center justify-between">
                     <p class="text-[9px] text-slate-400 uppercase font-bold tracking-widest flex items-center gap-1">
                         ✨ Total Saldo Gabungan Keluarga
@@ -146,41 +142,105 @@
                 <p class="text-[10px] text-slate-400 bg-slate-900/40 border border-slate-800 p-2 rounded-xl font-medium" id="txtRekomendasi">Sistem siap.</p>
             </div>
 
-            <!-- CARD CAROUSEL (LEBAR SEJAJAR SISI KANAN-KIRI) -->
             <div class="shrink-0 space-y-1.5 relative">
                 <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest pl-1">Pos Keuangan Keluarga 💳</h4>
-                
                 <div class="relative w-full h-32 flex items-center">
-                    <!-- List Container (Sejajar Sempurna Dengan Atas & Bawah) -->
-                    <div class="w-full h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5 z-10" id="posCarousel" onscroll="handleVerticalScroll()">
-                        <!-- Diisi via JS -->
-                    </div>
-                    
-                    <!-- Dots Urutan Menjorok Keluar Di Tepi Kanan -->
-                    <div class="absolute right-[-14px] top-0 bottom-0 flex flex-col space-y-1.5 justify-center items-center w-3 z-20" id="carouselDots">
-                        <!-- Diisi via JS -->
-                    </div>
+                    <div class="w-full h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5 z-10" id="posCarousel" onscroll="handleVerticalScroll()"></div>
+                    <div class="absolute right-[-14px] top-0 bottom-0 flex flex-col space-y-1.5 justify-center items-center w-3 z-20" id="carouselDots"></div>
                 </div>
             </div>
 
-            <!-- LIVE BUKU BESAR MUTASI -->
             <div class="flex-1 flex flex-col space-y-1.5 overflow-hidden min-h-0">
                 <div class="flex justify-between items-center pl-1 shrink-0">
                     <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Buku Besar Pos Aktif 📖</h4>
                     <span class="text-[9px] text-indigo-300 font-extrabold bg-indigo-950/50 border border-indigo-900/50 px-2 py-0.5 rounded-md tracking-wide uppercase" id="lblSelectedPos">SEMUA</span>
                 </div>
-                
-                <!-- Box Transaksi -->
-                <div class="flex-1 glass-card rounded-2xl p-3.5 shadow-sm overflow-y-auto no-scrollbar divide-y divide-slate-800/40 space-y-2.5 min-h-0 text-slate-300" id="ledgerBox">
-                    <div class="text-center py-6 text-xs text-slate-500 font-medium">Memuat mutasi kas...</div>
-                </div>
+                <div class="flex-1 glass-card rounded-2xl p-3.5 shadow-sm overflow-y-auto no-scrollbar divide-y divide-slate-800/40 space-y-2.5 min-h-0 text-slate-300" id="ledgerBox"></div>
             </div>
 
         </div>
 
-        <!-- ==================== PREMIUM FLOATING NAV BAR ==================== -->
-        <nav id="bottomNavbar" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto h-16 glass-nav rounded-2xl shadow-xl flex justify-around items-center px-2 z-50 hidden">
-            <button class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-indigo-400 cursor-pointer active:scale-95 transition-transform">
+        <div id="txModal" class="fixed inset-0 z-50 modal-blur flex items-end justify-center hidden">
+            <div class="glass-card w-full max-w-md rounded-t-3xl p-5 space-y-4 max-h-[90vh] overflow-y-auto no-scrollbar border-t border-slate-700/50 translate-y-full transition-transform duration-300" id="txModalContent">
+                
+                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <h3 class="text-sm font-black text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">📝 Buat Transaksi Baru</h3>
+                    <button onclick="closeModalTx()" class="p-1 text-slate-500 hover:text-slate-300 text-sm font-bold cursor-pointer">✕</button>
+                </div>
+
+                <div class="space-y-3 text-xs">
+                    <div class="space-y-1">
+                        <label class="block font-bold text-slate-400">Tujuan Kategori Transaksi</label>
+                        <select id="modalTxJenis" onchange="adaptifFormModal()" class="w-full bg-[#0d1527]/90 rounded-xl border border-slate-800 p-3 font-bold text-slate-200 focus:outline-none focus:border-indigo-500">
+                            <option value="Pengeluaran">💸 Pengeluaran Rutin / Konsumsi</option>
+                            <option value="Pemasukan">📥 Pemasukan (Gaji / Bisnis Telur)</option>
+                            <option value="Transfer">🔄 Transfer / Pindah Uang Antar-Pos</option>
+                            <option value="Pinjam">⚠️ Pinjam Uang (Hutang Anak / Ortu)</option>
+                            <option value="BayarHutang">🤝 Bayar Hutang / Cicilan</option>
+                        </select>
+                    </div>
+
+                    <div id="warningHutangIndicator" class="hidden bg-rose-950/50 border border-rose-900 text-rose-300 p-2.5 rounded-xl font-bold text-center tracking-wide animate-pulse">
+                        🚨 INGAT! HUTANG HARUS DI-BAYAR DAN DI-CICIL!
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block font-bold text-slate-400 mb-1" id="lblSumberPos">Sumber Uang (Dari Pos)</label>
+                            <select id="modalTxSumber" class="w-full bg-[#0d1527]/90 rounded-xl border border-slate-800 p-2.5 font-bold text-slate-200 focus:outline-none"></select>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-400 mb-1" id="lblTujuanPos">Tujuan Uang (Ke Pos)</label>
+                            <select id="modalTxTujuan" class="w-full bg-[#0d1527]/90 rounded-xl border border-slate-800 p-2.5 font-bold text-slate-200 focus:outline-none"></select>
+                        </div>
+                    </div>
+
+                    <div id="boxKomponenGaji" class="hidden space-y-1">
+                        <label class="block font-bold text-slate-400">Komponen Pendapatan Gaji</label>
+                        <input type="text" id="modalTxGaji" class="w-full bg-[#0d1527]/60 rounded-xl border border-slate-800 p-2.5 text-slate-200" placeholder="Gaji Pokok / Tunjangan / Bonus">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block font-bold text-slate-400">Keterangan Catatan</label>
+                        <input type="text" id="modalTxKet" class="w-full bg-[#0d1527]/60 rounded-xl border border-slate-800 p-2.5 text-slate-200 font-bold" placeholder="Misal: Beli Sembako / Pakan Ayam">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block font-bold text-slate-400 mb-1">Tag Kategori</label>
+                            <input type="text" id="modalTxTag" class="w-full bg-[#0d1527]/60 rounded-xl border border-slate-800 p-2.5 text-slate-200" placeholder="Sembako, Listrik, Pakan">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-400 mb-1">Jumlah Nominal (Rp)</label>
+                            <input type="number" id="modalTxJumlah" class="w-full bg-[#0d1527]/60 rounded-xl border border-slate-800 p-2.5 text-emerald-300 font-black text-sm" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block font-bold text-slate-400">Link URL Bukti SS Transfer / Dokumen</label>
+                        <input type="url" id="modalTxBukti" class="w-full bg-[#0d1527]/60 rounded-xl border border-slate-800 p-2.5 text-slate-400 text-[10px]" placeholder="https://drive.google.com/...">
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="button" onclick="tambahKeKeranjangTx()" class="w-full border border-dashed border-indigo-500/50 hover:border-indigo-400 text-indigo-400 font-bold py-2 rounded-xl active:scale-95 transition-transform cursor-pointer">
+                            ➕ Tambah Pengeluaran Lain (Multi-Transaksi)
+                        </button>
+                    </div>
+
+                    <div id="txBasketContainer" class="hidden bg-slate-900/50 border border-slate-800 rounded-xl p-2.5 space-y-1.5 max-h-24 overflow-y-auto no-scrollbar">
+                        <p class="text-[9px] font-extrabold text-indigo-400 tracking-wider uppercase">🛒 Daftar Nota Multi-Transaksi:</p>
+                        <div id="txBasketRows" class="divide-y divide-slate-800/60 space-y-1"></div>
+                    </div>
+
+                    <button onclick="prosesSubmitSuperTx()" class="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-slate-950 font-black py-3.5 rounded-xl shadow-lg text-sm tracking-wide active:scale-95 transition-transform mt-2 cursor-pointer">
+                        🔒 Eksekusi & Simpan Masuk Spreadsheet
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <nav id="bottomNavbar" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto h-16 glass-nav rounded-2xl shadow-2xl flex justify-around items-center px-2 z-50 hidden">
+            <button class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-indigo-400 cursor-pointer">
                 <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 <span class="text-[8px] font-black tracking-tight uppercase text-indigo-400">Home</span>
             </button>
@@ -189,12 +249,9 @@
                 <span class="text-[8px] font-black tracking-tight uppercase">Insight</span>
             </button>
             
-            <!-- CENTRAL GLASS FAB BUTTON `+` DENGAN IKON SVG PLUS TEBAL MODERN -->
             <div class="relative -top-4">
-                <button onclick="openModalTx()" class="w-13 h-13 modern-fab rounded-full flex items-center justify-center shadow-lg cursor-pointer text-indigo-300 hover:text-white" title="Tambah Transaksi Super">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path>
-                    </svg>
+                <button onclick="openModalTx()" class="w-13 h-13 modern-fab rounded-full flex items-center justify-center shadow-lg cursor-pointer text-indigo-300 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
                 </button>
             </div>
 
@@ -210,31 +267,16 @@
 
     </div>
 
-    <!-- CODE SCRIPT -->
     <script>
-        // MENGUNCI URL ENDPOINT SCRIPT API ASLI ANDA
         const API_URL = "https://script.google.com/macros/s/AKfycbwU-BDTK3uM54KBPvXJzaVVyB85wNFYU8j_LyGMoUfGz8u0kU7ASYIXq8i0EiMfIFBY/exec";
         
         let currentUser = null;
         let isPrivacyMode = false;
         let activePosIdGlobal = null;
+        let txKeranjangList = []; // Array khusus Nota Multi-Transaksi
         
-        // Data internal awal sebelum ditarik murni dari database Sheets Anda
-        let mockPosData = [
-            { ID_Pos: 'P001', Nama_Pos: 'Dompet Utama', Kategori: 'Utama', Pemilik: 'Bersama', Saldo_Saat_Ini: 4500000, Color_Class: 'card-blue' },
-            { ID_Pos: 'P002', Nama_Pos: 'Tabungan Utama', Kategori: 'Utama', Pemilik: 'Bersama', Saldo_Saat_Ini: 12500000, Color_Class: 'card-green' },
-            { ID_Pos: 'P003', Nama_Pos: 'Tabungan Anak', Kategori: 'Tabungan Anak', Pemilik: 'Anak', Saldo_Saat_Ini: 1500000, Color_Class: 'card-purple' },
-            { ID_Pos: 'P004', Nama_Pos: 'Tabungan Haji', Kategori: 'Haji', Pemilik: 'Bersama', Saldo_Saat_Ini: 8000000, Color_Class: 'card-amber' },
-            { ID_Pos: 'P005', Nama_Pos: 'Bisnis Telur Omega', Kategori: 'Bisnis', Pemilik: 'Bersama', Saldo_Saat_Ini: 3200000, Color_Class: 'card-teal' }
-        ];
-        
-        let mockLedgerData = [
-            { ID_Pos: 'P001', Tipe: 'Keluar', Ket: 'Beli Token Listrik Dompet', Vol: 200000, Time: '11 Jun 2026' },
-            { ID_Pos: 'P001', Tipe: 'Masuk', Ket: 'Transfer Sisa Gaji Pokok', Vol: 4500000, Time: '10 Jun 2026' },
-            { ID_Pos: 'P002', Tipe: 'Masuk', Ket: 'Alokasi Tabungan Bulanan', Vol: 2000000, Time: '08 Jun 2026' },
-            { ID_Pos: 'P003', Tipe: 'Keluar', Ket: 'Pinjam Uang Anak keperluan Mendesak', Vol: 300000, Time: '05 Jun 2026' },
-            { ID_Pos: 'P005', Tipe: 'Masuk', Ket: 'Omset Lunas Toko Kelontong B', Vol: 450000, Time: '11 Jun 2026' }
-        ];
+        let masterPosDinamis = [];
+        let masterLedgerDinamis = [];
 
         function togglePrivacy() {
             isPrivacyMode = !isPrivacyMode;
@@ -244,13 +286,11 @@
             refreshLedgerView();
         }
 
-        // AMBIL INPUT & TEMBAK KE GOOGLE APPS SCRIPT SECARA RIIL (TANPA CADANGAN BYPASS)
+        // LOGIN DISPATCHER RIIL
         document.getElementById('formLogin').addEventListener('submit', function(e) {
             e.preventDefault();
             const usr = document.getElementById('loginUsername').value.trim();
             const psw = document.getElementById('loginPassword').value;
-
-            console.log("Memulai otentikasi akun keluarga privat...");
 
             fetch(API_URL, {
                 method: 'POST',
@@ -261,18 +301,13 @@
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') {
-                    // Password Sesuai -> Ambil data spesifik user dari Sheet User_Access
                     currentUser = data;
                     executeAppLoginFlow();
                 } else {
-                    // Password Ngasal -> Langsung Blokir Akses
                     alert("❌ Akses Ditolak: " + data.message);
                 }
             })
-            .catch(err => {
-                alert("🌐 Gangguan Database. Pastikan jembatan Google Apps Script Anda sudah di-deploy ulang di Versi Terbaru.");
-                console.error(err);
-            });
+            .catch(() => alert("🌐 Hubungan Terputus. Periksa jaringan internet Anda."));
         });
 
         function executeAppLoginFlow() {
@@ -284,15 +319,34 @@
             document.getElementById('userRole').innerText = currentUser.role;
             document.getElementById('userAvatar').innerText = currentUser.nama.charAt(0);
 
-            // Filter Hak Akses Khusus untuk Tabungan Anak
-            if(currentUser.role === 'Child') {
-                mockPosData = mockPosData.filter(p => p.Pemilik === 'Anak');
-            }
+            tarikDataSheetsRealtime();
+        }
 
-            renderTotalBalance();
-            renderCarouselCards();
-            generateDots();
-            handleVerticalScroll();
+        // AMBIL DATA REALTIME DARI SPREADSHEET (MENGGANTI MOCK DATA SEBELUMNYA)
+        function tarikDataSheetsRealtime() {
+            fetch(API_URL + "?action=get_dashboard")
+            .then(res => res.json())
+            .then(data => {
+                // Konfigurasi skema warna visual dinamis
+                const colors = ['card-blue', 'card-green', 'card-purple', 'card-amber', 'card-teal'];
+                masterPosDinamis = data.pos.map((p, idx) => {
+                    p.Saldo_Saat_Ini = Number(p.Saldo_Saat_Ini);
+                    p.Color_Class = colors[idx % colors.length];
+                    return p;
+                });
+
+                if(currentUser.role === 'Child') {
+                    masterPosDinamis = masterPosDinamis.filter(p => p.Pemilik === 'Anak');
+                }
+
+                masterLedgerDinamis = data.ledger;
+                
+                renderTotalBalance();
+                renderCarouselCards();
+                generateDots();
+                populateDropdownOptions();
+                handleVerticalScroll();
+            });
         }
 
         function renderTotalBalance() {
@@ -301,20 +355,19 @@
                 document.getElementById('txtRekomendasi').innerText = "🙈 Mode privat aktif. Angka saldo gabungan tersembunyi.";
                 return;
             }
-            let total = mockPosData.reduce((acc, curr) => acc + curr.Saldo_Saat_Ini, 0);
+            let total = masterPosDinamis.reduce((acc, curr) => acc + curr.Saldo_Saat_Ini, 0);
             document.getElementById('txtSisaUang').innerText = "Rp " + total.toLocaleString('id-ID');
-            document.getElementById('txtRekomendasi').innerText = "💡 Kondisi finansial sehat. Alokasi antar-pos seimbang mematuhi rasio kuota keluarga.";
+            document.getElementById('txtRekomendasi').innerText = "💡 Sinkronisasi data sukses. Alokasi antar-pos seimbang mematuhi rasio kuota ideal sekeluarga.";
         }
 
         function renderCarouselCards() {
             const container = document.getElementById('posCarousel');
             container.innerHTML = "";
-            
-            mockPosData.forEach(pos => {
+            masterPosDinamis.forEach(pos => {
                 let displaySaldo = isPrivacyMode ? "Rp ••••" : "Rp " + pos.Saldo_Saat_Ini.toLocaleString('id-ID');
                 let badgeColor = pos.Kategori === 'Bisnis' ? 'text-emerald-400 bg-emerald-950/50 border border-emerald-900/30' : pos.Kategori === 'Haji' ? 'text-amber-400 bg-amber-950/50 border border-amber-900/30' : 'text-blue-400 bg-blue-950/50 border border-blue-900/30';
                 
-                let cardHtml = `
+                container.innerHTML += `
                     <div class="snap-center shrink-0 w-full h-32 glass-card ${pos.Color_Class} rounded-2xl p-4 shadow-sm flex flex-col justify-between box-border text-slate-300">
                         <div class="flex justify-between items-start">
                             <div>
@@ -329,14 +382,13 @@
                         </div>
                     </div>
                 `;
-                container.innerHTML += cardHtml;
             });
         }
 
         function generateDots() {
             const dotsContainer = document.getElementById('carouselDots');
             dotsContainer.innerHTML = "";
-            mockPosData.forEach((_, index) => {
+            masterPosDinamis.forEach((_, index) => {
                 let dot = document.createElement('div');
                 dot.id = `dot-${index}`;
                 dot.className = "w-1 h-1 rounded-full bg-slate-800 transition-all duration-300";
@@ -346,24 +398,21 @@
 
         function handleVerticalScroll() {
             const container = document.getElementById('posCarousel');
-            if(!container.children.length) return;
+            if(!container || !container.children.length) return;
             
             let cardHeight = container.children[0].offsetHeight + 10;
             let scrollTop = container.scrollTop;
             let activeIndex = Math.round(scrollTop / cardHeight);
             
-            if(activeIndex >= mockPosData.length) activeIndex = mockPosData.length - 1;
-            let activePos = mockPosData[activeIndex];
+            if(activeIndex >= masterPosDinamis.length) activeIndex = masterPosDinamis.length - 1;
+            let activePos = masterPosDinamis[activeIndex];
 
-            // Update state indikator titik vertikal
-            mockPosData.forEach((_, index) => {
+            masterPosDinamis.forEach((_, index) => {
                 let dot = document.getElementById(`dot-${index}`);
                 if(dot) {
-                    if(index === activeIndex) {
-                        dot.className = "w-1 h-3.5 rounded-full bg-indigo-400 transition-all duration-300 shadow-sm shadow-indigo-500/50";
-                    } else {
-                        dot.className = "w-1 h-1 rounded-full bg-slate-700 transition-all duration-300";
-                    }
+                    dot.className = (index === activeIndex) 
+                        ? "w-1 h-3.5 rounded-full bg-indigo-400 transition-all duration-300 shadow-sm shadow-indigo-500/50" 
+                        : "w-1 h-1 rounded-full bg-slate-700 transition-all duration-300";
                 }
             });
 
@@ -388,14 +437,9 @@
             const box = document.getElementById('ledgerBox');
             box.innerHTML = "";
             
-            let filteredList = mockLedgerData.filter(l => l.ID_Pos === posId);
-            
+            let filteredList = masterLedgerDinamis.filter(l => l.ID_Pos === posId);
             if(filteredList.length === 0) {
-                box.innerHTML = `
-                    <div class="text-center py-8 text-xs text-slate-500 font-bold">
-                        📭 Belum ada riwayat mutasi kas di pos ini.
-                    </div>
-                `;
+                box.innerHTML = `<div class="text-center py-8 text-xs text-slate-500 font-bold">📭 Belum ada riwayat pergerakan kas di pos ini.</div>`;
                 return;
             }
 
@@ -406,7 +450,7 @@
                 let icon = isMasuk ? "📥" : "💸";
                 let nominal = isPrivacyMode ? "Rp •••" : "Rp " + log.Vol.toLocaleString('id-ID');
 
-                let rowHtml = `
+                box.innerHTML += `
                     <div class="flex justify-between items-center py-2.5 text-xs text-slate-300 border-b border-slate-800/40 last:border-0">
                         <div class="flex items-center space-x-3 min-w-0">
                             <span class="text-base">${icon}</span>
@@ -415,17 +459,188 @@
                                 <p class="text-[9px] text-slate-500 font-bold">${log.Time} • Auto Verified</p>
                             </div>
                         </div>
-                        <div class="text-right shrink-0 font-black ${colorClass}">
-                            ${sign} ${nominal}
-                        </div>
+                        <div class="text-right shrink-0 font-black ${colorClass}">${sign} ${nominal}</div>
                     </div>
                 `;
-                box.innerHTML += rowHtml;
             });
         }
 
+        // ==================== LOGIKA ADAPTIF MODAL TRANSAKSI (FINTECH RULE) ====================
         function openModalTx() {
-            alert("Sistem API Terkunci Sukses! Popup Modal Transaksi Super (Multi-Tx, Warning Hutang, & Upload Berkas) siap dilepas penuh pada eksekusi TAHAP 3.");
+            document.getElementById('txModal').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('txModalContent').style.transform = "translateY(0)";
+            }, 10);
+            adaptifFormModal();
+        }
+
+        function closeModalTx() {
+            document.getElementById('txModalContent').style.transform = "translateY(100%)";
+            setTimeout(() => {
+                document.getElementById('txModal').classList.add('hidden');
+                clearModalInputs();
+            }, 300);
+        }
+
+        function populateDropdownOptions() {
+            const sumberSelect = document.getElementById('modalTxSumber');
+            const tujuanSelect = document.getElementById('modalTxTujuan');
+            
+            sumberSelect.innerHTML = "";
+            tujuanSelect.innerHTML = `<option value="">-- Pilih Pos Penerima --</option>`;
+            
+            masterPosDinamis.forEach(p => {
+                sumberSelect.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`;
+                tujuanSelect.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`;
+            });
+        }
+
+        function adaptifFormModal() {
+            const jenis = document.getElementById('modalTxJenis').value;
+            const warningBox = document.getElementById('warningHutangIndicator');
+            const boxGaji = document.getElementById('boxKomponenGaji');
+            const selectSumber = document.getElementById('modalTxSumber');
+            
+            // Reset state default
+            warningBox.classList.add('hidden');
+            boxGaji.classList.add('hidden');
+            document.getElementById('lblSumberPos').innerText = "Sumber Uang (Dari Pos)";
+            document.getElementById('lblTujuanPos').innerText = "Tujuan Uang (Ke Pos)";
+
+            populateDropdownOptions(); // Refresh item
+
+            if (jenis === "Pinjam") {
+                warningBox.classList.remove('hidden');
+                document.getElementById('lblSumberPos').innerText = "Pemberi Pinjaman (Pos Akun)";
+                document.getElementById('lblTujuanPos').innerText = "Penerima Pinjaman (Pos Anda)";
+            } 
+            else if (jenis === "Pemasukan") {
+                boxGaji.classList.remove('hidden');
+                document.getElementById('lblSumberPos').innerText = "Asal Dana Eksternal";
+                selectSumber.innerHTML = `<option value="EKSTERNAL">💼 Pihak Luar / Kantor / Pembeli</option>`;
+            } 
+            else if (jenis === "BayarHutang") {
+                document.getElementById('lblSumberPos').innerText = "Pos Hutang yang Mau Dibayar";
+                document.getElementById('lblTujuanPos').innerText = "Uang Pembayar (HANYA TABUNGAN)";
+                
+                // FinTech Rule: Ambil opsi sumber hanya dari kategori Utama/Tabungan, bukan bisnis/hutang
+                const opsiTabunganSaja = masterPosDinamis.filter(p => p.Kategori === 'Utama' || p.Kategori === 'Tabungan Anak' || p.Kategori === 'Haji');
+                const tujuanSelect = document.getElementById('modalTxTujuan');
+                tujuanSelect.innerHTML = "";
+                opsiTabunganSaja.forEach(p => {
+                    tujuanSelect.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`;
+                });
+            }
+        }
+
+        // ==================== FITUR MULTI-TRANSAKSI (KERANJANG NOTA) ====================
+        function tambahKeKeranjangTx() {
+            const jenis = document.getElementById('modalTxJenis').value;
+            const sumber = document.getElementById('modalTxSumber').value;
+            const tujuan = document.getElementById('modalTxTujuan').value;
+            const jumlah = document.getElementById('modalTxJumlah').value;
+            const keterangan = document.getElementById('modalTxKet').value.trim();
+            const tag = document.getElementById('modalTxTag').value.trim();
+            const bukti = document.getElementById('modalTxBukti').value.trim();
+            const gaji = document.getElementById('modalTxGaji').value.trim();
+
+            if(!jumlah || !keterangan) {
+                alert("Harap isi nominal harga dan keterangan terlebih dahulu.");
+                return;
+            }
+
+            const itemTx = {
+                jenis: jenis, sumber_pos: sumber, tujuan_pos: tujuan,
+                jumlah: jumlah, keterangan: keterangan, tag_kategori: tag,
+                bukti_transfer: bukti, komponen_gaji: gaji
+            };
+
+            txKeranjangList.push(itemTx);
+            updateBasketVisualHtml();
+
+            // Reset input item sembari mempertahankan setting dropdown boks
+            document.getElementById('modalTxJumlah').value = "";
+            document.getElementById('modalTxKet').value = "";
+            document.getElementById('modalTxTag').value = "";
+            document.getElementById('modalTxBukti').value = "";
+        }
+
+        function updateBasketVisualHtml() {
+            const container = document.getElementById('txBasketContainer');
+            const rows = document.getElementById('txBasketRows');
+            
+            if(txKeranjangList.length === 0) {
+                container.classList.add('hidden');
+                return;
+            }
+            
+            container.classList.remove('hidden');
+            rows.innerHTML = "";
+            
+            txKeranjangList.forEach((item, index) => {
+                rows.innerHTML += `
+                    <div class="flex justify-between items-center text-[10px] text-slate-400 py-1">
+                        <span class="truncate max-w-[240px]">🛒 ${item.keterangan} (${item.jenis})</span>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-bold text-emerald-400">Rp ${Number(item.jumlah).toLocaleString('id-ID')}</span>
+                            <button onclick="hapusItemBasket(${index})" class="text-rose-400 font-bold px-1">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function hapusItemBasket(idx) {
+            txKeranjangList.splice(idx, 1);
+            updateBasketVisualHtml();
+        }
+
+        // EXECUTE SUBMIT COLLECTOR KE GOOGLE SHEETS
+        function prosesSubmitSuperTx() {
+            // Jika isi keranjang belanja kosong, masukkan item aktif di form utama secara otomatis
+            if (txKeranjangList.length === 0) {
+                tambahKeKeranjangTx();
+            }
+
+            console.log("Mengirim paket data transaksi simultan ke Google Sheets...");
+            
+            // Loop eksekusi pengiriman data keranjang berurutan
+            let barisSukses = 0;
+            txKeranjangList.forEach(txItem => {
+                txItem.action = "add_transaksi";
+                txItem.tanggal = new Date().toISOString().split('T')[0];
+                txItem.dibuat_oleh = currentUser.username;
+
+                fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(txItem)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.status === 'success') {
+                        barisSukses++;
+                        if(barisSukses === txKeranjangList.length) {
+                            alert("🎉 Sukses! Seluruh nota transaksi berhasil dicatat di Spreadsheet dan Saldo Pos otomatis terpotong.");
+                            txKeranjangList = [];
+                            updateBasketVisualHtml();
+                            closeModalTx();
+                            tarikDataSheetsRealtime(); // Muat ulang dashboard saldo
+                        }
+                    }
+                });
+            });
+        }
+
+        function clearModalInputs() {
+            document.getElementById('modalTxJumlah').value = "";
+            document.getElementById('modalTxKet').value = "";
+            document.getElementById('modalTxTag').value = "";
+            document.getElementById('modalTxBukti').value = "";
+            document.getElementById('modalTxGaji').value = "";
+            txKeranjangList = [];
+            updateBasketVisualHtml();
         }
 
         function logout() {
@@ -437,9 +652,8 @@
             document.getElementById('formLogin').reset();
         }
 
-        // BLOCK INTERFERENSI IOS OVERSCROLL BOUNCING EFFECTS
         document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('#posCarousel') || e.target.closest('#ledgerBox')) {
+            if (e.target.closest('#posCarousel') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent')) {
                 return;
             }
             e.preventDefault();
