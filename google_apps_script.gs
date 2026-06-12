@@ -109,6 +109,8 @@ function handleGetDashboard() {
   if (sheetPos) {
     var rawPos = sheetPos.getDataRange().getValues();
     var hPos = rawPos[0];
+    var colIcon = hPos.indexOf("Icon");
+    var colTarget = hPos.indexOf("Target_Amount");
     for (var i = 1; i < rawPos.length; i++) {
       if (!rawPos[i][0]) continue;
       posList.push({
@@ -117,7 +119,9 @@ function handleGetDashboard() {
         Kategori: rawPos[i][hPos.indexOf("Kategori")],
         Pemilik: rawPos[i][hPos.indexOf("Pemilik")],
         Saldo_Saat_Ini: Number(rawPos[i][hPos.indexOf("Saldo_Saat_Ini")]),
-        Kategori_Kesehatan: rawPos[i][hPos.indexOf("Kategori_Kesehatan")]
+        Kategori_Kesehatan: rawPos[i][hPos.indexOf("Kategori_Kesehatan")],
+        Icon: colIcon > -1 ? rawPos[i][colIcon] : "",
+        Target_Amount: colTarget > -1 ? Number(rawPos[i][colTarget]) : 0
       });
     }
   }
@@ -434,11 +438,28 @@ function handleSavePocket(pos) {
   var colBal = headers.indexOf("Saldo_Saat_Ini");
   var colHealth = headers.indexOf("Kategori_Kesehatan");
   
+  var colIcon = headers.indexOf("Icon");
+  if (colIcon === -1) {
+    sheet.getRange(1, headers.length + 1).setValue("Icon");
+    headers.push("Icon");
+    colIcon = headers.indexOf("Icon");
+  }
+  
+  var colTarget = headers.indexOf("Target_Amount");
+  if (colTarget === -1) {
+    sheet.getRange(1, headers.length + 1).setValue("Target_Amount");
+    headers.push("Target_Amount");
+    colTarget = headers.indexOf("Target_Amount");
+  }
+  
   var id = pos.id;
   var name = pos.nama;
   var kat = pos.kategori; // Utama, Tabungan, Bisnis
   var pemilik = pos.pemilik || "Bersama";
   var health = pos.kategori_kesehatan || "Umum";
+  var icon = pos.icon || "";
+  var target = pos.target_amount ? Number(pos.target_amount) : 0;
+  var saldo = pos.saldo_saat_ini !== undefined ? Number(pos.saldo_saat_ini) : null;
   
   // If editing an existing pocket
   if (id) {
@@ -448,6 +469,11 @@ function handleSavePocket(pos) {
         sheet.getRange(i + 1, colKat + 1).setValue(kat);
         sheet.getRange(i + 1, colPemilik + 1).setValue(pemilik);
         sheet.getRange(i + 1, colHealth + 1).setValue(health);
+        sheet.getRange(i + 1, colIcon + 1).setValue(icon);
+        sheet.getRange(i + 1, colTarget + 1).setValue(target);
+        if (saldo !== null) {
+          sheet.getRange(i + 1, colBal + 1).setValue(saldo);
+        }
         return { status: "success", message: "Kantong berhasil diperbarui!" };
       }
     }
@@ -455,7 +481,20 @@ function handleSavePocket(pos) {
   
   // If adding new pocket
   var newId = "P" + String(data.length).padStart(3, '0') + Math.floor(Math.random() * 10);
-  sheet.appendRow([newId, name, kat, pemilik, 0, health]);
+  var newRow = [];
+  for (var c = 0; c < headers.length; c++) {
+    newRow.push("");
+  }
+  newRow[colId] = newId;
+  newRow[colNama] = name;
+  newRow[colKat] = kat;
+  newRow[colPemilik] = pemilik;
+  newRow[colBal] = 0;
+  newRow[colHealth] = health;
+  newRow[colIcon] = icon;
+  newRow[colTarget] = target;
+  
+  sheet.appendRow(newRow);
   return { status: "success", message: "Kantong baru berhasil dibuat!", id: newId };
 }
 
@@ -768,19 +807,39 @@ function handleCronAutoDebit() {
       var amount = Number(rawTpls[i][colNom]);
       var pos = rawTpls[i][colPos];
       
-      // Auto-execute transaction
-      var txObj = {
-        jenis: kat,
-        sumber_pos: kat === "Pengeluaran" ? pos : "",
-        tujuan_pos: kat === "Pemasukan" ? pos : "",
-        jumlah: amount,
-        keterangan: "Auto Debit: " + name,
-        tag_kategori: "Auto-Debit",
-        dibuat_oleh: "Auto-Cron"
-      };
-      
-      handleAddTransaksi(txObj);
-      processed++;
+      if (kat === "Multi") {
+        try {
+          var items = JSON.parse(pos);
+          for (var j = 0; j < items.length; j++) {
+            var item = items[j];
+            var subTx = {
+              jenis: item.jenis,
+              sumber_pos: item.sumber_pos,
+              tujuan_pos: item.tujuan_pos,
+              jumlah: Number(item.jumlah),
+              keterangan: "Auto Debit [Multi]: " + item.keterangan,
+              tag_kategori: item.tag_kategori || "Auto-Debit",
+              dibuat_oleh: "Auto-Cron"
+            };
+            handleAddTransaksi(subTx);
+          }
+          processed++;
+        } catch (e) {
+          // ignore parse errors
+        }
+      } else {
+        var txObj = {
+          jenis: kat,
+          sumber_pos: kat === "Pengeluaran" ? pos : "",
+          tujuan_pos: kat === "Pemasukan" ? pos : "",
+          jumlah: amount,
+          keterangan: "Auto Debit: " + name,
+          tag_kategori: "Auto-Debit",
+          dibuat_oleh: "Auto-Cron"
+        };
+        handleAddTransaksi(txObj);
+        processed++;
+      }
     }
   }
   

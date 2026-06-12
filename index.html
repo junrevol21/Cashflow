@@ -185,17 +185,39 @@
         </div>
     </div>
 
-    <!-- CREATE POCKET MODAL (HOME SHORTCUT) -->
+    <!-- CREATE/EDIT POCKET MODAL -->
     <div id="pocketCreateModal" class="fixed inset-0 z-[110] modal-blur flex items-center justify-center hidden p-6">
         <div class="glass-card max-w-sm w-full rounded-3xl p-5 border border-purple-500/30 flex flex-col space-y-4">
             <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h3 class="text-xs font-black text-purple-400 uppercase tracking-widest">🛠️ Buat Saku/Kantong Baru</h3>
+                <h3 class="text-xs font-black text-purple-400 uppercase tracking-widest" id="pocketModalTitle">🛠️ Buat Saku/Kantong Baru</h3>
                 <button onclick="closeCreatePocketModal()" class="text-xs font-bold text-rose-400 bg-rose-950/40 p-1 px-2.5 rounded-lg">✕</button>
             </div>
-            <div class="space-y-3.5 text-xs">
+            <div class="space-y-3 text-xs overflow-y-auto no-scrollbar max-h-[70vh] pr-1">
                 <div class="space-y-1">
                     <label class="text-[9px] font-bold text-slate-400 block uppercase">Nama Kantong</label>
                     <input type="text" id="pocketNama" class="w-full bg-[#0d1325]/75 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-purple-500 font-bold" placeholder="Misal: Tabungan Haji / Dana Darurat">
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-[9px] font-bold text-slate-400 block uppercase">Ikon Emoji</label>
+                    <input type="text" id="pocketIcon" class="w-full bg-[#0d1325]/75 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-purple-500 font-bold" placeholder="e.g. 💳">
+                    <!-- Suggestion emojis -->
+                    <div class="flex flex-wrap gap-1.5 mt-1 text-base" id="pocketEmojiSuggestions">
+                        <span onclick="setPocketEmoji('💳')" class="cursor-pointer hover:scale-125 transition-transform">💳</span>
+                        <span onclick="setPocketEmoji('💰')" class="cursor-pointer hover:scale-125 transition-transform">💰</span>
+                        <span onclick="setPocketEmoji('🏦')" class="cursor-pointer hover:scale-125 transition-transform">🏦</span>
+                        <span onclick="setPocketEmoji('📈')" class="cursor-pointer hover:scale-125 transition-transform">📈</span>
+                        <span onclick="setPocketEmoji('🛒')" class="cursor-pointer hover:scale-125 transition-transform">🛒</span>
+                        <span onclick="setPocketEmoji('🦄')" class="cursor-pointer hover:scale-125 transition-transform">🦄</span>
+                        <span onclick="setPocketEmoji('🥬')" class="cursor-pointer hover:scale-125 transition-transform">🥬</span>
+                        <span onclick="setPocketEmoji('🥚')" class="cursor-pointer hover:scale-125 transition-transform">🥚</span>
+                        <span onclick="setPocketEmoji('⚡')" class="cursor-pointer hover:scale-125 transition-transform">⚡</span>
+                        <span onclick="setPocketEmoji('🏠')" class="cursor-pointer hover:scale-125 transition-transform">🏠</span>
+                        <span onclick="setPocketEmoji('🚗')" class="cursor-pointer hover:scale-125 transition-transform">🚗</span>
+                        <span onclick="setPocketEmoji('🍿')" class="cursor-pointer hover:scale-125 transition-transform">🍿</span>
+                        <span onclick="setPocketEmoji('🎓')" class="cursor-pointer hover:scale-125 transition-transform">🎓</span>
+                        <span onclick="setPocketEmoji('🎁')" class="cursor-pointer hover:scale-125 transition-transform">🎁</span>
+                    </div>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-2">
@@ -227,6 +249,12 @@
                     </select>
                 </div>
 
+                <!-- Balance correction (Visible only in edit mode) -->
+                <div id="boxPocketSaldoAdjust" class="hidden space-y-1 animate-fadeIn">
+                    <label class="text-[9px] font-bold text-slate-400 block uppercase">Koreksi Saldo Aktif (Rp)</label>
+                    <input type="number" id="pocketSaldo" class="w-full bg-[#0d1325]/75 border border-slate-800 rounded-xl p-3 text-slate-200 font-bold font-mono" placeholder="Saldo saat ini (e.g. 5000000)">
+                </div>
+
                 <div class="flex items-center space-x-2 pt-1">
                     <input type="checkbox" id="pocketToggleGoal" onchange="document.getElementById('boxPocketGoal').classList.toggle('hidden')" class="rounded bg-[#090d16] border-slate-800 w-4 h-4 text-purple-500">
                     <label for="pocketToggleGoal" class="text-[10px] text-slate-400 font-bold">Aktifkan Target Tabungan (Goal)</label>
@@ -237,7 +265,7 @@
                     <input type="number" id="pocketTarget" class="w-full bg-[#0d1325]/75 border border-slate-800 rounded-xl p-3 text-slate-200 font-bold font-mono" placeholder="Target Rp (e.g. 5000000)">
                 </div>
 
-                <button onclick="simpanPocketCrud()" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-all cursor-pointer btn-bounce mt-2 shadow-lg shadow-purple-500/20">Simpan &amp; Hubungkan Pos</button>
+                <button onclick="simpanPocketCrud()" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-all cursor-pointer btn-bounce mt-2 shadow-lg shadow-purple-500/20" id="btnPocketCrudSubmit">Simpan &amp; Hubungkan Pos</button>
             </div>
         </div>
     </div>
@@ -334,32 +362,7 @@
                 <!-- QUICK ACTIONS GRID (3x2 Balanced Layout) -->
                 <div class="shrink-0 space-y-1.5">
                     <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1">Aksi Cepat Transaksi ⚡</h4>
-                    <div class="grid grid-cols-3 gap-2">
-                        <button onclick="openModalTxDirect('Pengeluaran')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
-                            <span class="text-base">💸</span>
-                            <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Kirim</span>
-                        </button>
-                        <button onclick="openModalTxDirect('Pemasukan')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
-                            <span class="text-base">📥</span>
-                            <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Terima</span>
-                        </button>
-                        <button onclick="openModalTxDirect('Transfer')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
-                            <span class="text-base">🔄</span>
-                            <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Pindah</span>
-                        </button>
-                        <button onclick="openModalTxDirect('BayarHutang')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
-                            <span class="text-base">🤝</span>
-                            <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Cicil</span>
-                        </button>
-                        <button onclick="openModalTxDirect('Pinjam')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
-                            <span class="text-base">⚠️</span>
-                            <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Pinjam</span>
-                        </button>
-                        <button onclick="openModalTxDirect('JualTelur')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-purple-500/20 active:scale-95 btn-bounce">
-                            <span class="text-base">🥚</span>
-                            <span class="text-[9px] font-extrabold uppercase text-purple-300 tracking-wide">Jual Telur</span>
-                        </button>
-                    </div>
+                    <div class="grid grid-cols-3 gap-2" id="quickActionsGrid"></div>
                 </div>
 
                 <!-- QUICK TEMPLATES CAROUSEL -->
@@ -385,7 +388,10 @@
                 <div class="space-y-1.5">
                     <div class="flex justify-between items-center pl-1 shrink-0">
                         <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Buku Besar Pos Aktif 📖</h4>
-                        <span class="text-[8px] text-indigo-300 font-extrabold bg-indigo-950/60 border border-indigo-900/40 px-2 py-0.5 rounded tracking-widest uppercase font-mono" id="lblSelectedPos">SEMUA</span>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-[8px] text-indigo-300 font-extrabold bg-indigo-950/60 border border-indigo-900/40 px-2 py-0.5 rounded tracking-widest uppercase font-mono" id="lblSelectedPos">SEMUA</span>
+                            <button onclick="openDetailedLedger()" class="text-[8px] text-teal-400 font-black bg-teal-950/60 border border-teal-900/40 px-2.5 py-0.5 rounded uppercase tracking-wider active:scale-90 transition-transform btn-bounce">🔍 Filter &amp; Detail</button>
+                        </div>
                     </div>
                     <div class="glass-card rounded-2xl p-4 shadow-sm divide-y divide-slate-800/40 space-y-2 text-slate-300" id="ledgerBox"></div>
                 </div>
@@ -499,6 +505,55 @@
                     </div>
 
                     <button onclick="simpanConfigSetting()" class="w-full bg-gradient-to-r from-indigo-500 to-teal-400 text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-transform cursor-pointer btn-bounce mt-2 shadow-lg shadow-indigo-500/10">Simpan &amp; Hubungkan API</button>
+                </div>
+
+                <!-- QUICK ACTIONS EDITOR -->
+                <div class="glass-card rounded-2xl p-4 shrink-0 space-y-3.5">
+                    <h3 class="text-xs font-black text-indigo-300 uppercase tracking-wider border-b border-slate-800 pb-2 mb-1">⚡ Kustomisasi Aksi Cepat (Quick Actions)</h3>
+                    
+                    <div class="space-y-2.5 text-xs">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block pl-1">Pilih Slot Tombol (1-6)</label>
+                            <select id="qaEditorSlot" onchange="loadQuickActionSlotData()" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2.5 text-xs font-bold text-slate-200 focus:outline-none">
+                                <option value="1">Tombol 1 (Kiri Atas)</option>
+                                <option value="2">Tombol 2 (Tengah Atas)</option>
+                                <option value="3">Tombol 3 (Kanan Atas)</option>
+                                <option value="4">Tombol 4 (Kiri Bawah)</option>
+                                <option value="5">Tombol 5 (Tengah Bawah)</option>
+                                <option value="6">Tombol 6 (Kanan Bawah)</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="space-y-1">
+                                <label class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block pl-1">Label Tombol</label>
+                                <input type="text" id="qaEditorLabel" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2.5 text-xs font-bold text-slate-200" placeholder="e.g. Kirim">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block pl-1">Ikon Emoji</label>
+                                <input type="text" id="qaEditorIcon" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2.5 text-xs font-bold text-slate-200" placeholder="e.g. 💸">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block pl-1">Target Aksi / Hubungkan ke Template</label>
+                            <select id="qaEditorTarget" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2.5 text-xs font-bold text-slate-200 focus:outline-none">
+                                <optgroup label="Aksi Standar">
+                                    <option value="Pengeluaran">💸 Kirim (Pengeluaran)</option>
+                                    <option value="Pemasukan">📥 Terima (Pemasukan)</option>
+                                    <option value="Transfer">🔄 Pindah (Transfer)</option>
+                                    <option value="BayarHutang">🤝 Cicil (Bayar Hutang)</option>
+                                    <option value="Pinjam">⚠️ Pinjam (Utang Baru)</option>
+                                    <option value="JualTelur">🥚 Jual Telur (Spesifik)</option>
+                                </optgroup>
+                                <optgroup label="Template Transaksi Aktif" id="qaEditorTemplateGroup">
+                                    <!-- Dynamic templates list -->
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <button onclick="saveQuickActionSlot()" class="w-full bg-gradient-to-r from-indigo-500 to-teal-400 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-transform cursor-pointer btn-bounce mt-1 shadow-lg shadow-indigo-500/10">Simpan Setelan Tombol</button>
+                    </div>
                 </div>
             </div>
 
@@ -658,6 +713,7 @@
                         <div class="space-y-1">
                             <label class="block font-bold text-slate-400">Tag Kategori</label>
                             <input type="text" id="modalTxTag" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-3 text-slate-200" placeholder="Konsumsi, Tagihan">
+                            <div id="tagSuggestionsBox" class="flex flex-wrap gap-1 pt-1.5 max-h-16 overflow-y-auto no-scrollbar"></div>
                         </div>
                     </div>
 
@@ -687,7 +743,10 @@
                     </div>
 
                     <div id="txBasketContainer" class="hidden bg-slate-900/40 border border-slate-800 rounded-2xl p-3 space-y-2 max-h-36 overflow-y-auto no-scrollbar">
-                        <p class="text-[8px] font-extrabold text-indigo-400 tracking-widest uppercase">🛒 Nota Multi-Transaksi:</p>
+                        <div class="flex justify-between items-center">
+                            <p class="text-[8px] font-extrabold text-indigo-400 tracking-widest uppercase">🛒 Nota Multi-Transaksi:</p>
+                            <button type="button" onclick="saveBasketAsTemplate()" class="text-[7.5px] bg-amber-950/60 text-amber-300 border border-amber-900/40 px-2 py-0.5 rounded font-black uppercase tracking-wider active:scale-90 transition-transform btn-bounce">💾 Simpan Template</button>
+                        </div>
                         <div id="txBasketRows" class="divide-y divide-slate-800/60 space-y-1.5"></div>
                     </div>
                 </div>
@@ -699,6 +758,103 @@
                     </button>
                 </div>
 
+            </div>
+        </div>
+
+        <!-- ==================== DETAILED LEDGER & POCKET MANAGEMENT VIEW ==================== -->
+        <div id="detailedLedgerModal" class="fixed inset-0 z-[120] modal-blur flex items-center justify-center hidden p-4">
+            <div class="glass-card w-full max-w-md rounded-3xl border border-slate-700/50 box-border text-slate-300 flex flex-col h-[90vh] relative overflow-hidden" id="detailedLedgerContent">
+                
+                <!-- Modal Header -->
+                <div class="flex justify-between items-center p-4 border-b border-slate-800/80 shrink-0 bg-[#070a13]/60">
+                    <h3 class="text-xs font-black text-teal-400 uppercase tracking-widest flex items-center gap-1.5">📖 Buku Besar &amp; Kelola Pos</h3>
+                    <button onclick="closeDetailedLedger()" class="text-xs font-black text-rose-400 bg-rose-950/40 p-1.5 px-3 rounded-lg active:scale-90 transition-all btn-bounce">✕ Tutup</button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-4">
+                    <!-- 1. POCKET MANAGER PANEL -->
+                    <div class="bg-slate-950/50 border border-slate-800/60 rounded-2xl p-3.5 space-y-3.5 shrink-0">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider">Pilih Kantong Aktif:</span>
+                            <button onclick="openCreatePocketModalDirect()" class="text-[8px] bg-purple-950/60 text-purple-300 border border-purple-900/40 px-2.5 py-1 rounded font-extrabold uppercase tracking-wide active:scale-90 transition-transform btn-bounce">➕ Kantong Baru</button>
+                        </div>
+                        
+                        <select id="dlPocketSelector" onchange="onDetailedLedgerPocketChange()" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2.5 text-xs font-bold text-slate-200 focus:outline-none"></select>
+                        
+                        <!-- Selected Pocket Info Card -->
+                        <div id="dlPocketInfoCard" class="hidden p-3 bg-slate-900/30 border border-slate-800/60 rounded-xl space-y-2.5 animate-fadeIn">
+                            <div class="flex justify-between items-start">
+                                <div class="truncate pr-1">
+                                    <h4 class="font-extrabold text-xs text-slate-200 truncate" id="dlPocketInfoName">Nama Kantong</h4>
+                                    <div class="flex flex-wrap gap-1 mt-0.5">
+                                        <span class="text-[7px] font-black px-1.5 py-0.2 rounded text-indigo-400 bg-indigo-950/60 uppercase tracking-wider" id="dlPocketInfoKat">Kategori</span>
+                                        <span class="text-[7px] font-black px-1.5 py-0.2 rounded text-teal-400 bg-teal-950/60 uppercase tracking-wider" id="dlPocketInfoPemilik">Pemilik</span>
+                                    </div>
+                                </div>
+                                <div class="text-right shrink-0">
+                                    <span class="text-[7px] text-slate-500 font-bold block uppercase">Saldo Aktif</span>
+                                    <span class="text-sm font-bold text-slate-100 font-mono" id="dlPocketInfoSaldo">Rp 0</span>
+                                </div>
+                            </div>
+
+                            <!-- Target Goal Progress (if any) -->
+                            <div id="dlPocketInfoGoalContainer" class="hidden space-y-1 border-t border-slate-800/40 pt-2">
+                                <!-- Goal HTML -->
+                            </div>
+
+                            <!-- Pocket Edit & Delete Buttons -->
+                            <div class="flex justify-end space-x-2 border-t border-slate-800/40 pt-2.5 mt-1">
+                                <button onclick="triggerEditPocket()" class="bg-indigo-950/60 text-indigo-300 border border-indigo-900/40 rounded px-3 py-1.5 text-[8.5px] font-extrabold active:scale-90 transition-all btn-bounce uppercase tracking-wider">✏️ Edit Pos</button>
+                                <button onclick="triggerDeletePocket()" id="btnDlDeletePocket" class="bg-rose-950/60 text-rose-300 border border-rose-900/40 rounded px-3 py-1.5 text-[8.5px] font-extrabold active:scale-90 transition-all btn-bounce uppercase tracking-wider">🗑️ Hapus Pos</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. SEARCH & FILTER SECTION -->
+                    <div class="bg-slate-950/50 border border-slate-800/60 rounded-2xl p-3.5 space-y-3 shrink-0">
+                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Filter Riwayat Transaksi:</span>
+                        
+                        <input type="text" id="dlSearchKeyword" oninput="renderDetailedLedger()" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2.5 text-xs font-bold text-slate-200" placeholder="Cari keterangan / tag...">
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="space-y-0.5">
+                                <label class="text-[8px] font-bold text-slate-500 uppercase tracking-wider pl-1">Tipe</label>
+                                <select id="dlFilterType" onchange="renderDetailedLedger()" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2 text-xs font-bold text-slate-200 focus:outline-none">
+                                    <option value="Semua">Semua Tipe</option>
+                                    <option value="Pemasukan">Pemasukan</option>
+                                    <option value="Pengeluaran">Pengeluaran</option>
+                                    <option value="Transfer">Transfer</option>
+                                    <option value="BayarHutang">Bayar Hutang</option>
+                                    <option value="Pinjam">Pinjam Uang</option>
+                                    <option value="JualTelur">Jual Telur</option>
+                                </select>
+                            </div>
+                            <div class="space-y-0.5">
+                                <label class="text-[8px] font-bold text-slate-500 uppercase tracking-wider pl-1">Tag Kategori</label>
+                                <input type="text" id="dlFilterTag" oninput="renderDetailedLedger()" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2 text-xs font-bold text-slate-200" placeholder="e.g. Tagihan">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="space-y-0.5">
+                                <label class="text-[8px] font-bold text-slate-500 uppercase tracking-wider pl-1">Mulai</label>
+                                <input type="date" id="dlFilterStartDate" onchange="renderDetailedLedger()" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2 text-xs font-bold text-slate-200 font-mono">
+                            </div>
+                            <div class="space-y-0.5">
+                                <label class="text-[8px] font-bold text-slate-500 uppercase tracking-wider pl-1">Akhir</label>
+                                <input type="date" id="dlFilterEndDate" onchange="renderDetailedLedger()" class="w-full bg-[#0d1527] rounded-xl border border-slate-850 p-2 text-xs font-bold text-slate-200 font-mono">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. MUTATION LIST -->
+                    <div class="space-y-1.5 flex-1 flex flex-col min-h-0">
+                        <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1 shrink-0">Hasil Pencarian Mutasi 📑</h4>
+                        <div class="glass-card rounded-2xl p-4 shadow-sm divide-y divide-slate-800/40 space-y-2 text-slate-300 overflow-y-auto no-scrollbar flex-1 min-h-0" id="dlLedgerRows">
+                            <!-- Mutasi List render here -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -738,6 +894,19 @@
         let activePosIdGlobal = null;
         let txKeranjangList = []; 
         let isScanningFile = false; 
+        let editingPocketId = null;
+        let quickActions = JSON.parse(localStorage.getItem('ff_quick_actions')) || [
+            { id: 1, label: "Kirim", icon: "💸", type: "Pengeluaran", templateId: "" },
+            { id: 2, label: "Terima", icon: "📥", type: "Pemasukan", templateId: "" },
+            { id: 3, label: "Pindah", icon: "🔄", type: "Transfer", templateId: "" },
+            { id: 4, label: "Cicil", icon: "🤝", type: "BayarHutang", templateId: "" },
+            { id: 5, label: "Pinjam", icon: "⚠️", type: "Pinjam", templateId: "" },
+            { id: 6, label: "Kustom", icon: "🥚", type: "JualTelur", templateId: "" }
+        ];
+
+        function setPocketEmoji(emoji) {
+            document.getElementById('pocketIcon').value = emoji;
+        }
         
         let masterPosDinamis = [];
         let masterLedgerDinamis = [];
@@ -767,9 +936,9 @@
                 { ID_Pos: "P004", Nama_Pos: "Dana Liburan", Kategori: "Tabungan", Pemilik: "Bersama", Saldo_Saat_Ini: 1500000, Kategori_Kesehatan: "Hiburan/Main", Target_Amount: 10000000 }
             ],
             ledger: [
-                { ID_Pos: "P001", Tipe: "Masuk", Vol: 4500000, Ket: "Pindah Sisa Gaji Pokok", Time: "2026-06-12", Bukti_Transfer: "" },
-                { ID_Pos: "P001", Tipe: "Keluar", Vol: 41000, Ket: "Beli mi ayam", Time: "2026-06-12", Bukti_Transfer: "" },
-                { ID_Pos: "P003", Tipe: "Masuk", Vol: 450000, Ket: "Jual 100 telur ke Toko Kelontong B", Time: "2026-06-11", Bukti_Transfer: "" }
+                { ID_Pos: "P001", Tipe: "Masuk", Vol: 4500000, Ket: "Pindah Sisa Gaji Pokok", Time: "2026-06-12", Bukti_Transfer: "", Tag: "Gaji, Utama" },
+                { ID_Pos: "P001", Tipe: "Keluar", Vol: 41000, Ket: "Beli mi ayam", Time: "2026-06-12", Bukti_Transfer: "", Tag: "Konsumsi, Makanan" },
+                { ID_Pos: "P003", Tipe: "Masuk", Vol: 450000, Ket: "Jual 100 telur ke Toko Kelontong B", Time: "2026-06-11", Bukti_Transfer: "", Tag: "Bisnis, Telur" }
             ],
             templates: [
                 { ID_Template: "T001", Kategori_Template: "Pengeluaran", Nama_Template: "Listrik Bulanan", Nominal_Standar: 500000, Pos_Default: "P001", Tanggal_Auto_Input: 25, Status_Auto: "Manual" },
@@ -787,7 +956,21 @@
                 localStorage.setItem(MOCK_DB_KEY, JSON.stringify(initialMockDB));
                 return initialMockDB;
             }
-            return JSON.parse(db);
+            let parsed = JSON.parse(db);
+            if (parsed.pos) {
+                parsed.pos = parsed.pos.map(p => {
+                    if (p.Icon === undefined) p.Icon = "";
+                    if (p.Target_Amount === undefined) p.Target_Amount = 0;
+                    return p;
+                });
+            }
+            if (parsed.ledger) {
+                parsed.ledger = parsed.ledger.map(l => {
+                    if (l.Tag === undefined) l.Tag = "";
+                    return l;
+                });
+            }
+            return parsed;
         }
 
         function saveMockDB(db) {
@@ -1009,6 +1192,30 @@
             renderProfilTab();
             renderInsightRatios();
             
+            // New renderers
+            renderQuickActionsGrid();
+            populateQuickActionsEditor();
+            loadQuickActionSlotData();
+
+            // Refresh Detailed Ledger modal if open
+            const dlModal = document.getElementById('detailedLedgerModal');
+            if (dlModal && !dlModal.classList.contains('hidden')) {
+                const selector = document.getElementById('dlPocketSelector');
+                const prevVal = selector ? selector.value : "SEMUA";
+                if (selector) {
+                    selector.innerHTML = `<option value="SEMUA">🌐 Semua Kantong Keuangan</option>`;
+                    masterPosDinamis.forEach(p => {
+                        selector.innerHTML += `<option value="${p.ID_Pos}">${p.Icon || '💳'} ${p.Nama_Pos}</option>`;
+                    });
+                    if ([...selector.options].some(o => o.value === prevVal)) {
+                        selector.value = prevVal;
+                    } else {
+                        selector.value = "SEMUA";
+                    }
+                }
+                onDetailedLedgerPocketChange();
+            }
+            
             if (masterPosDinamis.length > 0 && !activePosIdGlobal) {
                 selectPocketFilter(masterPosDinamis[0].ID_Pos);
             } else if (activePosIdGlobal) {
@@ -1053,7 +1260,7 @@
             container.innerHTML = "";
 
             if (masterPosDinamis.length === 0) {
-                container.innerHTML = `<div class="col-span-2 py-8 text-center text-xs font-bold text-slate-500">📭 Belum ada kantong.</div>`;
+                container.innerHTML = `<div class="py-8 text-center text-xs font-bold text-slate-500">📭 Belum ada kantong.</div>`;
                 return;
             }
 
@@ -1062,15 +1269,8 @@
                 let isSelected = activePosIdGlobal === pos.ID_Pos;
                 let activeBorder = isSelected ? 'ring-2 ring-indigo-500 border-indigo-500' : 'border-slate-800/40';
                 
-                // Show trash icon for pocket deletion (except Dompet Utama)
-                let deleteIconHtml = "";
-                if (pos.ID_Pos !== "P001") {
-                    deleteIconHtml = `
-                        <button onclick="event.stopPropagation(); hapusPocketCrud('${pos.ID_Pos}')" class="p-1 text-[10px] text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 rounded-lg active:scale-75 transition-all">
-                            🗑️
-                        </button>
-                    `;
-                }
+                // Use custom icon emoji or category fallback
+                let pocketIconHtml = pos.Icon ? pos.Icon : (pos.Kategori === 'Bisnis' ? '🥬' : pos.Kategori === 'Tabungan' ? '🦄' : '💳');
 
                 // Goal tracker progress bar
                 let goalTrackerHtml = "";
@@ -1095,7 +1295,7 @@
                         <div class="flex items-center justify-between z-10">
                             <div class="flex items-center space-x-2.5 truncate">
                                 <div class="w-7 h-7 rounded-lg bg-slate-900/60 border border-slate-800/40 flex items-center justify-center shrink-0">
-                                    <span class="text-xs">${pos.Kategori === 'Bisnis' ? '🥬' : pos.Kategori === 'Tabungan' ? '🦄' : '💳'}</span>
+                                    <span class="text-xs">${pocketIconHtml}</span>
                                 </div>
                                 <div class="truncate">
                                     <h5 class="font-extrabold text-xs text-slate-200 truncate pr-1">${pos.Nama_Pos}</h5>
@@ -1108,20 +1308,12 @@
                                     <span class="text-[7px] uppercase tracking-widest text-slate-500 font-black block">Saldo</span>
                                     <span class="text-xs font-extrabold text-slate-100 font-mono">${displaySaldo}</span>
                                 </div>
-                                ${deleteIconHtml}
                             </div>
                         </div>
                         ${goalTrackerHtml}
                     </div>
                 `;
             });
-
-            container.innerHTML += `
-                <div onclick="openCreatePocketModal()" class="glass-card border-dashed border border-slate-800 rounded-xl flex items-center justify-center p-3 cursor-pointer hover:border-purple-500/50 hover:bg-purple-950/5 active:scale-[0.98] transition-all text-slate-500 hover:text-purple-400 gap-2 shrink-0">
-                    <span class="text-sm font-light">+</span>
-                    <span class="text-[9px] font-bold uppercase tracking-widest">Tambah Kantong Baru</span>
-                </div>
-            `;
         }
 
         function openCreatePocketModal() {
@@ -1145,13 +1337,19 @@
 
             masterTemplates.forEach(tpl => {
                 let emoji = tpl.Kategori_Template === 'Pemasukan' ? '📥' : '💸';
+                let typeBadge = '';
+                if (tpl.Kategori_Template === 'Multi') {
+                    emoji = '🛒';
+                    typeBadge = `<span class="absolute -top-1 -right-1 text-[6.5px] bg-indigo-500/90 text-slate-100 font-extrabold px-1 py-0.2 rounded uppercase tracking-wider scale-90">Multi</span>`;
+                }
                 carousel.innerHTML += `
-                    <button onclick="eksekusiQuickTemplate('${tpl.ID_Template}')" class="snap-start shrink-0 glass-card rounded-xl px-3 py-2 flex items-center space-x-2 border-white/5 active:scale-95 transition-all btn-bounce text-xs">
+                    <button onclick="eksekusiQuickTemplate('${tpl.ID_Template}')" class="snap-start shrink-0 glass-card rounded-xl px-3 py-2 flex items-center space-x-2 border-white/5 active:scale-95 transition-all btn-bounce text-xs relative">
                         <span>${emoji}</span>
                         <div class="text-left">
                             <p class="font-extrabold text-[9px] text-slate-200 truncate max-w-[80px]">${tpl.Nama_Template}</p>
                             <p class="text-[7.5px] text-slate-500 font-mono font-bold">Rp ${Number(tpl.Nominal_Standar).toLocaleString('id-ID')}</p>
                         </div>
+                        ${typeBadge}
                     </button>
                 `;
             });
@@ -1225,21 +1423,15 @@
             document.getElementById('lightboxModal').classList.remove('hidden');
         }
 
-        function closeLightbox() {
-            document.getElementById('lightboxModal').classList.add('hidden');
-            document.getElementById('lightboxImg').src = "";
-        }
-
-        // ==========================================
-        // POCKETS CRUD ENGINE
-        // ==========================================
         function simpanPocketCrud() {
             const nama = document.getElementById('pocketNama').value.trim();
             const kategori = document.getElementById('pocketKategori').value;
             const pemilik = document.getElementById('pocketPemilik').value;
             const health = document.getElementById('pocketHealth').value;
+            const icon = document.getElementById('pocketIcon').value.trim();
             const hasGoal = document.getElementById('pocketToggleGoal').checked;
             const target = hasGoal ? Number(document.getElementById('pocketTarget').value) : 0;
+            const saldoVal = Number(document.getElementById('pocketSaldo').value) || 0;
 
             if(!nama) return showToast("Nama Kantong wajib diisi!", "⚠️");
             if(hasGoal && !target) return showToast("Target wajib diisi jika target aktif!", "⚠️");
@@ -1249,25 +1441,44 @@
                 kategori: kategori,
                 pemilik: pemilik,
                 kategori_kesehatan: health,
+                icon: icon,
                 target_amount: target
             };
 
-            showToast("Menghubungkan kantong...", "⏳");
+            if (editingPocketId) {
+                pocketData.id = editingPocketId;
+                pocketData.saldo_saat_ini = saldoVal;
+            }
+
+            showToast("Menyimpan kantong...", "⏳");
             closeCreatePocketModal();
 
             if (syncMode === 'demo') {
                 const db = getMockDB();
-                const newId = "P" + String(db.pos.length + 1).padStart(3, '0') + Math.floor(Math.random() * 10);
-                
-                db.pos.push({
-                    ID_Pos: newId,
-                    Nama_Pos: nama,
-                    Kategori: kategori,
-                    Pemilik: pemilik,
-                    Saldo_Saat_Ini: 0,
-                    Kategori_Kesehatan: health,
-                    Target_Amount: target
-                });
+                if (editingPocketId) {
+                    let p = db.pos.find(x => x.ID_Pos === editingPocketId);
+                    if (p) {
+                        p.Nama_Pos = nama;
+                        p.Kategori = kategori;
+                        p.Pemilik = pemilik;
+                        p.Kategori_Kesehatan = health;
+                        p.Icon = icon;
+                        p.Target_Amount = target;
+                        p.Saldo_Saat_Ini = saldoVal;
+                    }
+                } else {
+                    const newId = "P" + String(db.pos.length + 1).padStart(3, '0') + Math.floor(Math.random() * 10);
+                    db.pos.push({
+                        ID_Pos: newId,
+                        Nama_Pos: nama,
+                        Kategori: kategori,
+                        Pemilik: pemilik,
+                        Saldo_Saat_Ini: 0,
+                        Kategori_Kesehatan: health,
+                        Icon: icon,
+                        Target_Amount: target
+                    });
+                }
                 
                 saveMockDB(db);
                 tarikDataRealtime();
@@ -1346,9 +1557,15 @@
 
         function resetPocketForm() {
             document.getElementById('pocketNama').value = "";
+            document.getElementById('pocketIcon').value = "";
             document.getElementById('pocketTarget').value = "";
+            document.getElementById('pocketSaldo').value = "";
             document.getElementById('pocketToggleGoal').checked = false;
             document.getElementById('boxPocketGoal').classList.add('hidden');
+            document.getElementById('boxPocketSaldoAdjust').classList.add('hidden');
+            document.getElementById('pocketModalTitle').innerText = "🛠️ Buat Saku/Kantong Baru";
+            document.getElementById('btnPocketCrudSubmit').innerText = "Simpan & Hubungkan Pos";
+            editingPocketId = null;
         }
 
         // ==========================================
@@ -1465,16 +1682,33 @@
                     ? `<span class="text-[8.5px] text-amber-400 bg-amber-950/40 border border-amber-900/30 px-2 py-0.5 rounded font-mono font-bold uppercase">Auto-Debit (Tgl ${tpl.Tanggal_Auto_Input})</span>` 
                     : `<span class="text-[8.5px] text-blue-400 bg-blue-950/40 border border-blue-900/30 px-2 py-0.5 rounded font-bold uppercase">Manual</span>`;
 
+                if (tpl.Kategori_Template === 'Multi') {
+                    badgeStr += ` <span class="text-[8.5px] text-indigo-400 bg-indigo-950/40 border border-indigo-900/30 px-2 py-0.5 rounded font-bold uppercase ml-1">Multi</span>`;
+                }
+
                 let displayNominal = tpl.Nominal_Standar ? `Rp ${Number(tpl.Nominal_Standar).toLocaleString('id-ID')}` : 'Nominal Fleksibel';
+
+                let detailSubText = "";
+                if (tpl.Kategori_Template === 'Multi') {
+                    let count = 0;
+                    try {
+                        count = JSON.parse(tpl.Pos_Default).length;
+                    } catch(e) {}
+                    detailSubText = `${tpl.Kategori_Template} • Total: ${displayNominal} • [${count} Transaksi]`;
+                } else {
+                    detailSubText = `${tpl.Kategori_Template} • ${displayNominal} • Pos Default: ${tpl.Pos_Default}`;
+                }
 
                 container.innerHTML += `
                     <div class="glass-card rounded-2xl p-3.5 space-y-2 border-white/5">
                         <div class="flex justify-between items-start">
                             <div>
                                 <p class="font-extrabold text-slate-200 text-xs">${tpl.Nama_Template}</p>
-                                <p class="text-[8.5px] text-slate-500 font-bold mt-0.5">${tpl.Kategori_Template} • ${displayNominal} • Pos Default: ${tpl.Pos_Default}</p>
+                                <p class="text-[8.5px] text-slate-500 font-bold mt-0.5">${detailSubText}</p>
                             </div>
-                            ${badgeStr}
+                            <div class="flex flex-col items-end space-y-1">
+                                ${badgeStr}
+                            </div>
                         </div>
                         <div class="flex justify-end space-x-2 pt-2 border-t border-slate-800/40 mt-1">
                             <button onclick="hapusTemplate('${tpl.ID_Template}')" class="text-rose-400 hover:bg-rose-950/50 rounded px-2.5 py-1 text-[9px] font-bold active:scale-90 transition-colors btn-bounce">Hapus</button>
@@ -1586,20 +1820,50 @@
             let tpl = masterTemplates.find(t => t.ID_Template === id);
             if(!tpl) return;
 
-            openModalTxDirect(tpl.Kategori_Template);
-            
-            if(tpl.Kategori_Template === 'Pengeluaran') {
-                document.getElementById('modalTxSumber').value = tpl.Pos_Default;
-            } else if(tpl.Kategori_Template === 'Pemasukan') {
-                document.getElementById('modalTxTujuan').value = tpl.Pos_Default;
-            }
-            
-            document.getElementById('modalTxKet').value = tpl.Nama_Template;
-            document.getElementById('modalTxJumlah').value = tpl.Nominal_Standar || "";
-            document.getElementById('modalTxTag').value = "Template";
+            if (tpl.Kategori_Template === 'Multi') {
+                try {
+                    let items = JSON.parse(tpl.Pos_Default);
+                    txKeranjangList = items.map(item => ({
+                        jenis: item.jenis,
+                        sumber_pos: item.sumber_pos,
+                        tujuan_pos: item.tujuan_pos,
+                        jumlah: Number(item.jumlah),
+                        keterangan: item.keterangan,
+                        tag_kategori: item.tag_kategori || "Umum",
+                        komponen_gaji: item.komponen_gaji || "",
+                        bukti_transfer: item.bukti_transfer || ""
+                    }));
+                    
+                    document.getElementById('txModal').classList.remove('hidden');
+                    document.getElementById('txModalHeaderTitle').innerHTML = `🛒 Keranjang Multi-Transaksi`;
+                    document.getElementById('txModalHeaderTitle').className = "text-xs font-black text-amber-400 uppercase tracking-widest";
+                    
+                    document.getElementById('modalTxJenis').value = "Pengeluaran";
+                    
+                    populateDropdownOptions();
+                    adaptifFormModal();
+                    updateBasketVisualHtml();
+                    handleJumlahInput();
+                    showToast("Multi-template berhasil dimuat ke keranjang!", "🛒");
+                } catch(e) {
+                    showToast("Gagal memuat multi-template.", "❌");
+                }
+            } else {
+                openModalTxDirect(tpl.Kategori_Template);
+                
+                if(tpl.Kategori_Template === 'Pengeluaran') {
+                    document.getElementById('modalTxSumber').value = tpl.Pos_Default;
+                } else if(tpl.Kategori_Template === 'Pemasukan') {
+                    document.getElementById('modalTxTujuan').value = tpl.Pos_Default;
+                }
+                
+                document.getElementById('modalTxKet').value = tpl.Nama_Template;
+                document.getElementById('modalTxJumlah').value = tpl.Nominal_Standar || "";
+                document.getElementById('modalTxTag').value = "Template";
 
-            handleJumlahInput(); 
-            showToast("Template cepat berhasil dimuat!", "📋");
+                handleJumlahInput(); 
+                showToast("Template cepat berhasil dimuat!", "📋");
+            }
         }
 
         // ==========================================
@@ -1686,6 +1950,440 @@
         }
 
         // ==========================================
+        // CUSTOM QUICK ACTIONS ENGINE
+        // ==========================================
+        function renderQuickActionsGrid() {
+            const grid = document.getElementById('quickActionsGrid');
+            if (!grid) return;
+            grid.innerHTML = "";
+
+            quickActions.forEach(qa => {
+                let clickHandler = "";
+                if (qa.templateId) {
+                    clickHandler = `eksekusiQuickTemplate('${qa.templateId}')`;
+                } else {
+                    clickHandler = `openModalTxDirect('${qa.type}')`;
+                }
+
+                grid.innerHTML += `
+                    <button onclick="${clickHandler}" class="glass-card rounded-2xl p-3 flex flex-col items-center justify-center border-white/5 active:scale-95 transition-all text-center space-y-1 relative min-h-[70px] btn-bounce">
+                        <span class="text-xl shrink-0">${qa.icon}</span>
+                        <span class="text-[9.5px] font-black text-slate-300 leading-none">${qa.label}</span>
+                    </button>
+                `;
+            });
+        }
+
+        function loadQuickActionSlotData() {
+            const slotSelect = document.getElementById('qaEditorSlot');
+            if (!slotSelect) return;
+            const slotId = Number(slotSelect.value);
+            
+            const qa = quickActions.find(x => x.id === slotId);
+            if (!qa) return;
+
+            document.getElementById('qaEditorLabel').value = qa.label;
+            document.getElementById('qaEditorIcon').value = qa.icon;
+            
+            const targetSelect = document.getElementById('qaEditorTarget');
+            if (targetSelect) {
+                if (qa.templateId) {
+                    targetSelect.value = "tpl_" + qa.templateId;
+                } else {
+                    targetSelect.value = qa.type;
+                }
+            }
+        }
+
+        function saveQuickActionSlot() {
+            const slotId = Number(document.getElementById('qaEditorSlot').value);
+            const label = document.getElementById('qaEditorLabel').value.trim();
+            const icon = document.getElementById('qaEditorIcon').value.trim();
+            const targetVal = document.getElementById('qaEditorTarget').value;
+
+            if (!label || !icon) {
+                showToast("Label dan Ikon tidak boleh kosong!", "⚠️");
+                return;
+            }
+
+            const idx = quickActions.findIndex(x => x.id === slotId);
+            if (idx !== -1) {
+                quickActions[idx].label = label;
+                quickActions[idx].icon = icon;
+                if (targetVal.startsWith("tpl_")) {
+                    quickActions[idx].templateId = targetVal.replace("tpl_", "");
+                    quickActions[idx].type = "";
+                } else {
+                    quickActions[idx].templateId = "";
+                    quickActions[idx].type = targetVal;
+                }
+            }
+
+            localStorage.setItem('ff_quick_actions', JSON.stringify(quickActions));
+            renderQuickActionsGrid();
+            showToast("Setelan tombol berhasil disimpan!", "✔️");
+        }
+
+        function populateQuickActionsEditor() {
+            const grp = document.getElementById('qaEditorTemplateGroup');
+            if (!grp) return;
+            grp.innerHTML = "";
+            masterTemplates.forEach(t => {
+                let badge = t.Kategori_Template === 'Multi' ? '[Multi]' : '';
+                grp.innerHTML += `<option value="tpl_${t.ID_Template}">🚀 ${badge} ${t.Nama_Template}</option>`;
+            });
+        }
+
+        // ==========================================
+        // HISTORICAL TAG AUTOCOMPLETE
+        // ==========================================
+        function dapatkanDaftarTagHistori() {
+            let tagsMap = {};
+            masterLedgerDinamis.forEach(log => {
+                let tagStr = log.Tag || "";
+                if (tagStr) {
+                    tagStr.split(',').forEach(t => {
+                        let cleaned = t.trim();
+                        if (cleaned && cleaned.toLowerCase() !== 'umum') {
+                            tagsMap[cleaned] = (tagsMap[cleaned] || 0) + 1;
+                        }
+                    });
+                }
+            });
+            let sortedTags = Object.keys(tagsMap).sort((a, b) => tagsMap[b] - tagsMap[a]);
+            return sortedTags.slice(0, 6);
+        }
+
+        function renderTagSuggestions() {
+            const box = document.getElementById('tagSuggestionsBox');
+            if (!box) return;
+            box.innerHTML = "";
+            
+            const tags = dapatkanDaftarTagHistori();
+            if (tags.length === 0) {
+                const defaults = ["Konsumsi", "Tagihan", "Bisnis", "Investasi", "Hiburan", "Gaji"];
+                defaults.forEach(tag => {
+                    box.innerHTML += `
+                        <button type="button" onclick="pilihSaranTag('${tag}')" class="text-[9px] bg-slate-900/50 hover:bg-slate-800 text-slate-400 hover:text-slate-300 border border-slate-800/40 px-2 py-0.5 rounded-full font-bold transition-all">
+                            # ${tag}
+                        </button>
+                    `;
+                });
+                return;
+            }
+
+            tags.forEach(tag => {
+                box.innerHTML += `
+                    <button type="button" onclick="pilihSaranTag('${tag}')" class="text-[9px] bg-indigo-950/40 hover:bg-indigo-900/30 text-indigo-300 border border-indigo-900/30 px-2 py-0.5 rounded-full font-bold transition-all">
+                        # ${tag}
+                    </button>
+                `;
+            });
+        }
+
+        function pilihSaranTag(tag) {
+            const input = document.getElementById('modalTxTag');
+            let current = input.value.trim();
+            if (!current) {
+                input.value = tag;
+            } else {
+                let tagsList = current.split(',').map(t => t.trim());
+                if (!tagsList.includes(tag)) {
+                    tagsList.push(tag);
+                }
+                input.value = tagsList.join(', ');
+            }
+        }
+
+        // ==========================================
+        // DETAILED LEDGER & POCKET MANAGEMENT VIEW
+        // ==========================================
+        function openDetailedLedger() {
+            document.getElementById('detailedLedgerModal').classList.remove('hidden');
+            
+            document.getElementById('dlFilterStartDate').value = "";
+            document.getElementById('dlFilterEndDate').value = "";
+            document.getElementById('dlSearchKeyword').value = "";
+            document.getElementById('dlFilterType').value = "Semua";
+            document.getElementById('dlFilterTag').value = "";
+            
+            const selector = document.getElementById('dlPocketSelector');
+            selector.innerHTML = `<option value="SEMUA">🌐 Semua Kantong Keuangan</option>`;
+            masterPosDinamis.forEach(p => {
+                selector.innerHTML += `<option value="${p.ID_Pos}">${p.Icon || '💳'} ${p.Nama_Pos}</option>`;
+            });
+
+            if (activePosIdGlobal) {
+                selector.value = activePosIdGlobal;
+            } else {
+                selector.value = "SEMUA";
+            }
+            
+            onDetailedLedgerPocketChange();
+        }
+
+        function closeDetailedLedger() {
+            document.getElementById('detailedLedgerModal').classList.add('hidden');
+        }
+
+        function onDetailedLedgerPocketChange() {
+            const pId = document.getElementById('dlPocketSelector').value;
+            const infoCard = document.getElementById('dlPocketInfoCard');
+            const deleteBtn = document.getElementById('btnDlDeletePocket');
+            
+            if (pId === "SEMUA") {
+                infoCard.classList.add('hidden');
+            } else {
+                infoCard.classList.remove('hidden');
+                const pos = masterPosDinamis.find(p => p.ID_Pos === pId);
+                if (pos) {
+                    document.getElementById('dlPocketInfoName').innerText = pos.Nama_Pos;
+                    document.getElementById('dlPocketInfoKat').innerText = pos.Kategori;
+                    document.getElementById('dlPocketInfoPemilik').innerText = pos.Pemilik;
+                    document.getElementById('dlPocketInfoSaldo').innerText = "Rp " + pos.Saldo_Saat_Ini.toLocaleString('id-ID');
+                    
+                    const goalContainer = document.getElementById('dlPocketInfoGoalContainer');
+                    if (pos.Target_Amount > 0) {
+                         goalContainer.classList.remove('hidden');
+                         let progress = Math.min(100, Math.round((pos.Saldo_Saat_Ini / pos.Target_Amount) * 100));
+                         goalContainer.innerHTML = `
+                             <div class="flex justify-between text-[8px] font-bold text-slate-400">
+                                 <span>Goal: ${progress}%</span>
+                                 <span>Target: Rp ${pos.Target_Amount.toLocaleString('id-ID')}</span>
+                             </div>
+                             <div class="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden p-[0.5px]">
+                                 <div class="h-full bg-gradient-to-r from-emerald-400 to-indigo-500 rounded-full" style="width: ${progress}%;"></div>
+                             </div>
+                         `;
+                    } else {
+                         goalContainer.classList.add('hidden');
+                    }
+
+                    if (pId === "P001") {
+                        deleteBtn.classList.add('hidden');
+                    } else {
+                        deleteBtn.classList.remove('hidden');
+                    }
+                }
+            }
+            renderDetailedLedger();
+        }
+
+        function renderDetailedLedger() {
+            const pId = document.getElementById('dlPocketSelector').value;
+            const keyword = document.getElementById('dlSearchKeyword').value.trim().toLowerCase();
+            const type = document.getElementById('dlFilterType').value;
+            const tagFilter = document.getElementById('dlFilterTag').value.trim().toLowerCase();
+            const startDate = document.getElementById('dlFilterStartDate').value;
+            const endDate = document.getElementById('dlFilterEndDate').value;
+
+            const rows = document.getElementById('dlLedgerRows');
+            rows.innerHTML = "";
+
+            let list = masterLedgerDinamis;
+
+            if (pId !== "SEMUA") {
+                list = list.filter(l => l.ID_Pos === pId);
+            }
+
+            if (type !== "Semua") {
+                if (type === "Pemasukan") list = list.filter(l => l.Tipe === "Masuk");
+                else if (type === "Pengeluaran") list = list.filter(l => l.Tipe === "Keluar");
+                else if (type === "Transfer") {
+                    list = list.filter(l => l.Ket.includes("Pindah ke") || l.Ket.includes("Terima dari"));
+                } else if (type === "BayarHutang") {
+                    list = list.filter(l => l.Ket.includes("Bayar cicilan"));
+                } else if (type === "Pinjam") {
+                    list = list.filter(l => l.Ket.includes("Pinjam dari"));
+                } else if (type === "JualTelur") {
+                    list = list.filter(l => l.Ket.toLowerCase().includes("telur"));
+                }
+            }
+
+            if (keyword) {
+                list = list.filter(l => {
+                    let matchKet = l.Ket.toLowerCase().includes(keyword);
+                    let matchTag = l.Tag && l.Tag.toLowerCase().includes(keyword);
+                    return matchKet || matchTag;
+                });
+            }
+
+            if (tagFilter) {
+                list = list.filter(l => l.Tag && l.Tag.toLowerCase().includes(tagFilter));
+            }
+
+            if (startDate) {
+                list = list.filter(l => l.Time >= startDate);
+            }
+            if (endDate) {
+                list = list.filter(l => l.Time <= endDate);
+            }
+
+            if (list.length === 0) {
+                rows.innerHTML = `<div class="text-center py-8 text-xs text-slate-500 font-bold">📭 Tidak ada mutasi yang cocok dengan filter.</div>`;
+                return;
+            }
+
+            list.forEach(log => {
+                let isMasuk = log.Tipe === 'Masuk';
+                let sign = isMasuk ? "+" : "-";
+                let colorClass = isMasuk ? "text-emerald-400" : "text-rose-400";
+                let icon = isMasuk ? "📥" : "💸";
+                let nominal = isPrivacyMode ? "Rp •••" : "Rp " + log.Vol.toLocaleString('id-ID');
+                
+                let attachmentHtml = "";
+                if(log.Bukti_Transfer && log.Bukti_Transfer.length > 20) {
+                    attachmentHtml = `
+                        <button onclick="openLightbox('${log.Bukti_Transfer.replace(/'/g, "\\'")}')" class="p-1 text-[9px] font-black text-indigo-400 hover:text-indigo-300 bg-indigo-950/40 border border-indigo-900/30 rounded flex items-center justify-center shrink-0">
+                            📎 Lihat Struk
+                        </button>
+                    `;
+                }
+
+                let tagBadges = "";
+                if (log.Tag) {
+                    log.Tag.split(',').forEach(t => {
+                        let tagVal = t.trim();
+                        if (tagVal) {
+                            tagBadges += `<span class="text-[7px] text-indigo-300 bg-indigo-950/50 border border-indigo-900/30 px-1.5 py-0.2 rounded font-bold mr-0.5">#${tagVal}</span>`;
+                        }
+                    });
+                }
+
+                rows.innerHTML += `
+                    <div class="flex justify-between items-center py-2.5 text-xs text-slate-300 border-b border-slate-800/40 last:border-0">
+                        <div class="flex items-center space-x-2.5 min-w-0">
+                            <span class="text-base shrink-0">${icon}</span>
+                            <div class="min-w-0">
+                                <p class="font-extrabold text-slate-200 truncate text-[11.5px]">${log.Ket}</p>
+                                <p class="text-[8px] text-slate-500 font-bold font-mono">${log.Time} • ${tagBadges}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2 shrink-0">
+                            ${attachmentHtml}
+                            <div class="text-right font-black ${colorClass} font-mono">${sign} ${nominal}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function openCreatePocketModalDirect() {
+            resetPocketForm();
+            editingPocketId = null;
+            
+            document.getElementById('boxPocketSaldoAdjust').classList.add('hidden');
+            document.getElementById('pocketModalTitle').innerText = "➕ Buat Saku/Kantong Baru";
+            document.getElementById('btnPocketCrudSubmit').innerText = "Simpan & Buat Kantong";
+            
+            openCreatePocketModal();
+        }
+
+        function triggerEditPocket() {
+            const pId = document.getElementById('dlPocketSelector').value;
+            if (pId === "SEMUA") return;
+            
+            const pos = masterPosDinamis.find(p => p.ID_Pos === pId);
+            if (!pos) return;
+
+            editingPocketId = pId;
+            
+            document.getElementById('pocketNama').value = pos.Nama_Pos;
+            document.getElementById('pocketKategori').value = pos.Kategori;
+            document.getElementById('pocketPemilik').value = pos.Pemilik;
+            document.getElementById('pocketHealth').value = pos.Kategori_Kesehatan;
+            document.getElementById('pocketIcon').value = pos.Icon || "";
+            document.getElementById('pocketSaldo').value = pos.Saldo_Saat_Ini;
+            
+            if (pos.Target_Amount > 0) {
+                document.getElementById('pocketToggleGoal').checked = true;
+                document.getElementById('pocketTarget').value = pos.Target_Amount;
+                document.getElementById('boxPocketGoal').classList.remove('hidden');
+            } else {
+                document.getElementById('pocketToggleGoal').checked = false;
+                document.getElementById('pocketTarget').value = "";
+                document.getElementById('boxPocketGoal').classList.add('hidden');
+            }
+
+            document.getElementById('boxPocketSaldoAdjust').classList.remove('hidden');
+            
+            document.getElementById('pocketModalTitle').innerText = "✏️ Edit Kantong / Saldo";
+            document.getElementById('btnPocketCrudSubmit').innerText = "Simpan Perubahan";
+            
+            openCreatePocketModal();
+        }
+
+        function triggerDeletePocket() {
+            const pId = document.getElementById('dlPocketSelector').value;
+            if (pId === "SEMUA") return;
+            if (pId === "P001") {
+                showToast("Dompet Utama tidak boleh dihapus!", "❌");
+                return;
+            }
+
+            hapusPocketCrud(pId);
+            document.getElementById('dlPocketSelector').value = "SEMUA";
+            onDetailedLedgerPocketChange();
+        }
+
+        // ==========================================
+        // BATCH TEMPLATES SAVE ENGINE
+        // ==========================================
+        function saveBasketAsTemplate() {
+            if (txKeranjangList.length === 0) return;
+            const name = prompt("Masukkan nama template multi-transaksi:");
+            if (!name) return;
+
+            const totalNominal = txKeranjangList.reduce((sum, item) => sum + item.jumlah, 0);
+            const posDefaultStr = JSON.stringify(txKeranjangList);
+
+            const tplData = {
+                kategori_template: "Multi",
+                nama_template: name,
+                nominal_standar: totalNominal,
+                pos_default: posDefaultStr,
+                tanggal_auto_input: "",
+                status_auto: "Manual"
+            };
+
+            showToast("Menyimpan template multi-transaksi...", "⏳");
+
+            if (syncMode === 'demo') {
+                const db = getMockDB();
+                const newId = "T" + String(db.templates.length + 1).padStart(3, '0') + Math.floor(Math.random() * 10);
+                db.templates.push({
+                    ID_Template: newId,
+                    Kategori_Template: "Multi",
+                    Nama_Template: name,
+                    Nominal_Standar: totalNominal,
+                    Pos_Default: posDefaultStr,
+                    Tanggal_Auto_Input: "",
+                    Status_Auto: "Manual"
+                });
+                saveMockDB(db);
+                tarikDataRealtime();
+                showToast("Template multi-transaksi berhasil disimpan!", "✔️");
+            } else {
+                tplData.action = "save_template";
+                fetch(api_url_custom, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(tplData)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showToast(data.message, "✔️");
+                        tarikDataRealtime();
+                    } else {
+                        showToast("Gagal menyimpan: " + data.message, "❌");
+                    }
+                });
+            }
+        }
+
+        // ==========================================
         // SIMPLIFIED DIRECT ACTION SHORTCUT LOGIC
         // ==========================================
         function openModalTxDirect(category) {
@@ -1717,7 +2415,11 @@
             populateDropdownOptions();
             adaptifFormModal();
             handleJumlahInput(); 
+            
+            // Render Tag Suggestions
+            renderTagSuggestions();
         }
+
 
         function closeModalTx() {
             document.getElementById('txModal').classList.add('hidden');
@@ -2406,7 +3108,7 @@
         logout();
 
         document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('#pageHome') || e.target.closest('#pocketsGrid') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#listTemplateContainer') || e.target.closest('#pageProfil') || e.target.closest('#pocketCreateModal') || e.target.closest('#lightboxModal')) {
+            if (e.target.closest('#pageHome') || e.target.closest('#pocketsGrid') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#listTemplateContainer') || e.target.closest('#pageProfil') || e.target.closest('#pocketCreateModal') || e.target.closest('#lightboxModal') || e.target.closest('#detailedLedgerContent') || e.target.closest('#dlLedgerRows')) {
                 return;
             }
             e.preventDefault();
