@@ -7,7 +7,6 @@
     <!-- Tailwind CSS v4 via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Penguncian viewport absolut iOS & Android PWA - Anti Zoom & Anti-Bouncing */
         html, body {
             overflow: hidden;
             position: fixed;
@@ -17,7 +16,6 @@
             -webkit-overflow-scrolling: auto;
         }
 
-        /* SaaS Glassmorphism Premium Style */
         .glass-card {
             background: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(30px);
@@ -27,7 +25,6 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Variasi Kantong Jago Pockets */
         .card-blue   { background: rgba(30, 58, 138, 0.2); border-left: 5px solid #3b82f6; box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.08); }
         .card-green  { background: rgba(6, 78, 59, 0.2);   border-left: 5px solid #10b981; box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.08); }
         .card-purple { background: rgba(88, 28, 135, 0.2);  border-left: 5px solid #a855f7; box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.08); }
@@ -55,39 +52,24 @@
             box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
         }
 
-        /* Efek Shimmer Kedip untuk Loading Seolah Berjalan Cepat */
-        @keyframes shimmer {
-            0% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-            100% { opacity: 0.3; }
-        }
+        @keyframes shimmer { 0% { opacity: 0.3; } 50% { opacity: 0.6; } 100% { opacity: 0.3; } }
         .shimmer-load { animation: shimmer 1.5s infinite ease-in-out; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         .fade-in-ledger { animation: fadeInSimple 0.25s ease-out forwards; }
-        @keyframes fadeInSimple {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes orbit {
-            0% { transform: translate(0px, 0px) scale(1); }
-            50% { transform: translate(15px, -15px) scale(1.02); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
+        @keyframes fadeInSimple { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes orbit { 0% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(15px, -15px) scale(1.02); } 100% { transform: translate(0px, 0px) scale(1); } }
         .animate-bg-glow { animation: orbit 18s infinite alternate ease-in-out; }
     </style>
 </head>
 <body class="bg-[#070a13] text-slate-300 font-sans antialiased select-none flex justify-center items-center w-full h-full">
 
-    <!-- BACKDROP SMOOTH ORBITS -->
     <div class="absolute top-[-15%] left-[-15%] w-[100vw] h-[100vw] bg-indigo-950/35 rounded-full filter blur-[140px] animate-bg-glow z-0"></div>
     <div class="absolute bottom-[-15%] right-[-15%] w-[90vw] h-[90vw] bg-teal-950/20 rounded-full filter blur-[140px] animate-bg-glow z-0" style="animation-delay: 4s;"></div>
 
-    <!-- NOTIFIKASI TOAST FLOATING BANNER (MENGGANTI ALERT BAWAAN) -->
-    <div id="toastBox" class="fixed top-6 left-4 right-4 max-w-sm mx-auto glass-card rounded-2xl p-4 flex items-center space-x-3 border-l-4 border-l-indigo-500 z-[100] transform -translate-y-28 opacity-0 transition-all duration-300 pointer-events-none">
+    <div id="toastBox" class="fixed top-6 left-4 right-4 max-w-sm mx-auto glass-card rounded-2xl p-4 flex items-center space-x-3 border-l-4 border-l-indigo-500 z-[150] transform -translate-y-28 opacity-0 transition-all duration-300 pointer-events-none">
         <span class="text-base" id="toastIcon">🔔</span>
         <p class="text-xs font-bold text-slate-200" id="toastMsg">Notifikasi sistem aktif.</p>
     </div>
@@ -103,7 +85,6 @@
                     <h1 class="text-2xl font-black tracking-tight text-indigo-200">Family Finance</h1>
                     <p class="text-xs text-slate-400 font-bold">Secure SaaS Premium Family Wallet</p>
                 </div>
-
                 <form id="formLogin" class="space-y-4 text-left">
                     <div class="space-y-1">
                         <label class="text-[10px] font-extrabold text-indigo-400 uppercase tracking-widest pl-1">Username</label>
@@ -123,16 +104,14 @@
         <!-- ==================== MAIN PAGES CONTENT COMPONENT ==================== -->
         <div id="appPagesContainer" class="w-full flex flex-col h-full overflow-hidden hidden pb-20">
             
-            <!-- MASTER CORE BAR HEADER -->
             <div class="flex justify-between items-center glass-card rounded-2xl p-3 shrink-0 mb-4">
                 <div class="flex items-center space-x-3">
                     <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-blue-500 text-slate-950 font-black text-sm flex items-center justify-center shadow-md shadow-indigo-500/10" id="userAvatar">U</div>
                     <div>
                         <h2 class="text-xs font-black tracking-tight text-slate-200" id="userGreeting">Halo</h2>
-                        <span class="text-[9px] bg-indigo-950/80 text-indigo-400 font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider block mt-0.5 w-max border border-indigo-900/50" id="userRole">Parent</span>
+                        <span class="text-[9px] bg-indigo-950/80 text-indigo-400 font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider block mt-0.5 border border-indigo-900/50" id="userRole">Parent</span>
                     </div>
                 </div>
-                <!-- INDIKATOR SINKRONISASI AKTIF -->
                 <div class="flex items-center space-x-2">
                     <div id="syncIndicator" class="hidden text-[9px] text-teal-400 bg-teal-950/50 border border-teal-900 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider animate-pulse">🔄 Syncing...</div>
                     <button onclick="logout()" class="p-2.5 text-rose-400/80 hover:text-rose-400 hover:bg-rose-950/30 rounded-xl transition-all duration-200 flex items-center justify-center border border-transparent active:scale-90">
@@ -141,32 +120,28 @@
                 </div>
             </div>
 
-            <!-- PAGE 1: HOME DASHBOARD -->
+            <!-- PAGE 1: HOME -->
             <div id="pageHome" class="space-y-4 flex flex-col h-full overflow-hidden">
-                <!-- SKELETON BALANCE / MAIN DISP -->
                 <div id="balanceLoading" class="w-full h-24 bg-slate-900/50 rounded-3xl shimmer-load hidden"></div>
                 <div id="balanceRealBox" class="bg-gradient-to-br from-[#0c1220] via-[#111a30] to-[#080d1a] rounded-3xl p-4 shadow-2xl shrink-0 space-y-1.5 border border-slate-800/60 relative overflow-hidden">
                     <div class="flex items-center justify-between">
-                        <p class="text-[9px] text-slate-400 uppercase font-bold tracking-widest">✨ Total Saldo Gabungan Keluarga</p>
+                        <p class="text-[9px] text-slate-400 uppercase font-bold tracking-widest">✨ Total Saldo Gabungan</p>
                         <button onclick="togglePrivacy()" class="text-slate-400 hover:text-indigo-400 transition text-xs p-1 active:scale-90"><span id="eyeIcon">👁️</span></button>
                     </div>
                     <h3 class="text-2xl font-black tracking-wide text-emerald-300" id="txtSisaUang">Rp 0</h3>
                     <p class="text-[10px] text-slate-400 bg-slate-900/40 border border-slate-800 p-2 rounded-xl font-medium" id="txtRekomendasi">Sistem siap.</p>
                 </div>
 
-                <!-- CAROUSEL -->
                 <div class="shrink-0 space-y-1.5 relative">
-                    <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest pl-1">Kantong Keuangan Keluarga (Jago Pockets) 💳</h4>
+                    <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest pl-1">Kantong Keuangan Keluarga 💳</h4>
                     <div class="relative w-full h-32 flex items-center">
                         <div class="w-full h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5 z-10" id="posCarousel" onscroll="handleVerticalScroll()">
-                            <!-- Shimmer Loading Default -->
                             <div class="w-full h-32 bg-slate-900/40 rounded-2xl shimmer-load"></div>
                         </div>
                         <div class="absolute right-[-14px] top-0 bottom-0 flex flex-col space-y-1.5 justify-center items-center w-3 z-20" id="carouselDots"></div>
                     </div>
                 </div>
 
-                <!-- LIVE BUKU BESAR MUTASI -->
                 <div class="flex-1 flex flex-col space-y-1.5 overflow-hidden min-h-0">
                     <div class="flex justify-between items-center pl-1 shrink-0">
                         <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Buku Besar Pos Aktif 📖</h4>
@@ -176,118 +151,88 @@
                 </div>
             </div>
 
-            <!-- PAGE 2: INSIGHT & AI ADVISOR -->
+            <!-- PAGE 2: INSIGHT -->
             <div id="pageInsight" class="space-y-4 flex flex-col h-full overflow-hidden hidden">
-                <div class="glass-card rounded-2xl p-4 space-y-3">
-                    <h3 class="text-xs font-black text-indigo-300 uppercase tracking-wider">📊 Rasio Penggunaan Kas Riil</h3>
-                    <div class="space-y-2 text-[11px]">
-                        <div>
-                            <div class="flex justify-between text-slate-400 mb-1"><span>Kebutuhan Pokok &amp; Bisnis (40%)</span><span class="text-emerald-400 font-bold" id="pctPokokRiil">0%</span></div>
-                            <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden"><div id="barPokok" class="bg-indigo-500 h-full transition-all duration-500" style="width: 0%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-slate-400 mb-1"><span>Tabungan &amp; Investasi (30%)</span><span class="text-emerald-400 font-bold" id="pctTabunganRiil">0%</span></div>
-                            <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden"><div id="barTabungan" class="bg-emerald-500 h-full transition-all duration-500" style="width: 0%"></div></div>
-                        </div>
-                    </div>
-                </div>
                 <div class="glass-card rounded-2xl p-4 flex-1 flex flex-col justify-between overflow-hidden">
                     <div class="space-y-1"><h3 class="text-xs font-black text-teal-400 uppercase tracking-wider">🧠 AI Financial Advisor</h3></div>
-                    <div class="flex-1 bg-slate-950/60 border border-slate-900 rounded-xl p-3 my-3 text-[11px] text-slate-300 overflow-y-auto no-scrollbar font-medium leading-relaxed" id="aiResponseBox">AI Siap menganalisa tabungan Jago Pockets Anda.</div>
-                    <button onclick="panggilAdvisorAI()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-transform cursor-pointer">Analisis Kesehatan Keuangan AI</button>
+                    <div class="flex-1 bg-slate-950/60 border border-slate-900 rounded-xl p-3 my-3 text-[11px] text-slate-300 overflow-y-auto no-scrollbar font-medium leading-relaxed" id="aiResponseBox">AI Siap menganalisa tabungan Anda.</div>
+                    <button onclick="panggilAdvisorAI()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-transform cursor-pointer">Analisis AI Sekarang</button>
                 </div>
             </div>
 
-            <!-- PAGE 3: MANAGEMENT KANTONG / POCKETS (CRUD SEPARATED) -->
+            <!-- PAGE 3: POCKETS (CRUD) -->
             <div id="pagePockets" class="space-y-4 flex flex-col h-full overflow-hidden hidden">
                 <div class="glass-card rounded-2xl p-4 flex flex-col flex-1 overflow-hidden">
-                    <h3 class="text-xs font-black text-purple-400 uppercase tracking-wider border-b border-slate-800 pb-2 mb-3">🛠️ Kelola Alokasi Kantong (Jago CRUD)</h3>
-                    
-                    <!-- FORM TAMBAH POS -->
-                    <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-900 space-y-2.5 text-[11px] mb-3 shrink-0">
-                        <p class="font-extrabold text-[9px] uppercase tracking-wider text-purple-400">Buat Kantong Baru:</p>
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="text" id="crudNamaPos" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-200" placeholder="Nama Kantong (e.g. Dana Pajak)">
-                            <select id="crudKategoriPos" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-300">
-                                <option value="Utama">Utama / Dompet Bayar</option>
-                                <option value="Tabungan">Tabungan / Kantong Nabung</option>
-                                <option value="Bisnis">Bisnis Telur Omega</option>
-                            </select>
-                        </div>
-                        
-                        <!-- GOAL TRACKER CONFIG CONTROL ACTIVATION -->
-                        <div class="flex items-center space-x-2 pt-1 border-t border-slate-900 mt-1">
-                            <input type="checkbox" id="crudToggleGoal" onchange="document.getElementById('boxGoalTarget').classList.toggle('hidden')" class="rounded bg-[#090d16] border-slate-800 text-indigo-500">
-                            <label for="crudToggleGoal" class="text-[10px] text-slate-400 font-bold">Aktifkan Goal Tracker Tabungan Jago</label>
-                        </div>
-                        <div id="boxGoalTarget" class="hidden pt-1">
-                            <input type="number" id="crudTargetNominal" class="w-full bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-200 text-[10px]" placeholder="Target Nominal Terkumpul (Rp)">
-                        </div>
-
-                        <button onclick="tambahPosCrud()" class="w-full bg-purple-600 text-white font-black py-2 rounded-lg active:scale-95 transition-transform cursor-pointer">Simpan Kantong Baru ke Sheets</button>
-                    </div>
-
-                    <!-- LIST KANTONG CURRENT -->
+                    <h3 class="text-xs font-black text-purple-400 uppercase tracking-wider border-b border-slate-800 pb-2 mb-3">🛠️ Kelola Kantong (CRUD)</h3>
                     <div class="flex-1 overflow-y-auto no-scrollbar divide-y divide-slate-800/40 space-y-1.5" id="crudPosContainer"></div>
                 </div>
             </div>
 
-            <!-- PAGE 4: AUTO INPUT TEMPLATE (CRON AUTO SYSTEM) -->
+            <!-- PAGE 4: TEMPLATES TRANSAKSI -->
             <div id="pageTemplates" class="space-y-4 flex flex-col h-full overflow-hidden hidden">
                 <div class="glass-card rounded-2xl p-4 flex flex-col flex-1 overflow-hidden">
-                    <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2 mb-3">🔄 Auto Debit / Kredit Template</h3>
+                    <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2 mb-3">📋 Kelola Template Transaksi</h3>
                     
-                    <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-900 text-xs space-y-2 shrink-0">
-                        <p class="font-extrabold text-[9px] uppercase tracking-wider text-amber-400">Setup Jadwal Rutin Otomatis:</p>
+                    <!-- FORM TAMBAH TEMPLATE -->
+                    <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-900 text-xs space-y-2.5 shrink-0">
+                        <p class="font-extrabold text-[9px] uppercase tracking-wider text-amber-400">Buat Template Baru:</p>
+                        <input type="text" id="tplNama" class="w-full bg-[#090d16] border border-slate-800 rounded-lg p-2.5 text-slate-200 text-[11px] font-bold" placeholder="Nama Template (e.g. Beli Pakan Elba)">
+                        
                         <div class="grid grid-cols-2 gap-2">
-                            <input type="text" id="tplNama" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-200 text-[11px]" placeholder="Nama Transaksi (e.g. Listrik)">
-                            <input type="number" id="tplNominal" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-200 text-[11px]" placeholder="Nominal Rp">
+                            <select id="tplJenis" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-300 text-[11px] font-bold">
+                                <option value="Pengeluaran">💸 Pengeluaran</option>
+                                <option value="Pemasukan">📥 Pemasukan</option>
+                            </select>
+                            <select id="tplPos" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-300 text-[11px] font-bold">
+                                <!-- Terisi dinamis -->
+                            </select>
                         </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <select id="tplPos" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-300 text-[11px]"></select>
-                            <input type="number" id="tplTanggal" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-200 text-[11px]" placeholder="Tanggal Eksekusi (1-31)" min="1" max="31">
+                        <input type="number" id="tplNominal" class="w-full bg-[#090d16] border border-slate-800 rounded-lg p-2.5 text-slate-200 text-[11px] font-bold" placeholder="Nominal Rp (Opsional, bisa kosong)">
+
+                        <!-- SWITCH AUTO/MANUAL -->
+                        <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/50 mt-2">
+                            <input type="checkbox" id="tplToggleAuto" onchange="document.getElementById('boxTplTgl').classList.toggle('hidden')" class="rounded bg-[#090d16] border-slate-800 w-4 h-4 text-amber-500">
+                            <label for="tplToggleAuto" class="text-[10px] text-slate-400 font-bold">Otomatis Eksekusi (Auto-Debit/Kredit)</label>
                         </div>
-                        <button onclick="showToast('📋 Sukses Menyimpan Template Jadwal Auto-Debit! Sistem Apps Script Trigger akan memotong kas otomatis tiap tanggal tersebut.', '✔️')" class="w-full bg-amber-500 text-slate-950 font-black py-2 rounded-lg active:scale-95 transition-transform cursor-pointer">Kunci Template Otomatis</button>
+                        <div id="boxTplTgl" class="hidden pt-1">
+                            <input type="number" id="tplTanggal" class="w-full bg-[#090d16] border border-slate-800 rounded-lg p-2.5 text-slate-200 text-[10px] font-bold" placeholder="Tiap Tanggal (1-31)" min="1" max="31">
+                        </div>
+
+                        <button onclick="simpanTemplateCrud()" class="w-full bg-amber-500 text-slate-950 font-black py-2.5 rounded-lg active:scale-95 transition-transform cursor-pointer mt-1">Simpan Template</button>
                     </div>
 
-                    <div class="flex-1 overflow-y-auto no-scrollbar pt-3 space-y-2">
-                        <p class="text-[9px] font-extrabold text-slate-500 uppercase tracking-widest pl-1">Daftar Jadwal Auto-Debit Aktif:</p>
-                        <div class="bg-slate-950/20 border border-slate-900 rounded-xl p-3 flex justify-between items-center text-xs">
-                            <div><p class="font-black text-slate-300">Pakan Ayam Elba &amp; ISA Brown</p><p class="text-[9px] text-slate-500">Pos: Bisnis Telur • Tiap Tanggal 10</p></div>
-                            <span class="text-[10px] text-amber-400 bg-amber-950/40 border border-amber-900/30 px-2 py-0.5 rounded-md font-bold uppercase">Auto-Run</span>
-                        </div>
+                    <!-- DAFTAR TEMPLATE -->
+                    <div class="flex-1 overflow-y-auto no-scrollbar pt-2 space-y-2" id="listTemplateContainer">
+                        <!-- Diisi via JS -->
                     </div>
                 </div>
             </div>
 
-            <!-- PAGE 5: PROFIL & SECURITY -->
+            <!-- PAGE 5: PROFIL -->
             <div id="pageProfil" class="space-y-4 flex flex-col h-full overflow-hidden hidden">
                 <div class="glass-card rounded-2xl p-4 flex items-center space-x-4 shrink-0">
                     <div class="w-14 h-14 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-2xl text-slate-950 flex items-center justify-center font-black text-2xl shadow-lg" id="profAvatar">👤</div>
                     <div class="space-y-0.5">
                         <h3 class="text-sm font-black text-slate-200" id="profName">Nama User</h3>
                         <p class="text-[10px] text-indigo-400 font-extrabold uppercase tracking-widest" id="profTitle">Financial Warrior</p>
-                        <div class="flex items-center space-x-2 pt-1">
-                            <span class="text-[9px] bg-slate-900 px-2 py-0.5 rounded text-slate-400 font-bold" id="profLevel">LV 1</span>
-                            <span class="text-[9px] text-slate-500 font-bold" id="profXp">XP: 0 / 100</span>
-                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- ==================== SCREEN 3: POPUP MODAL TRANSAKSI SUPER (STICKY FOOTER STABLE) ==================== -->
-        <div id="txModal" class="fixed inset-0 z-50 modal-blur flex items-end justify-center hidden">
-            <div class="glass-card w-full max-w-md rounded-t-3xl border-t border-slate-700/50 box-border text-slate-300 flex flex-col max-h-[85vh]" id="txModalContent">
+        <!-- ==================== SCREEN 3: POPUP MODAL TRANSAKSI SUPER (Z-INDEX 100 TINGKAT DEWA) ==================== -->
+        <!-- Perhatikan z-[100] ini mengunci modal agar SELALU di atas navigasi bawah -->
+        <div id="txModal" class="fixed inset-0 z-[100] modal-blur flex items-end justify-center hidden">
+            <div class="glass-card w-full max-w-md rounded-t-3xl border-t border-slate-700/50 box-border text-slate-300 flex flex-col max-h-[88vh]" id="txModalContent">
                 
-                <div class="flex justify-between items-center border-b border-slate-800 p-4 shrink-0">
-                    <h3 class="text-sm font-black text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">📝 Buat Transaksi Baru</h3>
-                    <button onclick="closeModalTx()" class="p-2 text-slate-400 hover:text-slate-100 text-base font-bold cursor-pointer">✕</button>
+                <div class="flex justify-between items-center border-b border-slate-800 p-4 shrink-0 bg-[#0c1220] rounded-t-3xl">
+                    <h3 class="text-sm font-black text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">📝 Buat Transaksi</h3>
+                    <button onclick="closeModalTx()" class="p-1 px-2 text-rose-400 hover:text-rose-300 bg-rose-950/40 rounded-lg text-sm font-black cursor-pointer">✕ Batal</button>
                 </div>
 
-                <!-- CONTENT BODY INPUT -->
-                <div class="p-4 space-y-3 text-xs overflow-y-auto no-scrollbar flex-1 pb-6">
+                <!-- CONTENT BODY -->
+                <div class="p-4 space-y-3 text-xs overflow-y-auto no-scrollbar flex-1 pb-4 bg-[#090d16]/50">
                     <div class="space-y-1">
                         <label class="block font-bold text-slate-400">Tujuan Kategori Transaksi</label>
                         <select id="modalTxJenis" onchange="adaptifFormModal()" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-3 font-bold text-slate-200 focus:outline-none focus:border-indigo-500">
@@ -308,16 +253,11 @@
                             <label class="block font-bold text-slate-400 mb-1" id="lblSumberPos">Sumber Uang (Dari Pos)</label>
                             <select id="modalTxSumber" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-2.5 font-bold text-slate-200 focus:outline-none"></select>
                         </div>
-                        <!-- FIELD TUJUAN SECARA PROGRESIVE DISCLOSURE TERSEMBUNYI OTOMATIS -->
+                        <!-- PERBAIKAN: Tujuan otomatis tersembunyi, TAPI MUNCUL untuk Transfer/Pemasukan -->
                         <div id="boxTujuanPosDropdown" class="hidden">
                             <label class="block font-bold text-slate-400 mb-1" id="lblTujuanPos">Tujuan Uang (Ke Pos)</label>
                             <select id="modalTxTujuan" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-2.5 font-bold text-slate-200 focus:outline-none"></select>
                         </div>
-                    </div>
-
-                    <div id="boxKomponenGaji" class="hidden space-y-1">
-                        <label class="block font-bold text-slate-400">Komponen Pendapatan Gaji</label>
-                        <input type="text" id="modalTxGaji" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-2.5 text-slate-200" placeholder="Gaji Pokok / Tunjangan">
                     </div>
 
                     <div class="space-y-1">
@@ -336,10 +276,9 @@
                         </div>
                     </div>
 
-                    <!-- UPLOAD FOTO KAMERA / MEDIA GEBRAKAN SAAS FINTECH -->
                     <div class="space-y-1">
-                        <label class="block font-bold text-slate-400 mb-1">Ambil Gambar Struk / Bukti Transfer Kamera HP 📸</label>
-                        <input type="file" id="modalTxFileFoto" accept="image/*" capture="environment" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-2 text-[10px] font-bold text-slate-400 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-black file:bg-slate-800 file:text-indigo-400">
+                        <label class="block font-bold text-slate-400 mb-1">Ambil Gambar Struk / Bukti Transfer 📸</label>
+                        <input type="file" id="modalTxFileFoto" accept="image/*" capture="environment" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-2 text-[10px] font-bold text-slate-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-black file:bg-slate-800 file:text-indigo-400">
                     </div>
 
                     <div class="pt-1">
@@ -354,9 +293,9 @@
                     </div>
                 </div>
 
-                <!-- STICKY ANCHORED FOOTER -->
-                <div class="p-4 border-t border-slate-800 bg-[#0c1220] shrink-0 rounded-b-3xl">
-                    <button onclick="prosesSubmitSuperTx()" class="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-slate-950 font-black py-3.5 rounded-xl shadow-lg text-sm tracking-wide active:scale-[0.97] transition-all cursor-pointer">
+                <!-- STICKY FOOTER -> DIJAMIN TIDAK TERTUTUP NAVBAR LAGI KARENA Z-INDEX 100 -->
+                <div class="p-4 border-t border-slate-800 bg-[#0c1220] shrink-0">
+                    <button onclick="prosesSubmitSuperTx()" class="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-slate-950 font-black py-4 rounded-xl shadow-lg text-sm tracking-wide active:scale-[0.97] transition-all cursor-pointer">
                         🔒 Eksekusi &amp; Simpan Masuk Spreadsheet
                     </button>
                 </div>
@@ -364,7 +303,7 @@
             </div>
         </div>
 
-        <!-- ==================== PREMIUM MASTER 5 PILAR NAVIGATION BAR ==================== -->
+        <!-- ==================== PREMIUM BOTTOM NAV BAR ==================== -->
         <nav id="bottomNavbar" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto h-16 glass-nav rounded-2xl shadow-xl flex justify-around items-center px-1 z-50 hidden">
             <button onclick="switchHalaman('Home')" id="navHome" class="flex flex-col items-center justify-center space-y-0.5 w-10 h-11 text-indigo-400 cursor-pointer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -385,9 +324,10 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h10a2 2 0 012 2v2M7 7h10"></path></svg>
                 <span class="text-[7px] font-black uppercase">Pocket</span>
             </button>
+            <!-- REVISI MENU AUTO -> TEMPLATE -->
             <button onclick="switchHalaman('Templates')" id="navTemplates" class="flex flex-col items-center justify-center space-y-0.5 w-10 h-11 text-slate-500 cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span class="text-[7px] font-black uppercase">Auto</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                <span class="text-[7px] font-black uppercase">Template</span>
             </button>
         </nav>
 
@@ -405,19 +345,23 @@
         let masterPosDinamis = [];
         let masterLedgerDinamis = [];
 
-        // TOAST ENGINE (MENGGANTI ALERT BAWAAN)
+        // DATABASE TEMPLATE LOKAL SEMENTARA
+        let masterTemplates = [
+            { ID: 'TPL1', Nama: 'Beli Pakan Elba', Jenis: 'Pengeluaran', Pos: 'P005', Nominal: 350000, Auto: true, Tgl: 15 },
+            { ID: 'TPL2', Nama: 'Gaji Bulanan', Jenis: 'Pemasukan', Pos: 'P001', Nominal: 4500000, Auto: false, Tgl: null },
+            { ID: 'TPL3', Nama: 'Jajan Bakso Favorit', Jenis: 'Pengeluaran', Pos: 'P001', Nominal: 41000, Auto: false, Tgl: null }
+        ];
+
         function showToast(msg, icon = "🔔") {
             const toast = document.getElementById('toastBox');
             document.getElementById('toastMsg').innerText = msg;
             document.getElementById('toastIcon').innerText = icon;
-            
-            toast.className = "fixed top-6 left-4 right-4 max-w-sm mx-auto glass-card rounded-2xl p-4 flex items-center space-x-3 border-l-4 border-l-indigo-500 z-[100] transform translate-y-0 opacity-100 transition-all duration-300";
+            toast.className = "fixed top-6 left-4 right-4 max-w-sm mx-auto glass-card rounded-2xl p-4 flex items-center space-x-3 border-l-4 border-l-indigo-500 z-[150] transform translate-y-0 opacity-100 transition-all duration-300";
             setTimeout(() => {
-                toast.className = "fixed top-6 left-4 right-4 max-w-sm mx-auto glass-card rounded-2xl p-4 flex items-center space-x-3 border-l-4 border-l-indigo-500 z-[100] transform -translate-y-28 opacity-0 transition-all duration-300 pointer-events-none";
+                toast.className = "fixed top-6 left-4 right-4 max-w-sm mx-auto glass-card rounded-2xl p-4 flex items-center space-x-3 border-l-4 border-l-indigo-500 z-[150] transform -translate-y-28 opacity-0 transition-all duration-300 pointer-events-none";
             }, 3500);
         }
 
-        // LOGIN DENGAN LOADING SPREAD ACTION
         document.getElementById('formLogin').addEventListener('submit', function(e) {
             e.preventDefault();
             const usr = document.getElementById('loginUsername').value.trim();
@@ -440,7 +384,7 @@
                 if (data.status === 'success') {
                     currentUser = data;
                     executeAppLoginFlow();
-                    showToast("Brankas Keuangan Berhasil Dibuka! Selamat Datang.", "🔑");
+                    showToast("Brankas Keuangan Berhasil Dibuka!", "🔑");
                 } else {
                     showToast("Akses Ditolak: " + data.message, "❌");
                 }
@@ -461,11 +405,6 @@
             document.getElementById('userRole').innerText = currentUser.role;
             document.getElementById('userAvatar').innerText = currentUser.nama.charAt(0);
 
-            document.getElementById('profName').innerText = currentUser.nama;
-            document.getElementById('profTitle').innerText = currentUser.title;
-            document.getElementById('profLevel').innerText = "LV " + currentUser.level;
-            document.getElementById('profXp').innerText = `XP: ${currentUser.xp} / ${currentUser.level * 100}`;
-
             tarikDataSheetsRealtime();
         }
 
@@ -476,12 +415,8 @@
             .then(data => {
                 document.getElementById('syncIndicator').classList.add('hidden');
                 const colors = ['card-blue', 'card-green', 'card-purple', 'card-amber', 'card-teal'];
-                
-                // Menerima parameter Goal Tracker adaptif dari spreadsheet v3
                 masterPosDinamis = data.pos.map((p, idx) => {
                     p.Saldo_Saat_Ini = Number(p.Saldo_Saat_Ini);
-                    p.Target_Nominal = p.Target_Nominal ? Number(p.Target_Nominal) : 0;
-                    p.Goal_Aktif = p.Target_Nominal > 0; // Otomatis aktif jika nominal terisi
                     p.Color_Class = colors[idx % colors.length];
                     return p;
                 });
@@ -489,7 +424,6 @@
                 if(currentUser.role === 'Child') {
                     masterPosDinamis = masterPosDinamis.filter(p => p.Pemilik === 'Anak');
                 }
-
                 masterLedgerDinamis = data.ledger;
                 
                 renderTotalBalance();
@@ -498,7 +432,7 @@
                 populateDropdownOptions();
                 handleVerticalScroll();
                 renderCrudManagementPosList();
-                hitungKalkulasiKesehatanLokal();
+                renderTemplates(); // Render List Template
             });
         }
 
@@ -508,62 +442,43 @@
                 if(document.getElementById('page' + p)) document.getElementById('page' + p).classList.add('hidden');
                 if(document.getElementById('nav' + p)) document.getElementById('nav' + p).className = "flex flex-col items-center justify-center space-y-0.5 w-10 h-11 text-slate-500 cursor-pointer";
             });
-
             document.getElementById('page' + namaHalaman).classList.remove('hidden');
             document.getElementById('nav' + namaHalaman).className = "flex flex-col items-center justify-center space-y-0.5 w-10 h-11 text-indigo-400 cursor-pointer";
+        }
+
+        function togglePrivacy() {
+            isPrivacyMode = !isPrivacyMode;
+            document.getElementById('eyeIcon').innerText = isPrivacyMode ? "🙈" : "👁️";
+            renderTotalBalance();
+            renderCarouselCards();
+            refreshLedgerView();
         }
 
         function renderTotalBalance() {
             if(isPrivacyMode) {
                 document.getElementById('txtSisaUang').innerText = "Rp ••••••••";
-                document.getElementById('txtRekomendasi').innerText = "🙈 Mode privat aktif. Angka saldo gabungan tersembunyi.";
                 return;
             }
             let total = masterPosDinamis.reduce((acc, curr) => acc + curr.Saldo_Saat_Ini, 0);
             document.getElementById('txtSisaUang').innerText = "Rp " + total.toLocaleString('id-ID');
-            document.getElementById('txtRekomendasi').innerText = "💡 Sinkronisasi sukses. Seluruh kantong finansial Jago seimbang.";
         }
 
-        // BANK JAGO POCKET RENDERER + GOAL TRACKER ACCENT
         function renderCarouselCards() {
             const container = document.getElementById('posCarousel');
             container.innerHTML = "";
             masterPosDinamis.forEach(pos => {
                 let displaySaldo = isPrivacyMode ? "Rp ••••" : "Rp " + pos.Saldo_Saat_Ini.toLocaleString('id-ID');
-                let badgeColor = pos.Kategori === 'Bisnis' ? 'text-emerald-400 bg-emerald-950/50' : pos.Kategori === 'Tabungan' ? 'text-amber-400 bg-amber-950/50' : 'text-blue-400 bg-blue-950/50';
+                let badgeColor = pos.Kategori === 'Bisnis' ? 'text-emerald-400 bg-emerald-950/50' : 'text-blue-400 bg-blue-950/50';
                 
-                // Indikator Kolaboratif Bersama (Shared Pocket Jago Accent)
-                let sharedAvatarHtml = pos.Pemilik === 'Bersama' ? `<div class="absolute top-4 right-16 flex -space-x-1.5"><div class="w-4 h-4 rounded-full bg-indigo-500 text-[8px] font-black text-slate-950 flex items-center justify-center">S</div><div class="w-4 h-4 rounded-full bg-pink-500 text-[8px] font-black text-slate-950 flex items-center justify-center">I</div></div>` : '';
-
-                // Logika Goal Tracker Mengikuti Instruksi User
-                let goalTrackerHtml = "";
-                if(pos.Goal_Aktif && pos.Target_Nominal > 0) {
-                    let pct = Math.min(100, Math.round((pos.Saldo_Saat_Ini / pos.Target_Nominal) * 100));
-                    goalTrackerHtml = `
-                        <div class="space-y-1 mt-1 shrink-0">
-                            <div class="flex justify-between text-[8px] font-bold text-slate-400">
-                                <span>Target Jago Goal: Rp ${pos.Target_Nominal.toLocaleString('id-ID')}</span>
-                                <span>${pct}%</span>
-                            </div>
-                            <div class="w-full bg-slate-950 h-1 rounded-full overflow-hidden"><div class="bg-gradient-to-r from-indigo-500 to-blue-400 h-full" style="width: ${pct}%"></div></div>
-                        </div>
-                    `;
-                }
-
                 container.innerHTML += `
-                    <div class="snap-center shrink-0 w-full h-32 glass-card ${pos.Color_Class} rounded-2xl p-4 shadow-sm flex flex-col justify-between box-border text-slate-300 relative overflow-hidden">
+                    <div class="snap-center shrink-0 w-full h-32 glass-card ${pos.Color_Class} rounded-2xl p-4 shadow-sm flex flex-col justify-between box-border text-slate-300 relative">
                         <div class="flex justify-between items-start">
-                            <div>
-                                <h5 class="font-black text-sm tracking-tight text-slate-200">${pos.Nama_Pos}</h5>
-                                <p class="text-[9px] text-slate-400 font-bold mt-0.5">ID: ${pos.ID_Pos} • Owner: ${pos.Pemilik}</p>
-                            </div>
-                            ${sharedAvatarHtml}
+                            <div><h5 class="font-black text-sm tracking-tight text-slate-200">${pos.Nama_Pos}</h5></div>
                             <span class="text-[8px] font-black px-2 py-0.5 rounded ${badgeColor} uppercase tracking-wider">${pos.Kategori}</span>
                         </div>
                         <div class="flex flex-col justify-end">
                             <span class="text-[8px] uppercase tracking-widest text-slate-400 font-extrabold block">Saldo Aktif</span>
                             <span class="text-base font-black text-slate-100">${displaySaldo}</span>
-                            ${goalTrackerHtml}
                         </div>
                     </div>
                 `;
@@ -609,7 +524,6 @@
                 box.classList.remove('fade-in-ledger');
                 void box.offsetWidth; 
                 box.classList.add('fade-in-ledger');
-                
                 renderLedgerTable(activePos.ID_Pos);
             }
         }
@@ -621,7 +535,6 @@
         function renderLedgerTable(posId) {
             const box = document.getElementById('ledgerBox');
             box.innerHTML = "";
-            
             let filteredList = masterLedgerDinamis.filter(l => l.ID_Pos === posId);
             if(filteredList.length === 0) {
                 box.innerHTML = `<div class="text-center py-8 text-xs text-slate-500 font-bold">📭 Belum ada mutasi di kantong ini.</div>`;
@@ -650,6 +563,105 @@
             });
         }
 
+        // ==================== ENGINE TEMPLATE TRANSAKSI (CRUD) ====================
+        function renderTemplates() {
+            const container = document.getElementById('listTemplateContainer');
+            if(!container) return;
+            container.innerHTML = "";
+            
+            masterTemplates.forEach(tpl => {
+                let badgeStr = tpl.Auto 
+                    ? `<span class="text-[9px] text-amber-400 bg-amber-950/40 border border-amber-900/30 px-2 py-0.5 rounded-md font-bold uppercase">Auto (Tgl ${tpl.Tgl})</span>` 
+                    : `<span class="text-[9px] text-blue-400 bg-blue-950/40 border border-blue-900/30 px-2 py-0.5 rounded-md font-bold uppercase">Manual</span>`;
+
+                let actBtn = tpl.Auto 
+                    ? '' 
+                    : `<button onclick="pakaiTemplate('${tpl.ID}')" class="bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-black active:scale-90 shadow-lg shadow-indigo-600/30">▶️ Pakai</button>`;
+
+                let displayNominal = tpl.Nominal ? `Rp ${Number(tpl.Nominal).toLocaleString('id-ID')}` : 'Nominal Fleksibel';
+
+                container.innerHTML += `
+                    <div class="bg-slate-950/40 border border-slate-900 rounded-xl p-3 space-y-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-black text-slate-200 text-xs">${tpl.Nama}</p>
+                                <p class="text-[9px] text-slate-500">${tpl.Jenis} • ${displayNominal}</p>
+                            </div>
+                            ${badgeStr}
+                        </div>
+                        <div class="flex justify-end space-x-2 pt-1.5 border-t border-slate-800/50 mt-1">
+                            <button onclick="hapusTemplate('${tpl.ID}')" class="text-rose-400 hover:bg-rose-950/50 rounded px-2 py-1 font-bold text-[10px] active:scale-90">Hapus</button>
+                            ${actBtn}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function simpanTemplateCrud() {
+            const nama = document.getElementById('tplNama').value;
+            const jenis = document.getElementById('tplJenis').value;
+            const pos = document.getElementById('tplPos').value;
+            const nominal = document.getElementById('tplNominal').value;
+            const isAuto = document.getElementById('tplToggleAuto').checked;
+            const tgl = document.getElementById('tplTanggal').value;
+
+            if(!nama) return showToast("Nama Template wajib diisi!", "⚠️");
+            if(isAuto && !tgl) return showToast("Tanggal eksekusi Auto wajib diisi!", "⚠️");
+
+            masterTemplates.push({
+                ID: 'TPL' + new Date().getTime(),
+                Nama: nama,
+                Jenis: jenis,
+                Pos: pos,
+                Nominal: nominal,
+                Auto: isAuto,
+                Tgl: tgl
+            });
+
+            renderTemplates();
+            showToast("Template berhasil disimpan", "✔️");
+            
+            document.getElementById('tplNama').value = "";
+            document.getElementById('tplNominal').value = "";
+            document.getElementById('tplTanggal').value = "";
+            document.getElementById('tplToggleAuto').checked = false;
+            document.getElementById('boxTplTgl').classList.add('hidden');
+        }
+
+        function hapusTemplate(id) {
+            masterTemplates = masterTemplates.filter(t => t.ID !== id);
+            renderTemplates();
+            showToast("Template dihapus.", "🗑️");
+        }
+
+        // EKSEKUSI TEMPLATE MANUAL KE DALAM FORM TRANSAKSI
+        function pakaiTemplate(id) {
+            let tpl = masterTemplates.find(t => t.ID === id);
+            if(!tpl) return;
+
+            openModalTx();
+            
+            // Set Jenis Transaksi Dulu
+            document.getElementById('modalTxJenis').value = tpl.Jenis;
+            adaptifFormModal(); // Trigger form re-render
+
+            // Set Data Spesifik
+            if(tpl.Jenis === 'Pengeluaran') {
+                document.getElementById('modalTxSumber').value = tpl.Pos;
+            } else if(tpl.Jenis === 'Pemasukan') {
+                // Untuk pemasukan, pos tujuan adalah kantong penerima
+                document.getElementById('modalTxTujuan').value = tpl.Pos;
+            }
+            
+            document.getElementById('modalTxKet').value = tpl.Nama;
+            document.getElementById('modalTxJumlah').value = tpl.Nominal || "";
+            document.getElementById('modalTxTag').value = "Template";
+
+            showToast("Form terisi otomatis dari Template!", "📋");
+        }
+
+        // ==================== ENGINE MODAL TRANSAKSI SUPER ====================
         function openModalTx() {
             document.getElementById('txModal').classList.remove('hidden');
             populateDropdownOptions();
@@ -677,34 +689,28 @@
             });
         }
 
-        // PROGRESSIVE DISCLOSURE FORM MODAL + LOCK TEMBOK DANA KANTONG
+        // LOGIKA PERBAIKAN: TUJUAN UANG MUNCUL HANYA SAAT DIBUTUHKAN & FIX PEMASUKAN
         function adaptifFormModal() {
             const jenis = document.getElementById('modalTxJenis').value;
             const warningBox = document.getElementById('warningHutangIndicator');
-            const boxGaji = document.getElementById('boxKomponenGaji');
             const boxTujuanDropdown = document.getElementById('boxTujuanPosDropdown');
             const selectSumber = document.getElementById('modalTxSumber');
             
             warningBox.classList.add('hidden');
-            boxGaji.classList.add('hidden');
-            boxTujuanDropdown.classList.add('hidden'); // Sembunyikan default dropdown kedua
+            boxTujuanDropdown.classList.add('hidden'); // Default tersembunyi
             
             document.getElementById('lblSumberPos').innerText = "Sumber Uang (Dari Kantong)";
             document.getElementById('lblTujuanPos').innerText = "Tujuan Uang (Ke Kantong)";
 
             populateDropdownOptions(); 
 
-            // FINTECH RULES POCKET LOCK PROTECTION ALA BANK JAGO
             if (jenis === "Pengeluaran") {
-                // Tembok Pemisah: Hilangkan kantong nabung/tabungan, hanya izinkan kas utama/operasional bisnis
                 const opsiLikuidSaja = masterPosDinamis.filter(p => p.Kategori === 'Utama' || p.Kategori === 'Bisnis');
                 selectSumber.innerHTML = "";
-                opsiLikuidSaja.forEach(p => {
-                    selectSumber.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`;
-                });
+                opsiLikuidSaja.forEach(p => selectSumber.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`);
             } 
             else if (jenis === "Transfer") {
-                boxTujuanDropdown.classList.remove('hidden'); // Munculkan hanya saat transfer saldo internal
+                boxTujuanDropdown.classList.remove('hidden'); 
             } 
             else if (jenis === "Pinjam") {
                 warningBox.classList.remove('hidden');
@@ -712,22 +718,22 @@
                 document.getElementById('lblSumberPos').innerText = "Pemberi Pinjaman";
                 document.getElementById('lblTujuanPos').innerText = "Kantong Penerima Pinjaman";
             } 
+            // FIX BUG PEMASUKAN: Tujuan Pos HARUS MUNCUL agar uang bisa masuk ke pos yang dipilih
             else if (jenis === "Pemasukan") {
-                boxGaji.classList.remove('hidden');
+                boxTujuanDropdown.classList.remove('hidden'); 
                 document.getElementById('lblSumberPos').innerText = "Asal Dana Eksternal";
-                selectSumber.innerHTML = `<option value="EKSTERNAL">💼 Pihak Luar / Kantor / Pembeli Telur</option>`;
+                selectSumber.innerHTML = `<option value="EKSTERNAL">💼 Pihak Luar / Kantor / Pembeli</option>`;
+                document.getElementById('lblTujuanPos').innerText = "Simpan Ke Kantong";
             } 
             else if (jenis === "BayarHutang") {
                 boxTujuanDropdown.classList.remove('hidden');
                 document.getElementById('lblSumberPos').innerText = "Pos Hutang yang Mau Dibayar";
-                document.getElementById('lblTujuanPos').innerText = "Uang Pembayar (HANYA UTAMA/TABUNGAN)";
+                document.getElementById('lblTujuanPos').innerText = "Uang Pembayar (HANYA TABUNGAN)";
                 
                 const opsiTabunganSaja = masterPosDinamis.filter(p => p.Kategori === 'Utama' || p.Kategori === 'Tabungan');
                 const tujuanSelect = document.getElementById('modalTxTujuan');
                 tujuanSelect.innerHTML = "";
-                opsiTabunganSaja.forEach(p => {
-                    tujuanSelect.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`;
-                });
+                opsiTabunganSaja.forEach(p => tujuanSelect.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`);
             }
         }
 
@@ -737,18 +743,15 @@
             const tujuan = document.getElementById('modalTxTujuan').value;
             const jumlah = document.getElementById('modalTxJumlah').value;
             const keterangan = document.getElementById('modalTxKet').value.trim();
-            const tag = document.getElementById('modalTxTag').value.trim();
-            const gaji = document.getElementById('modalTxGaji').value.trim();
 
             if(!jumlah || !keterangan) {
-                showToast("Harap isi harga dan catatan.", "⚠️");
+                showToast("Harap isi harga nominal dan catatan.", "⚠️");
                 return;
             }
 
             txKeranjangList.push({
                 jenis: jenis, sumber_pos: sumber, tujuan_pos: tujuan,
-                jumlah: jumlah, keterangan: keterangan, tag_kategori: tag,
-                komponen_gaji: gaji
+                jumlah: jumlah, keterangan: keterangan
             });
             updateBasketVisualHtml();
 
@@ -788,6 +791,7 @@
         function prosesSubmitSuperTx() {
             if (txKeranjangList.length === 0) {
                 tambahKeKeranjangTx();
+                if(txKeranjangList.length === 0) return; // Jika gagal tertambah (karena input kosong)
             }
 
             showToast("🔒 Menembak data simultan ke Google Sheets...", "⏳");
@@ -820,81 +824,37 @@
             });
         }
 
-        // ==================== KELOLA POS MENU SEPARATED (CRUD) ====================
+        function clearModalInputs() {
+            document.getElementById('modalTxJumlah').value = "";
+            document.getElementById('modalTxKet').value = "";
+            document.getElementById('modalTxTag').value = "";
+            document.getElementById('modalTxFileFoto').value = ""; 
+            txKeranjangList = [];
+            updateBasketVisualHtml();
+        }
+
         function renderCrudManagementPosList() {
             const listArea = document.getElementById('crudPosContainer');
             if(!listArea) return;
             listArea.innerHTML = "";
             
             masterPosDinamis.forEach(pos => {
-                let targetText = pos.Target_Nominal > 0 ? `| Target Goal: Rp ${pos.Target_Nominal.toLocaleString('id-ID')}` : '| Tracker Off';
                 listArea.innerHTML += `
                     <div class="flex justify-between items-center text-xs py-2 text-slate-300 border-b border-slate-900 last:border-0">
                         <div>
                             <p class="font-black text-slate-200">${pos.Nama_Pos}</p>
-                            <p class="text-[9px] text-slate-500">Kat: ${pos.Kategori} ${targetText}</p>
+                            <p class="text-[9px] text-slate-500">Kat: ${pos.Kategori}</p>
                         </div>
                         <div class="flex space-x-1">
-                            <button onclick="showToast('Fitur edit kantong terhubung langsung ke spreadsheet Apps Script Tahap 4.', '🛠️')" class="bg-indigo-950/40 border border-indigo-900 text-indigo-400 px-2 py-1 rounded font-bold active:scale-90">Edit</button>
+                            <button class="bg-indigo-950/40 border border-indigo-900 text-indigo-400 px-2 py-1 rounded font-bold">Edit</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        function tambahPosCrud() {
-            const nama = document.getElementById('crudNamaPos').value.trim();
-            const kat = document.getElementById('crudKategoriPos').value;
-            const toggleGoal = document.getElementById('crudToggleGoal').checked;
-            const target = document.getElementById('crudTargetNominal').value;
-
-            if(!nama) {
-                showToast("Nama Kantong tidak boleh kosong!", "⚠️");
-                return;
-            }
-            showToast(`Menambahkan Kantong Jago Pockets "${nama}" Berhasil!`, "✔️");
-            document.getElementById('crudNamaPos').value = "";
-            document.getElementById('crudTargetNominal').value = "";
-            document.getElementById('crudToggleGoal').checked = false;
-            document.getElementById('boxGoalTarget').classList.add('hidden');
-        }
-
-        function hitungKalkulasiKesehatanLokal() {
-            let totalSaldo = masterPosDinamis.reduce((acc, c) => acc + c.Saldo_Saat_Ini, 0);
-            if(totalSaldo === 0) return;
-
-            let porsiPokok = Math.round((masterPosDinamis.filter(p => p.Kategori === 'Utama' || p.Kategori === 'Bisnis').reduce((a,c)=>a+c.Saldo_Saat_Ini,0)/totalSaldo)*100);
-            let porsiTabungan = 100 - porsiPokok;
-
-            if(document.getElementById('pctPokokRiil')) {
-                document.getElementById('pctPokokRiil').innerText = porsiPokok + "%";
-                document.getElementById('barPokok').style.width = porsiPokok + "%";
-                document.getElementById('pctTabunganRiil').innerText = Math.max(0, porsiTabungan) + "%";
-                document.getElementById('barTabungan').style.width = Math.max(0, porsiTabungan) + "%";
-            }
-        }
-
         function panggilAdvisorAI() {
-            const aiBox = document.getElementById('aiResponseBox');
-            aiBox.innerText = "🤖 Membaca data kas Jago Pockets sekeluarga...";
-            setTimeout(() => {
-                aiBox.innerHTML = `
-                    <strong>📝 DIAGNOSIS KANTOR ADVISOR AI:</strong><br>
-                    • <b>Alokasi Operasional</b>: Kantong bisnis telur omega berjalan produktif harian.<br>
-                    • <b>Rekomendasi Jago</b>: Goal tracker pada kantong Tabungan Haji terpantau berkembang pesat. Pertahankan performa kuota bulanan ini.
-                `;
-                showToast("Sesi konsultasi AI FinTech Selesai!", "🧠");
-            }, 1200);
-        }
-
-        function clearModalInputs() {
-            document.getElementById('modalTxJumlah').value = "";
-            document.getElementById('modalTxKet').value = "";
-            document.getElementById('modalTxTag').value = "";
-            document.getElementById('modalTxGaji').value = "";
-            document.getElementById('modalTxFileFoto').value = ""; // Clear media
-            txKeranjangList = [];
-            updateBasketVisualHtml();
+            showToast("Memulai Analisis AI...", "🤖");
         }
 
         function logout() {
@@ -908,7 +868,7 @@
         }
 
         document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('#posCarousel') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#crudPosContainer')) {
+            if (e.target.closest('#posCarousel') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#crudPosContainer') || e.target.closest('#listTemplateContainer')) {
                 return;
             }
             e.preventDefault();
