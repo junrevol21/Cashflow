@@ -6,7 +6,7 @@
     <title>Family Finance Super App</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Penguncian viewport total untuk iOS & Android PWA */
+        /* Penguncian dimensi PWA iOS - Cegah zoom otomatis dan geser liar */
         html, body {
             overflow: hidden;
             position: fixed;
@@ -18,11 +18,11 @@
 
         /* Glassmorphism Standard - Kontras Tinggi & Deteksi Tema Menyeluruh */
         .glass-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(15, 23, 42, 0.1);
-            box-shadow: 0 4px 24px 0 rgba(15, 23, 42, 0.03);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 20px 0 rgba(15, 23, 42, 0.02);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .dark .glass-card {
@@ -33,12 +33,12 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
         }
 
-        /* Variasi Warna Kartu Kaca Bergradasi Berdasarkan Karakter Pos */
-        .card-blue   { background: rgba(239, 246, 255, 0.95); border-left: 6px solid #2563eb; }
-        .card-green  { background: rgba(240, 253, 250, 0.95); border-left: 6px solid #0d9488; }
-        .card-purple { background: rgba(250, 245, 255, 0.95); border-left: 6px solid #7c3aed; }
-        .card-amber  { background: rgba(255, 251, 235, 0.95); border-left: 6px solid #d97706; }
-        .card-teal   { background: rgba(240, 253, 244, 0.95); border-left: 6px solid #16a34a; }
+        /* Variasi Warna Kartu Kaca Bergradasi */
+        .card-blue   { background: rgba(239, 246, 255, 0.9); border-left: 6px solid #2563eb; }
+        .card-green  { background: rgba(240, 253, 250, 0.9); border-left: 6px solid #0d9488; }
+        .card-purple { background: rgba(250, 245, 255, 0.9); border-left: 6px solid #7c3aed; }
+        .card-amber  { background: rgba(255, 251, 235, 0.9); border-left: 6px solid #d97706; }
+        .card-teal   { background: rgba(240, 253, 244, 0.9); border-left: 6px solid #16a34a; }
 
         .dark .card-blue   { background: rgba(30, 58, 138, 0.35); border-left: 6px solid #3b82f6; }
         .dark .card-green  { background: rgba(19, 78, 74, 0.35);  border-left: 6px solid #14b8a6; }
@@ -46,7 +46,7 @@
         .dark .card-amber  { background: rgba(120, 53, 4, 0.35);  border-left: 6px solid #f59e0b; }
         .dark .card-teal   { background: rgba(20, 83, 45, 0.35);  border-left: 6px solid #22c55e; }
 
-        /* Tombol Akses Kaca Tambah Transaksi `+` */
+        /* Tombol Tambah Akses Kaca Premium `+` */
         .glass-fab {
             background: rgba(15, 23, 42, 0.95);
             border: 1px solid rgba(15, 23, 42, 0.2);
@@ -59,25 +59,24 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
 
-        /* Bottom Nav Modifikasi Kontras Ekstrem */
+        /* Navigasi Bar Bawah Premium */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 23, 42, 0.06);
         }
         .dark .glass-nav {
             background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Navigasi Utilities */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Animasi Transisi Pudar Mikro Saat Ganti Pos */
+        /* Animasi Transisi Mikro Pudar Saat Ganti Pos */
         .fade-in-ledger {
             animation: fadeInSimple 0.25s ease-out forwards;
         }
@@ -146,7 +145,7 @@
             <div class="bg-gradient-to-br from-slate-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-4 shadow-xl shrink-0 space-y-2 relative overflow-hidden border border-white/5">
                 <div class="flex items-center justify-between">
                     <p class="text-[9px] text-indigo-300 uppercase font-black tracking-widest flex items-center gap-1">
-                        宝 Total Saldo Gabungan Keluarga
+                        💳 Total Saldo Gabungan Keluarga
                     </p>
                     <button onclick="togglePrivacy()" class="text-indigo-300 hover:text-white transition text-xs cursor-pointer p-1">
                         <span id="eyeIcon">👁️</span>
@@ -160,10 +159,10 @@
                 <h4 class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-1">Pilih Pos Keuangan (Geser Vertikal)</h4>
                 
                 <div class="relative w-full h-32 flex items-center">
-                    <div class="w-full h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5 pr-4 z-10" id="posCarousel" onscroll="handleVerticalScroll()">
+                    <div class="w-full h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5 z-10" id="posCarousel" onscroll="handleVerticalScroll()">
                         </div>
                     
-                    <div class="absolute right-[-4px] top-0 bottom-0 flex flex-col space-y-1.5 justify-center items-center w-3 z-20" id="carouselDots">
+                    <div class="absolute right-[-14px] top-0 bottom-0 flex flex-col space-y-1.5 justify-center items-center w-3 z-20" id="carouselDots">
                         </div>
                 </div>
             </div>
@@ -325,7 +324,7 @@
                             <span class="text-[8px] text-white font-black px-2 py-0.5 rounded ${badgeColor} uppercase tracking-wider">${pos.Kategori}</span>
                         </div>
                         <div>
-                            <span class="text-[9px] uppercase tracking-widest text-slate-500 dark:text-slate-400 font-extrabold block">Saldo Aktif</span>
+                            <span class="text-[9px] uppercase tracking-widest text-slate-500 dark:text-slate-400 font-extrabold block">Saldo Hack</span>
                             <span class="text-lg font-black text-slate-950 dark:text-white">${displaySaldo}</span>
                         </div>
                     </div>
@@ -340,7 +339,7 @@
             mockPosData.forEach((_, index) => {
                 let dot = document.createElement('div');
                 dot.id = `dot-${index}`;
-                dot.className = "w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-800 transition-all duration-300";
+                dot.className = "w-1 h-1 rounded-full bg-slate-400 dark:bg-slate-800 transition-all duration-300";
                 dotsContainer.appendChild(dot);
             });
         }
@@ -361,7 +360,7 @@
                 let dot = document.getElementById(`dot-${index}`);
                 if(dot) {
                     if(index === activeIndex) {
-                        dot.className = "w-1 h-3.5 rounded-full bg-indigo-600 dark:bg-indigo-400 transition-all duration-300 shadow-sm";
+                        dot.className = "w-1.5 h-3.5 rounded-full bg-indigo-600 dark:bg-indigo-400 transition-all duration-300 shadow-sm";
                     } else {
                         dot.className = "w-1 h-1 rounded-full bg-slate-400 dark:bg-slate-700 transition-all duration-300";
                     }
