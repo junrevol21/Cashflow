@@ -311,7 +311,6 @@
                     
                     <!-- Metallic Chip Visual & Numbers -->
                     <div class="flex items-center space-x-3 z-10 py-1 shrink-0">
-                        <!-- Card Chip simulation -->
                         <div class="w-8 h-6.5 bg-gradient-to-tr from-amber-500 to-yellow-300 rounded-md border border-amber-600/40 opacity-75 relative flex flex-col justify-around p-1">
                             <div class="w-full h-[1px] bg-amber-900/20"></div>
                             <div class="w-full h-[1px] bg-amber-900/20"></div>
@@ -327,29 +326,33 @@
                     </div>
                 </div>
 
-                <!-- QUICK ACTIONS GRID -->
+                <!-- QUICK ACTIONS GRID (3x2 Balanced Layout) -->
                 <div class="shrink-0 space-y-1.5">
                     <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1">Aksi Cepat Transaksi ⚡</h4>
-                    <div class="grid grid-cols-5 gap-2">
-                        <button onclick="openModalTxDirect('Pengeluaran')" class="glass-card glass-card-hover rounded-2xl py-3 flex flex-col items-center justify-center space-y-1 border-white/5 active:scale-95 btn-bounce">
-                            <div class="w-8 h-8 rounded-xl bg-rose-500/15 text-rose-400 flex items-center justify-center text-base">💸</div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="openModalTxDirect('Pengeluaran')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
+                            <span class="text-base">💸</span>
                             <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Kirim</span>
                         </button>
-                        <button onclick="openModalTxDirect('Pemasukan')" class="glass-card glass-card-hover rounded-2xl py-3 flex flex-col items-center justify-center space-y-1 border-white/5 active:scale-95 btn-bounce">
-                            <div class="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-base">📥</div>
+                        <button onclick="openModalTxDirect('Pemasukan')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
+                            <span class="text-base">📥</span>
                             <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Terima</span>
                         </button>
-                        <button onclick="openModalTxDirect('Transfer')" class="glass-card glass-card-hover rounded-2xl py-3 flex flex-col items-center justify-center space-y-1 border-white/5 active:scale-95 btn-bounce">
-                            <div class="w-8 h-8 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center text-base">🔄</div>
+                        <button onclick="openModalTxDirect('Transfer')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
+                            <span class="text-base">🔄</span>
                             <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Pindah</span>
                         </button>
-                        <button onclick="openModalTxDirect('BayarHutang')" class="glass-card glass-card-hover rounded-2xl py-3 flex flex-col items-center justify-center space-y-1 border-white/5 active:scale-95 btn-bounce">
-                            <div class="w-8 h-8 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center text-base">🤝</div>
+                        <button onclick="openModalTxDirect('BayarHutang')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
+                            <span class="text-base">🤝</span>
                             <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Cicil</span>
                         </button>
-                        <button onclick="openModalTxDirect('Pinjam')" class="glass-card glass-card-hover rounded-2xl py-3 flex flex-col items-center justify-center space-y-1 border-white/5 active:scale-95 btn-bounce">
-                            <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center text-base">⚠️</div>
+                        <button onclick="openModalTxDirect('Pinjam')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-white/5 active:scale-95 btn-bounce">
+                            <span class="text-base">⚠️</span>
                             <span class="text-[9px] font-extrabold uppercase text-slate-300 tracking-wide">Pinjam</span>
+                        </button>
+                        <button onclick="openModalTxDirect('JualTelur')" class="glass-card glass-card-hover rounded-2xl py-2.5 flex items-center justify-center space-x-2 border-purple-500/20 active:scale-95 btn-bounce">
+                            <span class="text-base">🥚</span>
+                            <span class="text-[9px] font-extrabold uppercase text-purple-300 tracking-wide">Jual Telur</span>
                         </button>
                     </div>
                 </div>
@@ -358,7 +361,6 @@
                 <div class="shrink-0 space-y-1.5" id="quickTemplatesWidget">
                     <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-widest pl-1">Pembayaran Kilat (Template) 🚀</h4>
                     <div class="flex space-x-2.5 overflow-x-auto no-scrollbar py-1" id="quickTemplatesCarousel">
-                        <!-- Loaded dynamically -->
                         <div class="snap-start shrink-0 w-24 h-10 bg-slate-900/30 rounded-xl shimmer-load"></div>
                     </div>
                 </div>
@@ -513,7 +515,6 @@
                 <!-- SUCCESS SCREEN OVERLAY -->
                 <div id="txModalSuccessScreen" class="absolute inset-0 bg-[#060a16] z-[120] flex flex-col items-center justify-center p-6 space-y-6 hidden">
                     
-                    <!-- SVG Checkmark -->
                     <div class="w-16 h-16 relative">
                         <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                             <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
@@ -521,7 +522,6 @@
                         </svg>
                     </div>
 
-                    <!-- Receipt Visual -->
                     <div class="w-full max-w-xs receipt-tear-border rounded-t-2xl p-5 border border-slate-800 text-center space-y-3">
                         <div class="space-y-0.5">
                             <span class="text-[8px] bg-emerald-950/50 text-emerald-400 border border-emerald-900/60 px-2 py-0.5 rounded font-extrabold uppercase tracking-widest">Sukses Terverifikasi</span>
@@ -558,7 +558,7 @@
                 <!-- CONTENT BODY -->
                 <div class="p-4 space-y-4 text-xs overflow-y-auto no-scrollbar flex-1 pb-6 bg-[#070a13]/40">
                     
-                    <!-- Form Category Selector (Dynamic preset, hidden for normal flow to prevent muter-muter) -->
+                    <!-- Form Category Selector -->
                     <div class="space-y-1 hidden">
                         <label class="block font-bold text-slate-400">Kategori Transaksi</label>
                         <select id="modalTxJenis" onchange="adaptifFormModal()" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-3 font-bold text-slate-200 focus:outline-none">
@@ -567,16 +567,17 @@
                             <option value="Transfer">🔄 Transfer</option>
                             <option value="Pinjam">⚠️ Pinjam</option>
                             <option value="BayarHutang">🤝 Bayar Hutang</option>
+                            <option value="JualTelur">🥚 Jual Telur</option>
                         </select>
                     </div>
 
                     <!-- BLINKING RED WARNING FOR BORROW -->
                     <div id="warningHutangIndicator" class="hidden border text-rose-400 p-3 rounded-xl font-bold text-center tracking-wide animate-blink-red text-[10px]">
-                        🚨 PERINGATAN: UTANG ADALAH BEBAN FINANSIAL! WAJIB DICILAL &amp; DILUNASI TEPAT WAKTU!
+                        🚨 PERINGATAN: UTANG ADALAH BEBAN FINANSIAL! WAJIB DICICIL &amp; DILUNASI TEPAT WAKTU!
                     </div>
 
                     <!-- SOURCE & DESTINATION POCKETS -->
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-3" id="rowPocketsSelectContainer">
                         <div>
                             <label class="block font-bold text-slate-400 mb-1" id="lblSumberPos">Dari Kantong</label>
                             <select id="modalTxSumber" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-3 font-bold text-slate-200 focus:outline-none focus:border-indigo-500"></select>
@@ -584,6 +585,36 @@
                         <div id="boxTujuanPosDropdown" class="hidden">
                             <label class="block font-bold text-slate-400 mb-1" id="lblTujuanPos">Ke Kantong</label>
                             <select id="modalTxTujuan" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-3 font-bold text-slate-200 focus:outline-none focus:border-indigo-500"></select>
+                        </div>
+                    </div>
+
+                    <!-- SPECIFIC FIELDS FOR EGG SALES BUSINESS LEDGER -->
+                    <div id="boxEggSalesFields" class="hidden bg-[#0d1527]/50 border border-slate-850 rounded-2xl p-3.5 space-y-2.5 animate-fadeIn">
+                        <p class="font-extrabold text-[8px] uppercase tracking-widest text-purple-400">Rincian Penjualan Telur Bisnis:</p>
+                        <div class="space-y-2">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[8px] text-slate-400 font-bold block mb-1">Nama Pembeli</label>
+                                    <input type="text" id="txEggPembeli" class="w-full bg-[#070a13] border border-slate-800 rounded-lg p-2 text-[10px] font-bold text-slate-200" placeholder="e.g. Toko Makmur">
+                                </div>
+                                <div>
+                                    <label class="text-[8px] text-slate-400 font-bold block mb-1">Status Bayar</label>
+                                    <select id="txEggStatus" class="w-full bg-[#070a13] border border-slate-800 rounded-lg p-2 text-[10px] font-bold text-slate-300">
+                                        <option value="Lunas">🟢 Lunas Tunai</option>
+                                        <option value="Tempo">🔴 Tempo (Piutang)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[8px] text-slate-400 font-bold block mb-1">Jumlah Telur (Butir)</label>
+                                    <input type="number" id="txEggQty" oninput="hitungTotalEggSales()" class="w-full bg-[#070a13] border border-slate-800 rounded-lg p-2 text-[10px] font-bold text-slate-200 font-mono" placeholder="0">
+                                </div>
+                                <div>
+                                    <label class="text-[8px] text-slate-400 font-bold block mb-1">Harga Per Butir (Rp)</label>
+                                    <input type="number" id="txEggPrice" oninput="hitungTotalEggSales()" class="w-full bg-[#070a13] border border-slate-800 rounded-lg p-2 text-[10px] font-bold text-slate-200 font-mono" value="2000">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -626,11 +657,10 @@
                     </div>
 
                     <!-- RECEIPT SCANNER AI SIMULATION -->
-                    <div class="space-y-2 bg-[#0b1021]/45 p-3 rounded-2xl border border-slate-800/60">
+                    <div class="space-y-2 bg-[#0b1021]/45 p-3 rounded-2xl border border-slate-800/60" id="receiptScannerContainerWidget">
                         <label class="block font-bold text-slate-400">Unggah/Ambil Foto Struk 📸</label>
                         <input type="file" id="modalTxFileFoto" accept="image/*" capture="environment" onchange="triggerReceiptScanningSim()" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-2 text-[10px] font-bold text-slate-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-black file:bg-slate-800 file:text-indigo-400 cursor-pointer">
                         
-                        <!-- Scanner overlay container -->
                         <div id="receiptScannerContainer" class="hidden relative w-full h-24 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center">
                             <img id="receiptScannerThumb" class="w-full h-full object-cover opacity-40" src="" alt="Scanner Thumb">
                             <div class="absolute left-0 right-0 h-1 bg-emerald-500 shadow-[0_0_8px_#10b981] animate-laser"></div>
@@ -645,7 +675,7 @@
                     </div>
 
                     <!-- MULTI TRANSACTION BASKET -->
-                    <div class="pt-1.5">
+                    <div class="pt-1.5" id="txMultiBasketAddBtnContainer">
                         <button type="button" onclick="tambahKeKeranjangTx()" class="w-full border border-dashed border-indigo-500/40 hover:border-indigo-400 text-indigo-400 font-bold py-3 rounded-xl active:scale-95 transition-transform cursor-pointer">
                             ➕ Tambah Pengeluaran Lain (Multi-Transaksi)
                         </button>
@@ -702,7 +732,7 @@
         let isPrivacyMode = false;
         let activePosIdGlobal = null;
         let txKeranjangList = []; 
-        let isScanningFile = false; // block inputs during scanner simulation
+        let isScanningFile = false; 
         
         let masterPosDinamis = [];
         let masterLedgerDinamis = [];
@@ -974,7 +1004,6 @@
             renderProfilTab();
             renderInsightRatios();
             
-            // Set default pocket log views
             if (masterPosDinamis.length > 0 && !activePosIdGlobal) {
                 selectPocketFilter(masterPosDinamis[0].ID_Pos);
             } else if (activePosIdGlobal) {
@@ -1028,6 +1057,16 @@
                 let isSelected = activePosIdGlobal === pos.ID_Pos;
                 let activeBorder = isSelected ? 'ring-2 ring-indigo-500 border-indigo-500' : 'border-slate-800/40';
                 
+                // Show trash icon for pocket deletion (except Dompet Utama)
+                let deleteIconHtml = "";
+                if (pos.ID_Pos !== "P001") {
+                    deleteIconHtml = `
+                        <button onclick="event.stopPropagation(); hapusPocketCrud('${pos.ID_Pos}')" class="p-1 text-[10px] text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 rounded-lg active:scale-75 transition-all">
+                            🗑️
+                        </button>
+                    `;
+                }
+
                 // Goal tracker progress bar
                 let goalTrackerHtml = "";
                 let targetAmount = pos.Target_Amount || 0;
@@ -1048,14 +1087,17 @@
 
                 container.innerHTML += `
                     <div onclick="selectPocketFilter('${pos.ID_Pos}')" class="glass-card ${pos.Color_Class} ${activeBorder} rounded-2xl p-3.5 flex flex-col justify-between h-28 cursor-pointer relative overflow-hidden active:scale-95 transition-all">
-                        <div class="flex justify-between items-start shrink-0">
+                        <div class="flex justify-between items-start shrink-0 z-10">
                             <h5 class="font-black text-xs text-slate-200 truncate pr-2">${pos.Nama_Pos}</h5>
-                            <span class="text-[7px] font-black px-1.5 py-0.5 rounded text-indigo-400 bg-indigo-950/60 uppercase tracking-wider shrink-0">${pos.Kategori}</span>
+                            <div class="flex items-center space-x-1 shrink-0">
+                                <span class="text-[6.5px] font-black px-1.5 py-0.5 rounded text-indigo-400 bg-indigo-950/60 uppercase tracking-wider">${pos.Kategori}</span>
+                                ${deleteIconHtml}
+                            </div>
                         </div>
                         
                         ${goalTrackerHtml}
 
-                        <div class="flex flex-col justify-end mt-auto pt-1 shrink-0">
+                        <div class="flex flex-col justify-end mt-auto pt-1 shrink-0 z-10">
                             <span class="text-[7.5px] uppercase tracking-widest text-slate-500 font-extrabold block">Saldo Aktif</span>
                             <span class="text-xs font-bold text-slate-100 font-mono">${displaySaldo}</span>
                         </div>
@@ -1063,7 +1105,6 @@
                 `;
             });
 
-            // Inline Create Pocket Shortcut Card
             container.innerHTML += `
                 <div onclick="openCreatePocketModal()" class="glass-card border-dashed border-2 border-slate-800 rounded-2xl flex flex-col items-center justify-center h-28 cursor-pointer hover:border-purple-500/50 hover:bg-purple-950/5 active:scale-95 transition-all text-slate-500 hover:text-purple-400">
                     <span class="text-2xl font-light">+</span>
@@ -1109,7 +1150,6 @@
             activePosIdGlobal = posId;
             document.getElementById('lblSelectedPos').innerText = (masterPosDinamis.find(p => p.ID_Pos === posId)?.Nama_Pos || "SEMUA").toUpperCase();
             
-            // Re-render grid selection borders
             renderPocketsGrid();
 
             const box = document.getElementById('ledgerBox');
@@ -1139,7 +1179,6 @@
                 let icon = isMasuk ? "📥" : "💸";
                 let nominal = isPrivacyMode ? "Rp •••" : "Rp " + log.Vol.toLocaleString('id-ID');
                 
-                // Show attachment indicator if photo is present
                 let attachmentHtml = "";
                 if(log.Bukti_Transfer && log.Bukti_Transfer.length > 20) {
                     attachmentHtml = `
@@ -1242,6 +1281,58 @@
             }
         }
 
+        function hapusPocketCrud(id) {
+            if (id === "P001") {
+                showToast("Dompet Utama tidak boleh dihapus!", "❌");
+                return;
+            }
+
+            if (!confirm("Hapus kantong ini? Sisa saldo di dalamnya akan ditransfer otomatis ke Dompet Utama.")) return;
+
+            showToast("Menghapus kantong...", "⏳");
+
+            if (syncMode === 'demo') {
+                const db = getMockDB();
+                const pocketIdx = db.pos.findIndex(p => p.ID_Pos === id);
+                if (pocketIdx !== -1) {
+                    const balance = db.pos[pocketIdx].Saldo_Saat_Ini;
+                    const mainIdx = db.pos.findIndex(p => p.ID_Pos === "P001");
+                    
+                    if (mainIdx !== -1 && balance > 0) {
+                        db.pos[mainIdx].Saldo_Saat_Ini += balance;
+                        db.ledger.unshift({
+                            ID_Pos: "P001",
+                            Tipe: "Masuk",
+                            Vol: balance,
+                            Ket: "Auto cleanup balance dari kantong terhapus: " + db.pos[pocketIdx].Nama_Pos,
+                            Time: new Date().toISOString().split('T')[0],
+                            Bukti_Transfer: ""
+                        });
+                    }
+                    db.pos.splice(pocketIdx, 1);
+                    saveMockDB(db);
+                    tarikDataRealtime();
+                    showToast("Kantong berhasil dihapus!", "🗑️");
+                }
+            } else {
+                fetch(api_url_custom, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'delete_pocket', id: id })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showToast(data.message, "🗑️");
+                        tarikDataRealtime();
+                    } else {
+                        showToast("Gagal menghapus: " + data.message, "❌");
+                    }
+                });
+            }
+        }
+
         function resetPocketForm() {
             document.getElementById('pocketNama').value = "";
             document.getElementById('pocketTarget').value = "";
@@ -1297,7 +1388,7 @@
 
         function panggilAdvisorAI() {
             if (!gemini_api_key) {
-                showToast("Kunci API Gemini (AI Token) belum dimasukkan!", "⚠️");
+                showToast("Kunci API Gemini belum dimasukkan!", "⚠️");
                 switchHalaman('Profil');
                 return;
             }
@@ -1335,7 +1426,7 @@
             .then(data => {
                 btn.disabled = false;
                 btn.innerHTML = "Minta Rekomendasi AI";
-                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Gagal memuat saran AI. Periksa validitas API Key.";
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "Gagal memuat saran AI. Periksa API Key.";
                 resBox.innerText = text;
             })
             .catch(() => {
@@ -1496,7 +1587,7 @@
             document.getElementById('modalTxJumlah').value = tpl.Nominal_Standar || "";
             document.getElementById('modalTxTag').value = "Template";
 
-            handleJumlahInput(); // update preview & validations
+            handleJumlahInput(); 
             showToast("Template cepat berhasil dimuat!", "📋");
         }
 
@@ -1532,7 +1623,6 @@
             floatingText.className = "absolute text-2xl font-black text-purple-400 font-mono tracking-wider animate-float-xp select-none drop-shadow-[0_0_12px_#c084fc]";
             floatingText.innerText = "+10 XP";
             
-            // Random horizontal positioning near center
             let randomX = Math.floor(Math.random() * 80) - 40; 
             floatingText.style.transform = `translateX(${randomX}px)`;
             
@@ -1575,8 +1665,6 @@
             }
 
             renderProfilTab();
-            
-            // Spawn visual rewards
             spawnFloatingXpText();
 
             if (levelUp) {
@@ -1592,7 +1680,6 @@
         function openModalTxDirect(category) {
             document.getElementById('txModal').classList.remove('hidden');
             
-            // Adjust title and styling based on target action
             const header = document.getElementById('txModalHeaderTitle');
             document.getElementById('modalTxJenis').value = category;
             
@@ -1611,20 +1698,20 @@
             } else if (category === 'Pinjam') {
                 header.innerHTML = `⚠️ Catat Pinjaman / Utang Baru`;
                 header.className = "text-xs font-black text-amber-400 uppercase tracking-widest";
+            } else if (category === 'JualTelur') {
+                header.innerHTML = `🥚 Catat Penjualan Telur Bisnis`;
+                header.className = "text-xs font-black text-purple-300 uppercase tracking-widest";
             }
 
             populateDropdownOptions();
             adaptifFormModal();
-            handleJumlahInput(); // Reset impact & validations
+            handleJumlahInput(); 
         }
 
         function closeModalTx() {
             document.getElementById('txModal').classList.add('hidden');
-            
-            // Reset screens inside modal
             document.getElementById('txModalPendingScreen').classList.add('hidden');
             document.getElementById('txModalSuccessScreen').classList.add('hidden');
-            
             clearModalInputs();
         }
 
@@ -1632,9 +1719,10 @@
             const sumberSelect = document.getElementById('modalTxSumber');
             const tujuanSelect = document.getElementById('modalTxTujuan');
             const tplSelect = document.getElementById('tplPos');
+            const eggPosSelect = document.getElementById('txEggPos');
             
             sumberSelect.innerHTML = "";
-            tujuanSelect.innerHTML = `<option value="">-- Pilih Kantong Tujuan --</option>`;
+            tujuanSelect.innerHTML = `<option value="">-- Pilih Kantong Penerima --</option>`;
             if(tplSelect) tplSelect.innerHTML = "";
             
             masterPosDinamis.forEach(p => {
@@ -1645,12 +1733,20 @@
         }
 
         function hitungTotalGaji() {
-            if(isScanningFile) return; // ignore inputs while scanning
+            if(isScanningFile) return;
             const pokok = Number(document.getElementById('txGajiPokok').value) || 0;
             const tunjangan = Number(document.getElementById('txTunjangan').value) || 0;
             const bonus = Number(document.getElementById('txBonus').value) || 0;
             
             document.getElementById('modalTxJumlah').value = pokok + tunjangan + bonus;
+            handleJumlahInput();
+        }
+
+        function hitungTotalEggSales() {
+            const qty = Number(document.getElementById('txEggQty').value) || 0;
+            const price = Number(document.getElementById('txEggPrice').value) || 0;
+            
+            document.getElementById('modalTxJumlah').value = qty * price;
             handleJumlahInput();
         }
 
@@ -1660,10 +1756,14 @@
             const boxTujuanDropdown = document.getElementById('boxTujuanPosDropdown');
             const selectSumber = document.getElementById('modalTxSumber');
             const boxKomponenGaji = document.getElementById('boxKomponenGaji');
+            const boxEggFields = document.getElementById('boxEggSalesFields');
+            const rowPockets = document.getElementById('rowPocketsSelectContainer');
             
             warningBox.classList.add('hidden');
             boxTujuanDropdown.classList.add('hidden'); 
             boxKomponenGaji.classList.add('hidden');
+            boxEggFields.classList.add('hidden');
+            rowPockets.classList.remove('hidden');
             
             document.getElementById('lblSumberPos').innerText = "Dari Kantong";
             document.getElementById('lblTujuanPos').innerText = "Ke Kantong";
@@ -1671,12 +1771,10 @@
             populateDropdownOptions(); 
 
             if (jenis === "Pengeluaran") {
-                // Liquid pockets filter only
                 const opsiLikuidSaja = masterPosDinamis.filter(p => p.Kategori === 'Utama' || p.Kategori === 'Bisnis');
                 selectSumber.innerHTML = "";
                 opsiLikuidSaja.forEach(p => selectSumber.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`);
                 
-                // Pre-select active pocket from dashboard if liquid
                 if (activePosIdGlobal) {
                     let isLiquid = opsiLikuidSaja.some(p => p.ID_Pos === activePosIdGlobal);
                     if (isLiquid) selectSumber.value = activePosIdGlobal;
@@ -1719,17 +1817,38 @@
                     });
                 }
                 
-                // Utama & Tabungan pockets filter
                 const opsiTabunganSaja = masterPosDinamis.filter(p => p.Kategori === 'Utama' || p.Kategori === 'Tabungan');
                 const tujuanSelect = document.getElementById('modalTxTujuan');
                 tujuanSelect.innerHTML = "";
                 opsiTabunganSaja.forEach(p => tujuanSelect.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`);
             }
+            else if (jenis === "JualTelur") {
+                boxEggFields.classList.remove('hidden');
+                boxTujuanDropdown.classList.remove('hidden'); 
+                
+                // Hide default row selectors since we use custom source "Distributor" and destinations
+                rowPockets.classList.add('hidden'); 
+                
+                document.getElementById('modalTxKet').value = "Hasil Panen Telur Omega";
+                document.getElementById('modalTxTag').value = "Bisnis";
+                
+                // Set destination pocket options for egg cash:
+                const tujuanSelect = document.getElementById('modalTxTujuan');
+                tujuanSelect.innerHTML = "";
+                // Pre-select Usaha Telur Omega pocket P003 if available
+                masterPosDinamis.forEach(p => {
+                    tujuanSelect.innerHTML += `<option value="${p.ID_Pos}">${p.Nama_Pos}</option>`;
+                });
+                
+                const eggPocket = masterPosDinamis.find(p => p.ID_Pos === "P003");
+                if (eggPocket) {
+                    tujuanSelect.value = "P003";
+                }
+            }
             
-            // Add change listener to select inputs to update previews dynamically
             selectSumber.onchange = handleJumlahInput;
-            const tujuanSelect = document.getElementById('modalTxTujuan');
-            tujuanSelect.onchange = handleJumlahInput;
+            const tSelect = document.getElementById('modalTxTujuan');
+            tSelect.onchange = handleJumlahInput;
         }
 
         // ==========================================
@@ -1740,14 +1859,11 @@
             if (fileInput.files.length === 0) return;
 
             isScanningFile = true;
-            
-            // Disable modal controls while scanning
             document.getElementById('modalTxJumlah').disabled = true;
             document.getElementById('modalTxKet').disabled = true;
             document.getElementById('modalTxTag').disabled = true;
             document.getElementById('btnSubmitTx').disabled = true;
 
-            // Render Thumbnail with scanning lasers
             const container = document.getElementById('receiptScannerContainer');
             const thumb = document.getElementById('receiptScannerThumb');
             container.classList.remove('hidden');
@@ -1758,20 +1874,16 @@
                 thumb.src = reader.result;
             };
 
-            // Simulate laser scan delay
             setTimeout(() => {
-                // Done scanning
                 isScanningFile = false;
                 container.classList.add('hidden');
 
-                // Enable fields
                 document.getElementById('modalTxJumlah').disabled = false;
                 document.getElementById('modalTxKet').disabled = false;
                 document.getElementById('modalTxTag').disabled = false;
                 document.getElementById('btnSubmitTx').disabled = false;
 
-                // Auto populate fields based on mock OCR heuristics
-                let randomAmount = (Math.floor(Math.random() * 8) + 1) * 75000; // random amount multiples
+                let randomAmount = (Math.floor(Math.random() * 8) + 1) * 75000; 
                 let randomKetList = ["Beli Sembako Bulanan", "Listrik PLN Pasca", "Pembelian Pakan Ternak", "Usaha Telur Omega B", "Servis Kendaraan"];
                 let randomKet = randomKetList[Math.floor(Math.random() * randomKetList.length)];
                 
@@ -1783,7 +1895,7 @@
                 if(!valKet.value) valKet.value = randomKet;
                 if(!valTag.value) valTag.value = "AI_OCR";
 
-                handleJumlahInput(); // recalculate balance impact & validations
+                handleJumlahInput(); 
                 showToast("Struk dipindai! Nominal & catatan terisi otomatis.", "✔️");
             }, 1800);
         }
@@ -1796,7 +1908,9 @@
 
             const jenis = document.getElementById('modalTxJenis').value;
             const jumlah = Number(document.getElementById('modalTxJumlah').value) || 0;
-            const sumberId = document.getElementById('modalTxSumber').value;
+            
+            // Adjust pointers depending on Egg Sales custom hidden layout
+            const sumberId = (jenis === "JualTelur") ? "EKSTERNAL" : document.getElementById('modalTxSumber').value;
             const tujuanId = document.getElementById('modalTxTujuan').value;
             
             const warningVal = document.getElementById('overdraftWarning');
@@ -1804,7 +1918,6 @@
             const impactBox = document.getElementById('balanceImpactBox');
             const impactDetails = document.getElementById('balanceImpactDetails');
 
-            // Reset statuses initially
             warningVal.classList.add('hidden');
             document.getElementById('modalTxJumlah').className = "w-full bg-[#0d1527] rounded-xl border border-slate-800 p-3.5 text-slate-200 font-black text-sm font-mono focus:outline-none";
             btnSubmit.disabled = false;
@@ -1812,11 +1925,9 @@
 
             if (jumlah <= 0) return;
 
-            // 1. Overdraft Validation
             if (jenis === 'Pengeluaran' || jenis === 'Transfer') {
                 const sPocket = masterPosDinamis.find(p => p.ID_Pos === sumberId);
                 if (sPocket && jumlah > sPocket.Saldo_Saat_Ini) {
-                    // Overdraft!
                     warningVal.classList.remove('hidden');
                     document.getElementById('modalTxJumlah').className = "w-full bg-[#0d1527] rounded-xl border border-rose-500/80 p-3.5 text-rose-400 font-black text-sm font-mono focus:outline-none";
                     btnSubmit.disabled = true;
@@ -1824,14 +1935,12 @@
             } else if (jenis === 'BayarHutang') {
                 const tPocket = masterPosDinamis.find(p => p.ID_Pos === tujuanId);
                 if (tPocket && jumlah > tPocket.Saldo_Saat_Ini) {
-                    // Overdraft on debt payment source
                     warningVal.classList.remove('hidden');
                     document.getElementById('modalTxJumlah').className = "w-full bg-[#0d1527] rounded-xl border border-rose-500/80 p-3.5 text-rose-400 font-black text-sm font-mono focus:outline-none";
                     btnSubmit.disabled = true;
                 }
             }
 
-            // 2. Balance Impact calculations
             impactBox.classList.remove('hidden');
             impactDetails.innerHTML = "";
 
@@ -1847,15 +1956,18 @@
                         </div>
                     `;
                 }
-            } else if (jenis === 'Pemasukan') {
+            } else if (jenis === 'Pemasukan' || jenis === 'JualTelur') {
                 const tPocket = masterPosDinamis.find(p => p.ID_Pos === tujuanId);
                 if (tPocket) {
                     let before = tPocket.Saldo_Saat_Ini;
-                    let after = before + jumlah;
+                    let after = before + (jenis === "JualTelur" && document.getElementById('txEggStatus').value === "Tempo" ? 0 : jumlah);
+                    
+                    let statusLabel = (jenis === "JualTelur" && document.getElementById('txEggStatus').value === "Tempo") ? " (Tempo/Piutang)" : "";
+                    
                     impactDetails.innerHTML = `
                         <div class="flex justify-between">
                             <span class="text-slate-400">${tPocket.Nama_Pos}:</span>
-                            <span>Rp ${before.toLocaleString('id-ID')} ➔ <span class="text-emerald-400 font-bold">Rp ${after.toLocaleString('id-ID')}</span></span>
+                            <span>Rp ${before.toLocaleString('id-ID')} ➔ <span class="text-emerald-400 font-bold">Rp ${after.toLocaleString('id-ID')}${statusLabel}</span></span>
                         </div>
                     `;
                 }
@@ -1921,7 +2033,9 @@
         // ==========================================
         function tambahKeKeranjangTx() {
             const jenis = document.getElementById('modalTxJenis').value;
-            const sumber = document.getElementById('modalTxSumber').value;
+            
+            // Map JualTelur fields specifically
+            let sumber = (jenis === "JualTelur") ? "EKSTERNAL" : document.getElementById('modalTxSumber').value;
             const tujuan = document.getElementById('modalTxTujuan').value;
             const jumlah = document.getElementById('modalTxJumlah').value;
             const keterangan = document.getElementById('modalTxKet').value.trim();
@@ -1933,10 +2047,15 @@
                 const tunjangan = Number(document.getElementById('txTunjangan').value) || 0;
                 const bonus = Number(document.getElementById('txBonus').value) || 0;
                 komponenJSON = JSON.stringify({ gaji_pokok: pokok, tunjangan: tunjangan, bonus: bonus });
+            } else if (jenis === "JualTelur") {
+                const qty = Number(document.getElementById('txEggQty').value) || 0;
+                const price = Number(document.getElementById('txEggPrice').value) || 0;
+                const buyer = document.getElementById('txEggPembeli').value.trim() || "Distributor";
+                const eggStatus = document.getElementById('txEggStatus').value;
+                komponenJSON = JSON.stringify({ jumlah_telur: qty, harga_satuan: price, nama_pembeli: buyer, status_bayar: eggStatus });
             }
 
             if(!jumlah || !keterangan) {
-                // Trigger shake visual micro-interaction on modal
                 const modalContent = document.getElementById('txModalContent');
                 modalContent.classList.add('animate-shake');
                 setTimeout(() => modalContent.classList.remove('animate-shake'), 400);
@@ -1974,7 +2093,6 @@
             
             updateBasketVisualHtml();
 
-            // Clear inputs for next multi transaction
             document.getElementById('modalTxJumlah').value = "";
             document.getElementById('modalTxKet').value = "";
             document.getElementById('modalTxTag').value = "";
@@ -1982,9 +2100,11 @@
             document.getElementById('txGajiPokok').value = "";
             document.getElementById('txTunjangan').value = "";
             document.getElementById('txBonus').value = "";
+            document.getElementById('txEggPembeli').value = "";
+            document.getElementById('txEggQty').value = "";
             
-            handleJumlahInput(); // reset preview
-            showToast("Transaksi ditambahkan ke keranjang multi!", "🛒");
+            handleJumlahInput(); 
+            showToast("Transaksi ditambahkan ke keranjang!", "🛒");
         }
 
         function updateBasketVisualHtml() {
@@ -2016,7 +2136,7 @@
         }
 
         // ==========================================
-        // SUBMIT AND FINAL STATE SERVICES
+        // SUBMIT AND FINAL STATE SERVICES (SINKRONISASI API)
         // ==========================================
         function prosesSubmitSuperTx() {
             if (txKeranjangList.length === 0) {
@@ -2024,23 +2144,21 @@
                 if(txKeranjangList.length === 0) return; 
             }
 
-            // PENDING STATE MICRO-INTERACTION
             const pendingScreen = document.getElementById('txModalPendingScreen');
             const pendingText = document.getElementById('txPendingText');
             pendingScreen.classList.remove('hidden');
 
-            // Cycle status messages
             let step = 0;
             const messages = [
                 "Menghubungi Google Sheets...",
-                "Mengamankan tanda tangan digital...",
+                "Mengamankan data transaksi...",
                 "Menyesuaikan saldo kantong...",
                 "Mencatat data transaksi..."
             ];
             const msgInterval = setInterval(() => {
                 pendingText.innerText = messages[step % messages.length];
                 step++;
-            }, 600);
+            }, 650);
             
             if (syncMode === 'demo') {
                 setTimeout(() => {
@@ -2049,28 +2167,58 @@
                     const todayStr = new Date().toISOString().split('T')[0];
                     
                     txKeranjangList.forEach(item => {
+                        let finalDest = item.tujuan_pos;
+                        let finalSource = item.sumber_pos;
+
                         // 1. Write ledger
                         db.ledger.unshift({
-                            ID_Pos: item.jenis === "Pemasukan" ? item.tujuan_pos : item.sumber_pos,
-                            Tipe: item.jenis === "Pemasukan" ? "Masuk" : "Keluar",
+                            ID_Pos: item.jenis === "Pemasukan" || item.jenis === "JualTelur" || item.jenis === "Pinjam" ? finalDest : finalSource,
+                            Tipe: item.jenis === "Pemasukan" || item.jenis === "JualTelur" || item.jenis === "Pinjam" ? "Masuk" : "Keluar",
                             Vol: item.jumlah,
                             Ket: item.keterangan,
                             Time: todayStr,
                             Bukti_Transfer: item.bukti_transfer
                         });
                         
-                        // 2. Adjust Balance
-                        const sIdx = db.pos.findIndex(p => p.ID_Pos === item.sumber_pos);
-                        if (sIdx !== -1) db.pos[sIdx].Saldo_Saat_Ini -= item.jumlah;
+                        // 2. Adjust Balance (avoid adjustments for Tempo Business sales)
+                        let isTempoBusiness = false;
+                        if (item.jenis === "JualTelur" && item.komponen_gaji) {
+                            try {
+                                let eggDetails = JSON.parse(item.komponen_gaji);
+                                if (eggDetails.status_bayar === "Tempo") isTempoBusiness = true;
+                            } catch(e) {}
+                        }
+
+                        if (!isTempoBusiness) {
+                            const sIdx = db.pos.findIndex(p => p.ID_Pos === finalSource);
+                            if (sIdx !== -1) db.pos[sIdx].Saldo_Saat_Ini -= item.jumlah;
+                            
+                            const tIdx = db.pos.findIndex(p => p.ID_Pos === finalDest);
+                            if (tIdx !== -1) db.pos[tIdx].Saldo_Saat_Ini += item.jumlah;
+                        }
                         
-                        const tIdx = db.pos.findIndex(p => p.ID_Pos === item.tujuan_pos);
-                        if (tIdx !== -1) db.pos[tIdx].Saldo_Saat_Ini += item.jumlah;
-                        
+                        // If JualTelur, register mock egg sale row
+                        if (item.jenis === "JualTelur" && item.komponen_gaji) {
+                            try {
+                                let eggDetails = JSON.parse(item.komponen_gaji);
+                                db.egg_sales = db.egg_sales || [];
+                                db.egg_sales.unshift({
+                                    ID_Jual: "TLR" + Math.floor(Math.random()*900 + 100),
+                                    Tanggal: todayStr,
+                                    Nama_Pembeli: eggDetails.nama_pembeli,
+                                    Jumlah_Telur: eggDetails.jumlah_telur,
+                                    Total_Harga: item.jumlah,
+                                    Status_Bayar: eggDetails.status_bayar,
+                                    Pos_Masuk: finalDest
+                                });
+                            } catch(e) {}
+                        }
+
                         // If Pinjam, add debt record
                         if (item.jenis === "Pinjam") {
                             db.debts.push({
                                 ID_Utang: "U" + String(db.debts.length + 1).padStart(3, '0'),
-                                Pemberi_Pinjaman: item.sumber_pos,
+                                Pemberi_Pinjaman: finalSource,
                                 Penerima_Pinjaman: currentUser.nama,
                                 Total_Pinjaman: item.jumlah,
                                 Tenor_Cicilan: 10,
@@ -2081,7 +2229,7 @@
                         
                         // If BayarHutang, update debt remaining
                         if (item.jenis === "BayarHutang") {
-                            const dIdx = db.debts.findIndex(d => d.ID_Utang === item.sumber_pos);
+                            const dIdx = db.debts.findIndex(d => d.ID_Utang === finalSource);
                             if (dIdx !== -1) {
                                 db.debts[dIdx].Sisa_Hutang = Math.max(0, db.debts[dIdx].Sisa_Hutang - item.jumlah);
                                 if (db.debts[dIdx].Sisa_Hutang === 0) db.debts[dIdx].Status = "Lunas";
@@ -2090,24 +2238,16 @@
                     });
 
                     saveMockDB(db);
-                    
-                    // Final State: Success Screen trigger
                     pendingScreen.classList.add('hidden');
                     
                     const lastTx = txKeranjangList[txKeranjangList.length - 1];
-                    const recNominal = document.getElementById('recNominal');
-                    const recKet = document.getElementById('recKet');
-                    const recKat = document.getElementById('recKat');
-                    const recTxId = document.getElementById('recTxId');
-
-                    recNominal.innerText = "Rp " + lastTx.jumlah.toLocaleString('id-ID');
-                    recKet.innerText = lastTx.keterangan;
-                    recKat.innerText = lastTx.jenis;
-                    recTxId.innerText = "TX-" + Math.floor(Math.random() * 90000 + 10000);
+                    document.getElementById('recNominal').innerText = "Rp " + lastTx.jumlah.toLocaleString('id-ID');
+                    document.getElementById('recKet').innerText = lastTx.keterangan;
+                    document.getElementById('recKat').innerText = lastTx.jenis;
+                    document.getElementById('recTxId').innerText = "TX-" + Math.floor(Math.random() * 90000 + 10000);
 
                     document.getElementById('txModalSuccessScreen').classList.remove('hidden');
 
-                    // Award XP and show floating visual
                     let totalXp = txKeranjangList.length * 10;
                     handleXpGainLocally(totalXp);
                     
@@ -2122,9 +2262,45 @@
                 let nextLevel = 1;
                 
                 txKeranjangList.forEach(txItem => {
-                    txItem.action = "add_transaksi";
                     txItem.tanggal = new Date().toISOString().split('T')[0];
                     txItem.dibuat_oleh = currentUser.username;
+                    
+                    // Route to correct Sheets POST action endpoints to fix the 3 gaps!
+                    if (txItem.jenis === "Pinjam") {
+                        txItem.action = "save_debt";
+                        txItem.total_pinjaman = txItem.jumlah;
+                        txItem.tenor_cicilan = 10;
+                        txItem.pemberi_pinjaman = txItem.sumber_pos;
+                        txItem.penerima_pinjaman = currentUser.nama;
+                        txItem.pos_masuk = txItem.tujuan_pos;
+                    } 
+                    else if (txItem.jenis === "BayarHutang") {
+                        txItem.action = "pay_debt";
+                        txItem.id_utang = txItem.sumber_pos;
+                        txItem.jumlah_bayar = txItem.jumlah;
+                        txItem.bukti_ss_transfer = txItem.bukti_transfer;
+                        txItem.pos_sumber = txItem.tujuan_pos; 
+                    }
+                    else if (txItem.jenis === "JualTelur") {
+                        txItem.action = "add_egg_sale";
+                        try {
+                            let eggDetails = JSON.parse(txItem.komponen_gaji);
+                            txItem.nama_pembeli = eggDetails.nama_pembeli;
+                            txItem.jumlah_telur = eggDetails.jumlah_telur;
+                            txItem.total_harga = txItem.jumlah;
+                            txItem.status_bayar = eggDetails.status_bayar;
+                            txItem.pos_masuk = txItem.tujuan_pos;
+                        } catch(e) {
+                            txItem.nama_pembeli = "Distributor";
+                            txItem.jumlah_telur = 0;
+                            txItem.total_harga = txItem.jumlah;
+                            txItem.status_bayar = "Lunas";
+                            txItem.pos_masuk = txItem.tujuan_pos;
+                        }
+                    }
+                    else {
+                        txItem.action = "add_transaksi";
+                    }
 
                     fetch(api_url_custom, {
                         method: 'POST',
@@ -2136,7 +2312,7 @@
                     .then(data => {
                         if(data.status === 'success') {
                             barisSukses++;
-                            currentUser.xp = data.current_xp;
+                            currentUser.xp = data.current_xp || (currentUser.xp + 10);
                             if (data.level_up) {
                                 levelUpTriggered = true;
                                 nextLevel = data.current_level;
@@ -2146,16 +2322,10 @@
                                 clearInterval(msgInterval);
                                 pendingScreen.classList.add('hidden');
 
-                                // Render Success receipt
-                                const recNominal = document.getElementById('recNominal');
-                                const recKet = document.getElementById('recKet');
-                                const recKat = document.getElementById('recKat');
-                                const recTxId = document.getElementById('recTxId');
-
-                                recNominal.innerText = "Rp " + txItem.jumlah.toLocaleString('id-ID');
-                                recKet.innerText = txItem.keterangan;
-                                recKat.innerText = txItem.jenis;
-                                recTxId.innerText = data.transaction_id || "TX-CLOUD";
+                                document.getElementById('recNominal').innerText = "Rp " + txItem.jumlah.toLocaleString('id-ID');
+                                document.getElementById('recKet').innerText = txItem.keterangan;
+                                document.getElementById('recKat').innerText = txItem.jenis;
+                                document.getElementById('recTxId').innerText = data.id || "TX-CLOUD";
 
                                 document.getElementById('txModalSuccessScreen').classList.remove('hidden');
 
@@ -2173,15 +2343,15 @@
                         } else {
                             clearInterval(msgInterval);
                             pendingScreen.classList.add('hidden');
-                            showToast("Gagal menyimpan: " + data.message, "❌");
+                            showToast("Gagal mencatat: " + data.message, "❌");
                             
-                            // Trigger shake micro interaction on failure
                             const modalContent = document.getElementById('txModalContent');
                             modalContent.classList.add('animate-shake');
                             setTimeout(() => modalContent.classList.remove('animate-shake'), 400);
                         }
                     })
-                    .catch(() => {
+                    .catch((err) => {
+                        console.error(err);
                         clearInterval(msgInterval);
                         pendingScreen.classList.add('hidden');
                         showToast("Koneksi gagal mengirim transaksi.", "❌");
@@ -2198,10 +2368,11 @@
             document.getElementById('txGajiPokok').value = "";
             document.getElementById('txTunjangan').value = "";
             document.getElementById('txBonus').value = "";
+            document.getElementById('txEggPembeli').value = "";
+            document.getElementById('txEggQty').value = "";
             txKeranjangList = [];
             updateBasketVisualHtml();
             
-            // Clean scan previews
             document.getElementById('receiptScannerContainer').classList.add('hidden');
             document.getElementById('receiptScannerThumb').src = "";
         }
@@ -2215,14 +2386,13 @@
             document.getElementById('appPagesContainer').classList.add('hidden');
             document.getElementById('bottomNavbar').classList.add('hidden');
             
-            // Reset pages
             switchHalaman('Home');
         }
 
         // ==========================================
         // PWA PREVENT SCROLL LOGIC
         // ==========================================
-        logout(); // Initial trigger to boot to login page
+        logout();
 
         document.addEventListener('touchmove', function(e) {
             if (e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#listTemplateContainer') || e.target.closest('#pageProfil') || e.target.closest('#pocketCreateModal') || e.target.closest('#lightboxModal')) {
