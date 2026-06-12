@@ -294,7 +294,7 @@
             </div>
 
             <!-- PAGE 1: HOME (BERANDA SUPER APP) -->
-            <div id="pageHome" class="space-y-4 flex flex-col h-full overflow-hidden">
+            <div id="pageHome" class="space-y-4 flex flex-col h-full overflow-y-auto no-scrollbar pb-6">
                 
                 <!-- METALLIC CREDIT CARD BALANCE -->
                 <div id="balanceRealBox" class="bg-gradient-to-br from-[#0c1221] via-[#10172e] to-[#060a16] rounded-3xl p-5 shadow-2xl shrink-0 border border-slate-700/35 relative overflow-hidden flex flex-col justify-between h-44 box-border">
@@ -2395,7 +2395,7 @@
         logout();
 
         document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#listTemplateContainer') || e.target.closest('#pageProfil') || e.target.closest('#pocketCreateModal') || e.target.closest('#lightboxModal')) {
+            if (e.target.closest('#pageHome') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#listTemplateContainer') || e.target.closest('#pageProfil') || e.target.closest('#pocketCreateModal') || e.target.closest('#lightboxModal')) {
                 return;
             }
             e.preventDefault();
