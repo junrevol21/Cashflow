@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Family Finance Super App</title>
+    <!-- Tailwind CSS v4 via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         /* Penguncian dimensi PWA iOS - Mutlak Anti-Zoom & Anti-Geser Diagonal */
@@ -16,7 +17,7 @@
             -webkit-overflow-scrolling: auto;
         }
 
-        /* Premium Dark Glassmorphism Theme - Nyaman di Mata (No Pure White Fonts) */
+        /* Pure Dark Glassmorphism Theme 2026 - Nyaman di Mata (No Pure White Fonts) */
         .glass-card {
             background: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(30px);
@@ -26,14 +27,14 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Variasi Warna Kartu Kaca Bergradasi dengan Teks Pastel Nyaman di Mata */
+        /* Variasi Rona Gradasi Kaca Berdasarkan Karakter Master Pos */
         .card-blue   { background: rgba(30, 58, 138, 0.25); border-left: 5px solid #3b82f6; box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.1); }
         .card-green  { background: rgba(6, 78, 59, 0.25);   border-left: 5px solid #10b981; box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1); }
         .card-purple { background: rgba(88, 28, 135, 0.25);  border-left: 5px solid #a855f7; box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.1); }
         .card-amber  { background: rgba(120, 53, 4, 0.25);   border-left: 5px solid #f59e0b; box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.1); }
         .card-teal   { background: rgba(20, 83, 45, 0.25);   border-left: 5px solid #22c55e; box-shadow: inset 0 0 20px rgba(34, 197, 94, 0.1); }
 
-        /* Super Apps Modern Floating Nav Kaca Tempa */
+        /* Dock Navigasi Bawah Kaca Tempa Gelap */
         .glass-nav {
             background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(30px);
@@ -77,11 +78,14 @@
 </head>
 <body class="bg-[#090d16] text-slate-300 font-sans antialiased select-none flex justify-center items-center w-full h-full">
 
+    <!-- AMBIENT BACKGROUND GLOW ORBITS -->
     <div class="absolute top-[-15%] left-[-15%] w-[100vw] h-[100vw] bg-indigo-950/40 rounded-full filter blur-[130px] animate-bg-glow z-0"></div>
     <div class="absolute bottom-[-15%] right-[-15%] w-[90vw] h-[90vw] bg-teal-950/25 rounded-full filter blur-[130px] animate-bg-glow z-0" style="animation-delay: 4s;"></div>
 
+    <!-- MAIN DASHBOARD CONTENT VIEWPORT CONTAINER -->
     <div class="relative z-10 w-full max-w-md h-full flex flex-col justify-between p-4 pt-5 pb-24 box-border overflow-hidden">
         
+        <!-- ==================== SCREEN 1: LOGIN USERNAME + PASSWORD ==================== -->
         <div id="loginScreen" class="w-full my-auto space-y-6">
             <div class="glass-card rounded-3xl p-6 text-center space-y-6 border border-slate-800/50">
                 <div class="space-y-2">
@@ -106,8 +110,10 @@
             </div>
         </div>
 
+        <!-- ==================== SCREEN 2: MAIN DASHBOARD ==================== -->
         <div id="mainDashboard" class="w-full flex flex-col space-y-4 h-full overflow-hidden hidden">
             
+            <!-- MASTER CORE BAR HEADER -->
             <div class="flex justify-between items-center glass-card rounded-2xl p-3 shrink-0">
                 <div class="flex items-center space-x-3">
                     <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-blue-500 text-slate-950 font-black text-sm flex items-center justify-center shadow-md" id="userAvatar">U</div>
@@ -117,6 +123,7 @@
                     </div>
                 </div>
                 
+                <!-- BUTTON LOGOUT DENGAN SENSASI TACTILE -->
                 <button onclick="logout()" class="p-2.5 text-rose-400/80 hover:text-rose-400 hover:bg-rose-950/30 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center border border-transparent active:scale-90" title="Keluar">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
@@ -124,6 +131,7 @@
                 </button>
             </div>
 
+            <!-- DOMPET DISPLAY TOTAL BOX -->
             <div class="bg-gradient-to-br from-[#0c1220] via-[#111a30] to-[#080d1a] rounded-3xl p-4 shadow-2xl shrink-0 space-y-1.5 border border-slate-800/60 relative overflow-hidden">
                 <div class="absolute right-[-5%] top-[-10%] w-24 h-24 bg-blue-500/5 rounded-full filter blur-xl"></div>
                 <div class="flex items-center justify-between">
@@ -138,24 +146,31 @@
                 <p class="text-[10px] text-slate-400 bg-slate-900/40 border border-slate-800 p-2 rounded-xl font-medium" id="txtRekomendasi">Sistem siap.</p>
             </div>
 
+            <!-- CARD CAROUSEL (LEBAR SEJAJAR SISI KANAN-KIRI) -->
             <div class="shrink-0 space-y-1.5 relative">
                 <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest pl-1">Pos Keuangan Keluarga 💳</h4>
                 
                 <div class="relative w-full h-32 flex items-center">
+                    <!-- List Container (Sejajar Sempurna Dengan Atas & Bawah) -->
                     <div class="w-full h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5 z-10" id="posCarousel" onscroll="handleVerticalScroll()">
-                        </div>
+                        <!-- Diisi via JS -->
+                    </div>
                     
+                    <!-- Dots Urutan Menjorok Keluar Di Tepi Kanan -->
                     <div class="absolute right-[-14px] top-0 bottom-0 flex flex-col space-y-1.5 justify-center items-center w-3 z-20" id="carouselDots">
-                        </div>
+                        <!-- Diisi via JS -->
+                    </div>
                 </div>
             </div>
 
+            <!-- LIVE BUKU BESAR MUTASI -->
             <div class="flex-1 flex flex-col space-y-1.5 overflow-hidden min-h-0">
                 <div class="flex justify-between items-center pl-1 shrink-0">
                     <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Buku Besar Pos Aktif 📖</h4>
                     <span class="text-[9px] text-indigo-300 font-extrabold bg-indigo-950/50 border border-indigo-900/50 px-2 py-0.5 rounded-md tracking-wide uppercase" id="lblSelectedPos">SEMUA</span>
                 </div>
                 
+                <!-- Box Transaksi -->
                 <div class="flex-1 glass-card rounded-2xl p-3.5 shadow-sm overflow-y-auto no-scrollbar divide-y divide-slate-800/40 space-y-2.5 min-h-0 text-slate-300" id="ledgerBox">
                     <div class="text-center py-6 text-xs text-slate-500 font-medium">Memuat mutasi kas...</div>
                 </div>
@@ -163,7 +178,8 @@
 
         </div>
 
-        <nav id="bottomNavbar" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto h-16 glass-nav rounded-2xl shadow-2xl flex justify-around items-center px-2 z-50 hidden">
+        <!-- ==================== PREMIUM FLOATING NAV BAR ==================== -->
+        <nav id="bottomNavbar" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto h-16 glass-nav rounded-2xl shadow-xl flex justify-around items-center px-2 z-50 hidden">
             <button class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-indigo-400 cursor-pointer active:scale-95 transition-transform">
                 <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 <span class="text-[8px] font-black tracking-tight uppercase text-indigo-400">Home</span>
@@ -173,6 +189,7 @@
                 <span class="text-[8px] font-black tracking-tight uppercase">Insight</span>
             </button>
             
+            <!-- CENTRAL GLASS FAB BUTTON `+` DENGAN IKON SVG PLUS TEBAL MODERN -->
             <div class="relative -top-4">
                 <button onclick="openModalTx()" class="w-13 h-13 modern-fab rounded-full flex items-center justify-center shadow-lg cursor-pointer text-indigo-300 hover:text-white" title="Tambah Transaksi Super">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,13 +210,16 @@
 
     </div>
 
+    <!-- CODE SCRIPT -->
     <script>
+        // MENGUNCI URL ENDPOINT SCRIPT API ASLI ANDA
         const API_URL = "https://script.google.com/macros/s/AKfycbwU-BDTK3uM54KBPvXJzaVVyB85wNFYU8j_LyGMoUfGz8u0kU7ASYIXq8i0EiMfIFBY/exec";
         
         let currentUser = null;
         let isPrivacyMode = false;
         let activePosIdGlobal = null;
         
+        // Data internal awal sebelum ditarik murni dari database Sheets Anda
         let mockPosData = [
             { ID_Pos: 'P001', Nama_Pos: 'Dompet Utama', Kategori: 'Utama', Pemilik: 'Bersama', Saldo_Saat_Ini: 4500000, Color_Class: 'card-blue' },
             { ID_Pos: 'P002', Nama_Pos: 'Tabungan Utama', Kategori: 'Utama', Pemilik: 'Bersama', Saldo_Saat_Ini: 12500000, Color_Class: 'card-green' },
@@ -224,18 +244,38 @@
             refreshLedgerView();
         }
 
+        // AMBIL INPUT & TEMBAK KE GOOGLE APPS SCRIPT SECARA RIIL (TANPA CADANGAN BYPASS)
         document.getElementById('formLogin').addEventListener('submit', function(e) {
             e.preventDefault();
             const usr = document.getElementById('loginUsername').value.trim();
-            executeAppLoginFlow(usr);
+            const psw = document.getElementById('loginPassword').value;
+
+            console.log("Memulai otentikasi akun keluarga privat...");
+
+            fetch(API_URL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: 'login', email: usr, password: psw })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Password Sesuai -> Ambil data spesifik user dari Sheet User_Access
+                    currentUser = data;
+                    executeAppLoginFlow();
+                } else {
+                    // Password Ngasal -> Langsung Blokir Akses
+                    alert("❌ Akses Ditolak: " + data.message);
+                }
+            })
+            .catch(err => {
+                alert("🌐 Gangguan Database. Pastikan jembatan Google Apps Script Anda sudah di-deploy ulang di Versi Terbaru.");
+                console.error(err);
+            });
         });
 
-        function executeAppLoginFlow(usr) {
-            currentUser = { 
-                nama: usr.toLowerCase() === 'anak' ? 'Anak' : (usr.charAt(0).toUpperCase() + usr.slice(1)), 
-                role: usr.toLowerCase() === 'anak' ? 'Child' : 'Parent' 
-            };
-
+        function executeAppLoginFlow() {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('mainDashboard').classList.remove('hidden');
             document.getElementById('bottomNavbar').classList.remove('hidden');
@@ -244,6 +284,7 @@
             document.getElementById('userRole').innerText = currentUser.role;
             document.getElementById('userAvatar').innerText = currentUser.nama.charAt(0);
 
+            // Filter Hak Akses Khusus untuk Tabungan Anak
             if(currentUser.role === 'Child') {
                 mockPosData = mockPosData.filter(p => p.Pemilik === 'Anak');
             }
@@ -257,7 +298,7 @@
         function renderTotalBalance() {
             if(isPrivacyMode) {
                 document.getElementById('txtSisaUang').innerText = "Rp ••••••••";
-                document.getElementById('txtRekomendasi').innerText = "🙈 Mode privasi aktif. Angka nominal disamarkan.";
+                document.getElementById('txtRekomendasi').innerText = "🙈 Mode privat aktif. Angka saldo gabungan tersembunyi.";
                 return;
             }
             let total = mockPosData.reduce((acc, curr) => acc + curr.Saldo_Saat_Ini, 0);
@@ -314,7 +355,7 @@
             if(activeIndex >= mockPosData.length) activeIndex = mockPosData.length - 1;
             let activePos = mockPosData[activeIndex];
 
-            // Update state titik indikator vertikal (Warna cerah cerdas)
+            // Update state indikator titik vertikal
             mockPosData.forEach((_, index) => {
                 let dot = document.getElementById(`dot-${index}`);
                 if(dot) {
@@ -352,7 +393,7 @@
             if(filteredList.length === 0) {
                 box.innerHTML = `
                     <div class="text-center py-8 text-xs text-slate-500 font-bold">
-                        📭 Belum ada riwayat pergerakan kas di pos ini.
+                        📭 Belum ada riwayat mutasi kas di pos ini.
                     </div>
                 `;
                 return;
@@ -366,7 +407,7 @@
                 let nominal = isPrivacyMode ? "Rp •••" : "Rp " + log.Vol.toLocaleString('id-ID');
 
                 let rowHtml = `
-                    <div class="flex justify-between items-center py-2.5 text-xs text-slate-300 border-b border-slate-800/40 last:border-0 animate-fade-in">
+                    <div class="flex justify-between items-center py-2.5 text-xs text-slate-300 border-b border-slate-800/40 last:border-0">
                         <div class="flex items-center space-x-3 min-w-0">
                             <span class="text-base">${icon}</span>
                             <div class="min-w-0">
@@ -384,7 +425,7 @@
         }
 
         function openModalTx() {
-            alert("Tombol '+' Premium Glassmorphism Berhasil Di-polish! Akses Popup Form Komplit (Multi-Tx, Warning Utang, & Upload SS) siap dilepas penuh pada eksekusi TAHAP 2.");
+            alert("Sistem API Terkunci Sukses! Popup Modal Transaksi Super (Multi-Tx, Warning Hutang, & Upload Berkas) siap dilepas penuh pada eksekusi TAHAP 3.");
         }
 
         function logout() {
@@ -396,7 +437,7 @@
             document.getElementById('formLogin').reset();
         }
 
-        // BLOCK INTERFERENSI IOS OVERSCROLL BOUNCING
+        // BLOCK INTERFERENSI IOS OVERSCROLL BOUNCING EFFECTS
         document.addEventListener('touchmove', function(e) {
             if (e.target.closest('#posCarousel') || e.target.closest('#ledgerBox')) {
                 return;
