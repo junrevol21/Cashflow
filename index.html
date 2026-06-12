@@ -6,7 +6,7 @@
     <title>Family Finance Super App</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Penguncian Dimensi Layar PWA iOS - Anti Zoom & Anti Geser Liar */
+        /* Penguncian viewport total untuk iOS & Android PWA */
         html, body {
             overflow: hidden;
             position: fixed;
@@ -16,14 +16,14 @@
             -webkit-overflow-scrolling: auto;
         }
 
-        /* Glassmorphism Standard 2026 - Ultra Kontras & Adaptif */
+        /* Glassmorphism Standard - Kontras Tinggi & Deteksi Tema Menyeluruh */
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.04);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            box-shadow: 0 4px 24px 0 rgba(15, 23, 42, 0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .dark .glass-card {
             background: rgba(15, 23, 42, 0.45);
@@ -33,80 +33,78 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
         }
 
-        /* Varian Warna-Warni Kartu Kaca Bergradasi */
-        .card-blue   { background: rgba(219, 234, 254, 0.75); border-left: 5px solid #2563eb; }
-        .card-green  { background: rgba(209, 250, 229, 0.75); border-left: 5px solid #10b981; }
-        .card-amber  { background: rgba(254, 243, 199, 0.75); border-left: 5px solid #d97706; }
-        .card-teal   { background: rgba(204, 251, 241, 0.75); border-left: 5px solid #0d9488; }
-        .card-purple { background: rgba(243, 232, 255, 0.75); border-left: 5px solid #8b5cf6; }
+        /* Variasi Warna Kartu Kaca Bergradasi Berdasarkan Karakter Pos */
+        .card-blue   { background: rgba(239, 246, 255, 0.95); border-left: 6px solid #2563eb; }
+        .card-green  { background: rgba(240, 253, 250, 0.95); border-left: 6px solid #0d9488; }
+        .card-purple { background: rgba(250, 245, 255, 0.95); border-left: 6px solid #7c3aed; }
+        .card-amber  { background: rgba(255, 251, 235, 0.95); border-left: 6px solid #d97706; }
+        .card-teal   { background: rgba(240, 253, 244, 0.95); border-left: 6px solid #16a34a; }
 
-        .dark .card-blue   { background: rgba(30, 58, 138, 0.3); border-left: 5px solid #3b82f6; }
-        .dark .card-green  { background: rgba(6, 78, 59, 0.3);   border-left: 5px solid #10b981; }
-        .dark .card-amber  { background: rgba(120, 53, 4, 0.3);   border-left: 5px solid #f59e0b; }
-        .dark .card-teal   { background: rgba(19, 78, 74, 0.3);   border-left: 5px solid #14b8a6; }
-        .dark .card-purple { background: rgba(88, 28, 135, 0.3);  border-left: 5px solid #a855f7; }
+        .dark .card-blue   { background: rgba(30, 58, 138, 0.35); border-left: 6px solid #3b82f6; }
+        .dark .card-green  { background: rgba(19, 78, 74, 0.35);  border-left: 6px solid #14b8a6; }
+        .dark .card-purple { background: rgba(88, 28, 135, 0.35); border-left: 6px solid #a855f7; }
+        .dark .card-amber  { background: rgba(120, 53, 4, 0.35);  border-left: 6px solid #f59e0b; }
+        .dark .card-teal   { background: rgba(20, 83, 45, 0.35);  border-left: 6px solid #22c55e; }
 
-        /* Tombol Tambah Akses Kaca Premium */
+        /* Tombol Akses Kaca Tambah Transaksi `+` */
         .glass-fab {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(99, 102, 241, 0.8));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(15, 23, 42, 0.2);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.15);
+            transition: all 0.2s ease;
         }
         .dark .glass-fab {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
 
+        /* Bottom Nav Modifikasi Kontras Ekstrem */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(15, 23, 42, 0.08);
         }
         .dark .glass-nav {
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* Sistem utility scroll */
+        /* Navigasi Utilities */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Animasi Transisi Halus Buku Besar */
+        /* Animasi Transisi Pudar Mikro Saat Ganti Pos */
         .fade-in-ledger {
             animation: fadeInSimple 0.25s ease-out forwards;
         }
         @keyframes fadeInSimple {
-            from { opacity: 0; transform: translateY(4px); }
+            from { opacity: 0; transform: translateY(3px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes orbit {
             0% { transform: translate(0px, 0px) scale(1); }
-            50% { transform: translate(25px, -25px) scale(1.05); }
+            50% { transform: translate(20px, -20px) scale(1.05); }
             100% { transform: translate(0px, 0px) scale(1); }
         }
-        .animate-bg-glow { animation: orbit 12s infinite alternate ease-in-out; }
+        .animate-bg-glow { animation: orbit 14s infinite alternate ease-in-out; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased select-none transition-colors duration-300 flex justify-center items-center w-full h-full">
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased select-none transition-colors duration-300 flex justify-center items-center w-full h-full">
 
-    <div class="absolute top-[-10%] left-[-10%] w-[100vw] h-[100vw] bg-blue-400/15 dark:bg-indigo-900/25 rounded-full filter blur-[120px] animate-bg-glow z-0"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[90vw] h-[90vw] bg-emerald-400/10 dark:bg-emerald-900/15 rounded-full filter blur-[120px] animate-bg-glow z-0" style="animation-delay: 3s;"></div>
+    <div class="absolute top-[-10%] left-[-10%] w-[100vw] h-[100vw] bg-blue-500/10 dark:bg-indigo-900/20 rounded-full filter blur-[120px] animate-bg-glow z-0"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[90vw] h-[90vw] bg-emerald-500/5 dark:bg-emerald-900/15 rounded-full filter blur-[120px] animate-bg-glow z-0" style="animation-delay: 3s;"></div>
 
     <div class="relative z-10 w-full max-w-md h-full flex flex-col justify-between p-4 pt-5 pb-24 box-border overflow-hidden">
         
         <div id="loginScreen" class="w-full my-auto space-y-6">
             <div class="glass-card rounded-3xl p-6 text-center space-y-6">
                 <div class="space-y-2">
-                    <div class="inline-flex p-3.5 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl text-white font-black text-xl tracking-wider shadow-md">FF</div>
+                    <div class="inline-flex p-3.5 bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black text-xl tracking-wider rounded-2xl shadow-sm">FF</div>
                     <h1 class="text-2xl font-black tracking-tight text-slate-950 dark:text-white">Family Finance</h1>
                     <p class="text-xs text-slate-500 dark:text-slate-400 font-bold">Platform FinTech Kolaborasi Keluarga</p>
                 </div>
@@ -114,11 +112,11 @@
                 <form id="formLogin" class="space-y-4 text-left">
                     <div class="space-y-1">
                         <label class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-1">Username</label>
-                        <input type="text" id="loginUsername" class="w-full bg-slate-200/40 dark:bg-slate-900/50 rounded-2xl border border-slate-300/40 dark:border-slate-800/80 p-3.5 text-sm font-bold text-slate-950 dark:text-white focus:outline-none focus:border-indigo-500 transition" placeholder="Username Anda" required autocomplete="username">
+                        <input type="text" id="loginUsername" class="w-full bg-slate-200/50 dark:bg-slate-900/50 rounded-2xl border border-slate-300/60 dark:border-slate-800 p-3.5 text-sm font-bold text-slate-950 dark:text-white focus:outline-none focus:border-indigo-500 transition" placeholder="Username Anda" required autocomplete="username">
                     </div>
                     <div class="space-y-1">
                         <label class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-1">Password</label>
-                        <input type="password" id="loginPassword" class="w-full bg-slate-200/40 dark:bg-slate-900/50 rounded-2xl border border-slate-300/40 dark:border-slate-800/80 p-3.5 text-sm font-bold text-slate-950 dark:text-white focus:outline-none focus:border-indigo-500 transition" placeholder="••••••••" required autocomplete="current-password">
+                        <input type="password" id="loginPassword" class="w-full bg-slate-200/50 dark:bg-slate-900/50 rounded-2xl border border-slate-300/60 dark:border-slate-800 p-3.5 text-sm font-bold text-slate-950 dark:text-white focus:outline-none focus:border-indigo-500 transition" placeholder="••••••••" required autocomplete="current-password">
                     </div>
                     <button type="submit" class="w-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black rounded-2xl text-sm py-4 shadow-lg active:scale-[0.97] transition-all duration-150 mt-2 cursor-pointer">
                         Masuk Aplikasi
@@ -131,24 +129,24 @@
             
             <div class="flex justify-between items-center glass-card rounded-2xl p-3 shrink-0">
                 <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black text-sm flex items-center justify-center shadow-md" id="userAvatar">U</div>
+                    <div class="w-9 h-9 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 font-black text-sm flex items-center justify-center shadow-sm" id="userAvatar">U</div>
                     <div>
                         <h2 class="text-xs font-black tracking-tight text-slate-950 dark:text-white" id="userGreeting">Halo</h2>
-                        <span class="text-[9px] bg-slate-200 dark:bg-indigo-950/60 text-slate-800 dark:text-indigo-300 font-black px-2 py-0.5 rounded-md uppercase tracking-wider block mt-0.5 w-max" id="userRole">Parent</span>
+                        <span class="text-[9px] bg-slate-200 dark:bg-indigo-950/60 text-slate-800 dark:text-indigo-300 font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider block mt-0.5 w-max" id="userRole">Parent</span>
                     </div>
                 </div>
                 <div class="flex items-center space-x-1">
                     <button onclick="toggleDarkMode()" class="p-2.5 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-xl transition cursor-pointer">
                         <span id="themeIcon" class="text-xs">🌙</span>
                     </button>
-                    <button onclick="logout()" class="p-2.5 text-rose-500 font-extrabold text-xs hover:bg-rose-100/40 rounded-xl transition cursor-pointer">Keluar</button>
+                    <button onclick="logout()" class="p-2.5 text-rose-600 dark:text-rose-500 font-black text-xs hover:bg-rose-100/40 rounded-xl transition cursor-pointer">Keluar</button>
                 </div>
             </div>
 
             <div class="bg-gradient-to-br from-slate-950 via-indigo-950 to-blue-950 text-white rounded-3xl p-4 shadow-xl shrink-0 space-y-2 relative overflow-hidden border border-white/5">
                 <div class="flex items-center justify-between">
                     <p class="text-[9px] text-indigo-300 uppercase font-black tracking-widest flex items-center gap-1">
-                        💳 Total Saldo Gabungan Keluarga
+                        宝 Total Saldo Gabungan Keluarga
                     </p>
                     <button onclick="togglePrivacy()" class="text-indigo-300 hover:text-white transition text-xs cursor-pointer p-1">
                         <span id="eyeIcon">👁️</span>
@@ -158,14 +156,14 @@
                 <p class="text-[10px] text-slate-300 bg-white/5 border border-white/5 p-2 rounded-xl font-medium" id="txtRekomendasi">Sistem siap.</p>
             </div>
 
-            <div class="shrink-0 space-y-1.5">
+            <div class="shrink-0 space-y-1.5 relative">
                 <h4 class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-1">Pilih Pos Keuangan (Geser Vertikal)</h4>
                 
-                <div class="flex items-center space-x-3 w-full">
-                    <div class="w-[90%] h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5" id="posCarousel" onscroll="handleVerticalScroll()">
+                <div class="relative w-full h-32 flex items-center">
+                    <div class="w-full h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5 pr-4 z-10" id="posCarousel" onscroll="handleVerticalScroll()">
                         </div>
                     
-                    <div class="flex flex-col space-y-2 justify-center items-center w-[10%]" id="carouselDots">
+                    <div class="absolute right-[-4px] top-0 bottom-0 flex flex-col space-y-1.5 justify-center items-center w-3 z-20" id="carouselDots">
                         </div>
                 </div>
             </div>
@@ -173,10 +171,10 @@
             <div class="flex-1 flex flex-col space-y-1.5 overflow-hidden min-h-0">
                 <div class="flex justify-between items-center pl-1 shrink-0">
                     <h4 class="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Buku Besar Pos Aktif 📖</h4>
-                    <span class="text-[9px] text-indigo-600 dark:text-indigo-400 font-black bg-indigo-100/80 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md tracking-wide uppercase" id="lblSelectedPos">SEMUA</span>
+                    <span class="text-[9px] text-indigo-700 dark:text-indigo-300 font-black bg-indigo-100/80 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md tracking-wide uppercase" id="lblSelectedPos">SEMUA</span>
                 </div>
                 
-                <div class="flex-1 glass-card rounded-2xl p-3.5 shadow-sm overflow-y-auto no-scrollbar divide-y divide-slate-200/60 dark:divide-slate-800/60 space-y-2.5 min-h-0" id="ledgerBox">
+                <div class="flex-1 glass-card rounded-2xl p-3.5 shadow-sm overflow-y-auto no-scrollbar divide-y divide-slate-200 dark:divide-slate-800/60 space-y-2.5 min-h-0 text-slate-900 dark:text-white" id="ledgerBox">
                     <div class="text-center py-6 text-xs text-slate-400 font-medium">Memuat mutasi kas...</div>
                 </div>
             </div>
@@ -194,8 +192,8 @@
             </button>
             
             <div class="relative -top-4">
-                <button onclick="openModalTx()" class="w-12 h-12 glass-fab text-white dark:text-white font-black rounded-full flex items-center justify-center text-xl active:scale-90 transition-all duration-150 border border-white/40 shadow-md cursor-pointer">
-                    +
+                <button onclick="openModalTx()" class="w-12 h-12 glass-fab text-white dark:text-slate-950 font-black rounded-full flex items-center justify-center text-xl active:scale-90 transition-all duration-150 border border-slate-200/20 dark:border-white/20 shadow-md cursor-pointer">
+                    <span class="text-white dark:text-slate-950 font-black">+</span>
                 </button>
             </div>
 
@@ -234,7 +232,7 @@
             { ID_Pos: 'P005', Tipe: 'Masuk', Ket: 'Omset Lunas Toko Kelontong B', Vol: 450000, Time: '11 Jun 2026' }
         ];
 
-        // SETUP PREFERENSI TEMA
+        // LOGIKA THEME LOCK & SINKRONISASI TOTAL
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
             document.getElementById('themeIcon').innerText = "☀️";
@@ -268,7 +266,6 @@
             refreshLedgerView();
         }
 
-        // LOGIN DISPATCHER
         document.getElementById('formLogin').addEventListener('submit', function(e) {
             e.preventDefault();
             const usr = document.getElementById('loginUsername').value.trim();
@@ -316,14 +313,14 @@
             
             mockPosData.forEach(pos => {
                 let displaySaldo = isPrivacyMode ? "Rp ••••" : "Rp " + pos.Saldo_Saat_Ini.toLocaleString('id-ID');
-                let badgeColor = pos.Kategori === 'Bisnis' ? 'bg-emerald-500' : pos.Kategori === 'Haji' ? 'bg-amber-600' : 'bg-blue-600';
+                let badgeColor = pos.Kategori === 'Bisnis' ? 'bg-emerald-600' : pos.Kategori === 'Haji' ? 'bg-amber-600' : 'bg-blue-600';
                 
                 let cardHtml = `
                     <div class="snap-center shrink-0 w-full h-32 glass-card ${pos.Color_Class} rounded-2xl p-4 shadow-sm flex flex-col justify-between box-border text-slate-900 dark:text-white">
                         <div class="flex justify-between items-start">
                             <div>
                                 <h5 class="font-black text-sm tracking-tight text-slate-950 dark:text-white">${pos.Nama_Pos}</h5>
-                                <p class="text-[9px] text-slate-600 dark:text-slate-400 font-medium mt-0.5">ID: ${pos.ID_Pos} • Owner: ${pos.Pemilik}</p>
+                                <p class="text-[9px] text-slate-600 dark:text-slate-400 font-bold mt-0.5">ID: ${pos.ID_Pos} • Owner: ${pos.Pemilik}</p>
                             </div>
                             <span class="text-[8px] text-white font-black px-2 py-0.5 rounded ${badgeColor} uppercase tracking-wider">${pos.Kategori}</span>
                         </div>
@@ -343,12 +340,11 @@
             mockPosData.forEach((_, index) => {
                 let dot = document.createElement('div');
                 dot.id = `dot-${index}`;
-                dot.className = "w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-800 transition-all duration-300";
+                dot.className = "w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-800 transition-all duration-300";
                 dotsContainer.appendChild(dot);
             });
         }
 
-        // DETEKSI SCROLL VERTIKAL & EMIT SMOOTH TRANSITION TRANSITION
         function handleVerticalScroll() {
             const container = document.getElementById('posCarousel');
             if(!container.children.length) return;
@@ -360,14 +356,14 @@
             if(activeIndex >= mockPosData.length) activeIndex = mockPosData.length - 1;
             let activePos = mockPosData[activeIndex];
 
-            // Update Indicator Dots Active State
+            // Update state titik indikator vertikal
             mockPosData.forEach((_, index) => {
                 let dot = document.getElementById(`dot-${index}`);
                 if(dot) {
                     if(index === activeIndex) {
-                        dot.className = "w-1.5 h-3.5 rounded-full bg-indigo-600 dark:bg-indigo-400 transition-all duration-300";
+                        dot.className = "w-1 h-3.5 rounded-full bg-indigo-600 dark:bg-indigo-400 transition-all duration-300 shadow-sm";
                     } else {
-                        dot.className = "w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-800 transition-all duration-300";
+                        dot.className = "w-1 h-1 rounded-full bg-slate-400 dark:bg-slate-700 transition-all duration-300";
                     }
                 }
             });
@@ -376,7 +372,6 @@
                 activePosIdGlobal = activePos.ID_Pos;
                 document.getElementById('lblSelectedPos').innerText = activePos.Nama_Pos.toUpperCase();
                 
-                // Memicu efek transisi pudar (smooth transition micro-effect)
                 const box = document.getElementById('ledgerBox');
                 box.classList.remove('fade-in-ledger');
                 void box.offsetWidth; // Force Reflow
@@ -413,12 +408,12 @@
                 let nominal = isPrivacyMode ? "Rp •••" : "Rp " + log.Vol.toLocaleString('id-ID');
 
                 let rowHtml = `
-                    <div class="flex justify-between items-center py-2.5 text-xs text-slate-900 dark:text-white">
+                    <div class="flex justify-between items-center py-2.5 text-xs text-slate-900 dark:text-white border-b border-slate-200/40 dark:border-slate-800/40 last:border-0">
                         <div class="flex items-center space-x-3 min-w-0">
                             <span class="text-base">${icon}</span>
                             <div class="min-w-0">
                                 <p class="font-black text-slate-950 dark:text-white truncate">${log.Ket}</p>
-                                <p class="text-[9px] text-slate-400 dark:text-slate-500 font-medium">${log.Time} • Auto Verified</p>
+                                <p class="text-[9px] text-slate-400 dark:text-slate-500 font-bold">${log.Time} • Auto Verified</p>
                             </div>
                         </div>
                         <div class="text-right shrink-0 font-black ${colorClass}">
@@ -431,7 +426,7 @@
         }
 
         function openModalTx() {
-            alert("Tombol '+' Premium Glassmorphism Aktif! Akses Popup Form Komplit (Multi-Tx, Warning Utang, & Upload SS) siap dilepas penuh pada eksekusi TAHAP 2.");
+            alert("Tombol '+' Premium Glassmorphism Berhasil Di-polish! Akses Popup Form Komplit (Multi-Tx, Warning Utang, & Upload SS) siap dilepas penuh pada eksekusi TAHAP 2.");
         }
 
         function logout() {
@@ -443,7 +438,7 @@
             document.getElementById('formLogin').reset();
         }
 
-        // BLOCK PULL-TO-REFRESH DAN OVERSCROLL DI SAFARI IOS
+        // BLOCK INTERFERENSI IOS OVERSCROLL BOUNCING
         document.addEventListener('touchmove', function(e) {
             if (e.target.closest('#posCarousel') || e.target.closest('#ledgerBox')) {
                 return;
