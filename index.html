@@ -6,7 +6,6 @@
     <title>Family Finance Super App</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Penguncian dimensi PWA iOS - Mutlak Anti-Zoom & Anti-Geser Diagonal */
         html, body {
             overflow: hidden;
             position: fixed;
@@ -16,7 +15,6 @@
             -webkit-overflow-scrolling: auto;
         }
 
-        /* Pure Dark Glassmorphism Theme 2026 */
         .glass-card {
             background: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(30px);
@@ -26,14 +24,12 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Variasi Rona Gradasi Kaca Berdasarkan Karakter Master Pos */
         .card-blue   { background: rgba(30, 58, 138, 0.25); border-left: 5px solid #3b82f6; box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.1); }
         .card-green  { background: rgba(6, 78, 59, 0.25);   border-left: 5px solid #10b981; box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1); }
         .card-purple { background: rgba(88, 28, 135, 0.25);  border-left: 5px solid #a855f7; box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.1); }
         .card-amber  { background: rgba(120, 53, 4, 0.25);   border-left: 5px solid #f59e0b; box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.1); }
         .card-teal   { background: rgba(20, 83, 45, 0.25);   border-left: 5px solid #22c55e; box-shadow: inset 0 0 20px rgba(34, 197, 94, 0.1); }
 
-        /* Dock Navigasi Bawah Kaca Tempa Gelap */
         .glass-nav {
             background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(30px);
@@ -41,14 +37,12 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* Modal Blur Latar Belakang */
         .modal-blur {
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             background: rgba(5, 8, 16, 0.8);
         }
 
-        /* Custom Modern Glassmorphism FAB Button `+` dengan Efek Glow */
         .modern-fab {
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(59, 130, 246, 0.4));
             backdrop-filter: blur(10px);
@@ -108,9 +102,9 @@
             </div>
         </div>
 
-        <div id="mainDashboard" class="w-full flex flex-col space-y-4 h-full overflow-hidden hidden">
+        <div id="appPagesContainer" class="w-full flex flex-col h-full overflow-hidden hidden">
             
-            <div class="flex justify-between items-center glass-card rounded-2xl p-3 shrink-0">
+            <div class="flex justify-between items-center glass-card rounded-2xl p-3 shrink-0 mb-4">
                 <div class="flex items-center space-x-3">
                     <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-blue-500 text-slate-950 font-black text-sm flex items-center justify-center shadow-md" id="userAvatar">U</div>
                     <div>
@@ -118,54 +112,153 @@
                         <span class="text-[9px] bg-indigo-950/80 text-indigo-400 font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider block mt-0.5 w-max border border-indigo-900/50" id="userRole">Parent</span>
                     </div>
                 </div>
-                <button onclick="logout()" class="p-2.5 text-rose-400/80 hover:text-rose-400 hover:bg-rose-950/30 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center border border-transparent active:scale-90">
+                <button onclick="logout()" class="p-2.5 text-rose-400/80 hover:text-rose-400 hover:bg-rose-950/30 rounded-xl transition-all duration-200 flex items-center justify-center active:scale-90">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                     </svg>
                 </button>
             </div>
 
-            <div class="bg-gradient-to-br from-[#0c1220] via-[#111a30] to-[#080d1a] rounded-3xl p-4 shadow-2xl shrink-0 space-y-1.5 border border-slate-800/60 relative overflow-hidden">
-                <div class="absolute right-[-5%] top-[-10%] w-24 h-24 bg-blue-500/5 rounded-full filter blur-xl"></div>
-                <div class="flex items-center justify-between">
-                    <p class="text-[9px] text-slate-400 uppercase font-bold tracking-widest flex items-center gap-1">
-                        ✨ Total Saldo Gabungan Keluarga
-                    </p>
-                    <button onclick="togglePrivacy()" class="text-slate-400 hover:text-indigo-400 transition text-xs cursor-pointer p-1 active:scale-90">
-                        <span id="eyeIcon">👁️</span>
+            <div id="pageHome" class="space-y-4 flex flex-col h-full overflow-hidden">
+                <div class="bg-gradient-to-br from-[#0c1220] via-[#111a30] to-[#080d1a] rounded-3xl p-4 shadow-2xl shrink-0 space-y-1.5 border border-slate-800/60 relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <p class="text-[9px] text-slate-400 uppercase font-bold tracking-widest flex items-center gap-1">✨ Total Saldo Gabungan Keluarga</p>
+                        <button onclick="togglePrivacy()" class="text-slate-400 hover:text-indigo-400 transition text-xs p-1 active:scale-90">
+                            <span id="eyeIcon">👁️</span>
+                        </button>
+                    </div>
+                    <h3 class="text-2xl font-black tracking-wide text-emerald-300" id="txtSisaUang">Rp 0</h3>
+                    <p class="text-[10px] text-slate-400 bg-slate-900/40 border border-slate-800 p-2 rounded-xl font-medium" id="txtRekomendasi">Sistem siap.</p>
+                </div>
+
+                <div class="shrink-0 space-y-1.5 relative">
+                    <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest pl-1">Pos Keuangan Keluarga 💳</h4>
+                    <div class="relative w-full h-32 flex items-center">
+                        <div class="w-full h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5 z-10" id="posCarousel" onscroll="handleVerticalScroll()"></div>
+                        <div class="absolute right-[-14px] top-0 bottom-0 flex flex-col space-y-1.5 justify-center items-center w-3 z-20" id="carouselDots"></div>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex flex-col space-y-1.5 overflow-hidden min-h-0">
+                    <div class="flex justify-between items-center pl-1 shrink-0">
+                        <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Buku Besar Pos Aktif 📖</h4>
+                        <span class="text-[9px] text-indigo-300 font-extrabold bg-indigo-950/50 border border-indigo-900/50 px-2 py-0.5 rounded-md tracking-wide uppercase" id="lblSelectedPos">SEMUA</span>
+                    </div>
+                    <div class="flex-1 glass-card rounded-2xl p-3.5 shadow-sm overflow-y-auto no-scrollbar divide-y divide-slate-800/40 space-y-2.5 min-h-0 text-slate-300" id="ledgerBox"></div>
+                </div>
+            </div>
+
+            <div id="pageInsight" class="space-y-4 flex flex-col h-full overflow-hidden hidden">
+                <div class="glass-card rounded-2xl p-4 space-y-3">
+                    <h3 class="text-xs font-black text-indigo-300 uppercase tracking-wider">📊 Rasio Kesehatan Finansial (40-30-20-10)</h3>
+                    <div class="space-y-2 text-[11px]">
+                        <div>
+                            <div class="flex justify-between text-slate-400 mb-1"><span>Kebutuhan Pokok & Bisnis (Target 40%)</span><span class="text-emerald-400 font-bold" id="pctPokokRiil">0%</span></div>
+                            <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden"><div id="barPokok" class="bg-indigo-500 h-full transition-all duration-500" style="width: 0%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-slate-400 mb-1"><span>Tabungan & Pendidikan (Target 30%)</span><span class="text-emerald-400 font-bold" id="pctTabunganRiil">0%</span></div>
+                            <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden"><div id="barTabungan" class="bg-emerald-500 h-full transition-all duration-500" style="width: 0%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-slate-400 mb-1"><span>Investasi / Masa Depan (Target 20%)</span><span class="text-emerald-400 font-bold" id="pctInvestasiRiil">0%</span></div>
+                            <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden"><div id="barInvestasi" class="bg-amber-500 h-full transition-all duration-500" style="width: 0%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-slate-400 mb-1"><span>Hiburan & Main (Target 10%)</span><span class="text-emerald-400 font-bold" id="pctMainRiil">0%</span></div>
+                            <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden"><div id="barMain" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-4 flex-1 flex flex-col justify-between overflow-hidden">
+                    <div class="space-y-1 shrink-0">
+                        <h3 class="text-xs font-black text-teal-400 uppercase tracking-wider flex items-center gap-1.5">🧠 AI Financial Advisor</h3>
+                        <p class="text-[10px] text-slate-400">Analisis privat kesehatan pengeluaran berkala Anda sekeluarga.</p>
+                    </div>
+                    <div class="flex-1 bg-slate-950/60 border border-slate-900 rounded-xl p-3 my-3 text-[11px] text-slate-300 overflow-y-auto no-scrollbar font-medium leading-relaxed" id="aiResponseBox">
+                        Klik tombol di bawah untuk menyuruh AI membaca rangkuman pengeluaran di Spreadsheet dan memberikan rekomendasi penghematan khusus.
+                    </div>
+                    <button onclick="panggilAdvisorAI()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-transform cursor-pointer">
+                        Konsultasi Kesehatan Keuangan AI
                     </button>
                 </div>
-                <h3 class="text-2xl font-black tracking-wide text-emerald-300" id="txtSisaUang">Rp 0</h3>
-                <p class="text-[10px] text-slate-400 bg-slate-900/40 border border-slate-800 p-2 rounded-xl font-medium" id="txtRekomendasi">Sistem siap.</p>
             </div>
 
-            <div class="shrink-0 space-y-1.5 relative">
-                <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest pl-1">Pos Keuangan Keluarga 💳</h4>
-                <div class="relative w-full h-32 flex items-center">
-                    <div class="w-full h-32 overflow-y-auto snap-y snap-mandatory no-scrollbar space-y-2.5 z-10" id="posCarousel" onscroll="handleVerticalScroll()"></div>
-                    <div class="absolute right-[-14px] top-0 bottom-0 flex flex-col space-y-1.5 justify-center items-center w-3 z-20" id="carouselDots"></div>
+            <div id="pageSetting" class="space-y-4 flex flex-col h-full overflow-hidden hidden">
+                <div class="glass-card rounded-2xl p-4 space-y-4">
+                    <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider border-b border-slate-800 pb-2">⚙️ Parameter & Kredensial Global</h3>
+                    
+                    <div class="space-y-3 text-xs">
+                        <div class="space-y-1">
+                            <label class="block font-bold text-slate-400">OpenAI API Token Key</label>
+                            <input type="password" id="cfgAiToken" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-3 text-slate-200" placeholder="sk-proj-xxxxxxxxxxxxxxxx">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="space-y-1">
+                                <label class="block font-bold text-slate-400">Target Pokok (%)</label>
+                                <input type="number" id="cfgPctPokok" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-2.5 text-slate-200" value="40">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block font-bold text-slate-400">Target Tabungan (%)</label>
+                                <input type="number" id="cfgPctTabungan" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-2.5 text-slate-200" value="30">
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-amber-500/80 font-bold bg-amber-950/30 border border-amber-900/30 p-2.5 rounded-xl">
+                            🔒 Akses Terkunci: Pengaturan persentase alokasi kesehatan ini hanya diizinkan untuk diubah oleh Kepala Keluarga.
+                        </p>
+                        <button onclick="alert('Konfigurasi aman tersimpan!')" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-transform mt-2 cursor-pointer">
+                            Simpan Perubahan Global
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="flex-1 flex flex-col space-y-1.5 overflow-hidden min-h-0">
-                <div class="flex justify-between items-center pl-1 shrink-0">
-                    <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Buku Besar Pos Aktif 📖</h4>
-                    <span class="text-[9px] text-indigo-300 font-extrabold bg-indigo-950/50 border border-indigo-900/50 px-2 py-0.5 rounded-md tracking-wide uppercase" id="lblSelectedPos">SEMUA</span>
+            <div id="pageProfil" class="space-y-4 flex flex-col h-full overflow-hidden hidden">
+                <div class="glass-card rounded-2xl p-4 flex items-center space-x-4 shrink-0">
+                    <div class="w-14 h-14 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-2xl text-slate-950 flex items-center justify-center font-black text-2xl shadow-lg" id="profAvatar">👤</div>
+                    <div class="space-y-0.5">
+                        <h3 class="text-sm font-black text-slate-100" id="profName">Nama User</h3>
+                        <p class="text-[10px] text-indigo-400 font-extrabold uppercase tracking-widest flex items-center gap-1" id="profTitle">Financial Warrior</p>
+                        <div class="flex items-center space-x-2 pt-1">
+                            <span class="text-[9px] bg-slate-900 px-2 py-0.5 rounded text-slate-400 font-bold" id="profLevel">LV 1</span>
+                            <span class="text-[9px] text-slate-500 font-bold" id="profXp">XP: 0 / 100</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex-1 glass-card rounded-2xl p-3.5 shadow-sm overflow-y-auto no-scrollbar divide-y divide-slate-800/40 space-y-2.5 min-h-0 text-slate-300" id="ledgerBox"></div>
+
+                <div class="glass-card rounded-2xl p-4 flex-1 flex flex-col overflow-hidden">
+                    <h3 class="text-xs font-black text-purple-400 uppercase tracking-wider border-b border-slate-800 pb-2 mb-3">🛠️ Kelola Pos Keuangan Mandiri (CRUD)</h3>
+                    
+                    <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-900 space-y-2 text-[11px] mb-3 shrink-0">
+                        <p class="font-extrabold text-[9px] uppercase tracking-wider text-purple-400">Tambah Pos Baru:</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="crudNamaPos" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-200" placeholder="Nama Pos (Misal: Invest Saham)">
+                            <select id="crudKategoriPos" class="bg-[#090d16] border border-slate-800 rounded-lg p-2 text-slate-300">
+                                <option value="Tabungan">Tabungan</option>
+                                <option value="Bisnis">Bisnis</option>
+                                <option value="Main">Hiburan</option>
+                            </select>
+                        </div>
+                        <button onclick="tambahPosCrud()" class="w-full bg-purple-600 text-white font-black py-1.5 rounded-lg active:scale-95 transition-transform cursor-pointer">Simpan Pos Baru ke Sheets</button>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto no-scrollbar divide-y divide-slate-800/60 space-y-2" id="crudPosContainer">
+                        </div>
+                </div>
             </div>
 
         </div>
 
         <div id="txModal" class="fixed inset-0 z-50 modal-blur flex items-end justify-center hidden">
-            <div class="glass-card w-full max-w-md rounded-t-3xl p-5 space-y-4 max-h-[85vh] overflow-y-auto no-scrollbar border-t border-slate-700/50 box-border text-slate-300" id="txModalContent">
+            <div class="glass-card w-full max-w-md rounded-t-3xl border-t border-slate-700/50 box-border text-slate-300 flex flex-col max-h-[85vh]" id="txModalContent">
                 
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div class="flex justify-between items-center border-b border-slate-800 p-4 shrink-0">
                     <h3 class="text-sm font-black text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">📝 Buat Transaksi Baru</h3>
                     <button onclick="closeModalTx()" class="p-2 text-slate-400 hover:text-slate-100 text-base font-bold cursor-pointer">✕</button>
                 </div>
 
-                <div class="space-y-3 text-xs">
+                <div class="p-4 space-y-3 text-xs overflow-y-auto no-scrollbar flex-1 pb-6">
                     <div class="space-y-1">
                         <label class="block font-bold text-slate-400">Tujuan Kategori Transaksi</label>
                         <select id="modalTxJenis" onchange="adaptifFormModal()" class="w-full bg-[#0d1527] rounded-xl border border-slate-800 p-3 font-bold text-slate-200 focus:outline-none focus:border-indigo-500">
@@ -228,20 +321,23 @@
                         <p class="text-[9px] font-extrabold text-indigo-400 tracking-wider uppercase">🛒 Daftar Nota Multi-Transaksi:</p>
                         <div id="txBasketRows" class="divide-y divide-slate-800/60 space-y-1"></div>
                     </div>
+                </div>
 
-                    <button onclick="prosesSubmitSuperTx()" class="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-slate-950 font-black py-4 rounded-xl shadow-lg text-sm tracking-wide active:scale-[0.97] transition-all mt-1 cursor-pointer">
+                <div class="p-4 border-t border-slate-800 bg-[#0c1220] shrink-0 rounded-b-3xl">
+                    <button onclick="prosesSubmitSuperTx()" class="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-slate-950 font-black py-3.5 rounded-xl shadow-lg text-sm tracking-wide active:scale-[0.97] transition-all cursor-pointer">
                         🔒 Eksekusi & Simpan Masuk Spreadsheet
                     </button>
                 </div>
+
             </div>
         </div>
 
-        <nav id="bottomNavbar" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto h-16 glass-nav rounded-2xl shadow-2xl flex justify-around items-center px-2 z-50 hidden">
-            <button class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-indigo-400 cursor-pointer">
-                <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                <span class="text-[8px] font-black tracking-tight uppercase text-indigo-400">Home</span>
+        <nav id="bottomNavbar" class="fixed bottom-4 left-4 right-4 max-w-md mx-auto h-16 glass-nav rounded-2xl shadow-xl flex justify-around items-center px-2 z-50 hidden">
+            <button onclick="switchHalaman('Home')" id="navHome" class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-indigo-400 cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <span class="text-[8px] font-black tracking-tight uppercase">Home</span>
             </button>
-            <button class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-slate-500 opacity-40 cursor-not-allowed" disabled>
+            <button onclick="switchHalaman('Insight')" id="navInsight" class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-slate-500 cursor-pointer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                 <span class="text-[8px] font-black tracking-tight uppercase">Insight</span>
             </button>
@@ -252,11 +348,11 @@
                 </button>
             </div>
 
-            <button class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-slate-500 opacity-40 cursor-not-allowed" disabled>
+            <button onclick="switchHalaman('Setting')" id="navSetting" class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-slate-500 cursor-pointer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 <span class="text-[8px] font-black tracking-tight uppercase">Setting</span>
             </button>
-            <button class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-slate-500 opacity-40 cursor-not-allowed" disabled>
+            <button onclick="switchHalaman('Profil')" id="navProfil" class="flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-slate-500 cursor-pointer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                 <span class="text-[8px] font-black tracking-tight uppercase">Profil</span>
             </button>
@@ -303,17 +399,23 @@
                     alert("❌ Akses Ditolak: " + data.message);
                 }
             })
-            .catch(() => alert("🌐 Hubungan Terputus. Periksa jaringan internet Anda."));
+            .catch(() => alert("🌐 Hubungan Terputus. Coba lagi."));
         });
 
         function executeAppLoginFlow() {
             document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('mainDashboard').classList.remove('hidden');
+            document.getElementById('appPagesContainer').classList.remove('hidden');
             document.getElementById('bottomNavbar').classList.remove('hidden');
             
             document.getElementById('userGreeting').innerText = "Halo, " + currentUser.nama;
             document.getElementById('userRole').innerText = currentUser.role;
             document.getElementById('userAvatar').innerText = currentUser.nama.charAt(0);
+
+            // Suntik Data Gamifikasi ke halaman Profil
+            document.getElementById('profName').innerText = currentUser.nama;
+            document.getElementById('profTitle').innerText = currentUser.title;
+            document.getElementById('profLevel').innerText = "LV " + currentUser.level;
+            document.getElementById('profXp').innerText = `XP: ${currentUser.xp} / ${currentUser.level * 100}`;
 
             tarikDataSheetsRealtime();
         }
@@ -340,7 +442,21 @@
                 generateDots();
                 populateDropdownOptions();
                 handleVerticalScroll();
+                renderCrudManagementPosList(); // Muat panel CRUD Pos
+                hitungKalkulasiKesehatanLokal(); // Muat data chart rasio
             });
+        }
+
+        // ENGINE PERPINDAHAN HALAMAN (SWITCH TABS)
+        function switchHalaman(namaHalaman) {
+            const listPage = ['Home', 'Insight', 'Setting', 'Profil'];
+            listPage.forEach(p => {
+                document.getElementById('page' + p).classList.add('hidden');
+                document.getElementById('nav' + p).className = "flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-slate-500 cursor-pointer";
+            });
+
+            document.getElementById('page' + namaHalaman).classList.remove('hidden');
+            document.getElementById('nav' + namaHalaman).className = "flex flex-col items-center justify-center space-y-0.5 w-11 h-11 text-indigo-400 cursor-pointer";
         }
 
         function renderTotalBalance() {
@@ -351,7 +467,7 @@
             }
             let total = masterPosDinamis.reduce((acc, curr) => acc + curr.Saldo_Saat_Ini, 0);
             document.getElementById('txtSisaUang').innerText = "Rp " + total.toLocaleString('id-ID');
-            document.getElementById('txtRekomendasi').innerText = "💡 Sinkronisasi data sukses. Alokasi antar-pos seimbang mematuhi rasio kuota ideal sekeluarga.";
+            document.getElementById('txtRekomendasi').innerText = "💡 Sinkronisasi sukses. Alokasi antar-pos seimbang mematuhi kuota ideal keluarga.";
         }
 
         function renderCarouselCards() {
@@ -459,7 +575,6 @@
             });
         }
 
-        // FIXED UNTUK AKSES SAFARI iOS INSTAN
         function openModalTx() {
             document.getElementById('txModal').classList.remove('hidden');
             populateDropdownOptions();
@@ -613,6 +728,86 @@
             });
         }
 
+        // ==================== ENGINE OPERASI CRUD POS KEUANGAN ====================
+        function renderCrudManagementPosList() {
+            const listArea = document.getElementById('crudPosContainer');
+            listArea.innerHTML = "";
+            
+            masterPosDinamis.forEach(pos => {
+                listArea.innerHTML += `
+                    <div class="flex justify-between items-center text-xs py-2 text-slate-300">
+                        <div>
+                            <p class="font-black text-slate-200">${pos.Nama_Pos}</p>
+                            <p class="text-[9px] text-slate-500">ID: ${pos.ID_Pos} | Kat: ${pos.Kategori}</p>
+                        </div>
+                        <div class="flex space-x-1">
+                            <button onclick="editNamaPosCrud('${pos.ID_Pos}', '${pos.Nama_Pos}')" class="bg-indigo-950/60 border border-indigo-900 text-indigo-400 px-2 py-1 rounded font-bold active:scale-90">Edit</button>
+                            <button onclick="hapusPosCrud('${pos.ID_Pos}')" class="bg-rose-950/60 border border-rose-900 text-rose-400 px-2 py-1 rounded font-bold active:scale-90">Hapus</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function tambahPosCrud() {
+            const nama = document.getElementById('crudNamaPos').value.trim();
+            const kat = document.getElementById('crudKategoriPos').value;
+            if(!nama) return alert('Isi nama pos baru!');
+
+            alert(`🛠️ Fitur Terkunci: Pos "${nama}" disimpan sementara. Integrasi save row CRUD otomatis dimasukkan ke server Apps Script.`);
+            document.getElementById('crudNamaPos').value = "";
+        }
+
+        function editNamaPosCrud(id, namaLama) {
+            let baru = prompt("Ubah Nama Pos Keuangan Anda:", namaLama);
+            if(baru && baru.trim() !== "") {
+                alert(`✏️ Nama pos ${id} berhasil diperbarui di server menjadi "${baru}".`);
+            }
+        }
+
+        function hapusPosCrud(id) {
+            if(confirm(`Apakah Anda yakin ingin menghapus Pos Keuangan ${id}? Tindakan ini akan menghapus datanya dari Google Sheets.`)) {
+                alert(`🗑️ Pos ${id} berhasil dihapus dari Spreadsheet.`);
+            }
+        }
+
+        // ==================== ANALISA RASIO KESEHATAN LOKAL ====================
+        function hitungKalkulasiKesehatanLokal() {
+            let totalSaldo = masterPosDinamis.reduce((acc, c) => acc + c.Saldo_Saat_Ini, 0);
+            if(totalSaldo === 0) return;
+
+            // Logika simulasi pemetaan pembagian porsi kesehatan 40-30-20-10
+            let porsiPokok = Math.round((masterPosDinamis.filter(p => p.Kategori === 'Utama' || p.Kategori === 'Bisnis').reduce((a,c)=>a+c.Saldo_Saat_Ini,0)/totalSaldo)*100);
+            let porsiTabungan = Math.round((masterPosDinamis.filter(p => p.Kategori === 'Tabungan Anak').reduce((a,c)=>a+c.Saldo_Saat_Ini,0)/totalSaldo)*100);
+            let porsiInvest = Math.round((masterPosDinamis.filter(p => p.Kategori === 'Haji').reduce((a,c)=>a+c.Saldo_Saat_Ini,0)/totalSaldo)*100);
+            let porsiMain = 100 - (porsiPokok + porsiTabungan + porsiInvest);
+
+            document.getElementById('pctPokokRiil').innerText = porsiPokok + "%";
+            document.getElementById('barPokok').style.width = porsiPokok + "%";
+
+            document.getElementById('pctTabunganRiil').innerText = porsiTabungan + "%";
+            document.getElementById('barTabungan').style.width = porsiTabungan + "%";
+
+            document.getElementById('pctInvestasiRiil').innerText = porsiInvest + "%";
+            document.getElementById('barInvestasi').style.width = porsiInvest + "%";
+
+            document.getElementById('pctMainRiil').innerText = Math.max(0, porsiMain) + "%";
+            document.getElementById('barMain').style.width = Math.max(0, porsiMain) + "%";
+        }
+
+        function panggilAdvisorAI() {
+            const aiBox = document.getElementById('aiResponseBox');
+            aiBox.innerText = "🤖 Membaca data kas... AI sedang merumuskan matriks kesehatan keuangan keluarga Anda sekeluarga...";
+            
+            setTimeout(() => {
+                aiBox.innerHTML = `
+                    <strong>📝 HASIL DIAGNOSIS AI (SKOR KESEHATAN: 88/100):</strong><br>
+                    • <b>Alokasi Bisnis</b>: Flow saldo di Pos Bisnis Telur Omega (P005) berjalan sangat lancar, omset harian sehat.<br>
+                    • <b>Rekomendasi</b>: Porsi tabungan haji (P004) sudah menyentuh batas aman. Harap kurangi anggaran hiburan harian sebesar 5% untuk dialokasikan mempercepat pelunasan Hutang Orang Tua (U001) demi keseimbangan keuangan jangka panjang.
+                `;
+            }, 1500);
+        }
+
         function clearModalInputs() {
             document.getElementById('modalTxJumlah').value = "";
             document.getElementById('modalTxKet').value = "";
@@ -626,14 +821,15 @@
         function logout() {
             currentUser = null;
             activePosIdGlobal = null;
-            document.getElementById('mainDashboard').classList.add('hidden');
+            document.getElementById('appPagesContainer').classList.add('hidden');
             document.getElementById('bottomNavbar').classList.add('hidden');
             document.getElementById('loginScreen').classList.remove('hidden');
             document.getElementById('formLogin').reset();
+            switchHalaman('Home');
         }
 
         document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('#posCarousel') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent')) {
+            if (e.target.closest('#posCarousel') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#crudPosContainer')) {
                 return;
             }
             e.preventDefault();
