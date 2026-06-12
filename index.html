@@ -35,7 +35,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        #pageHome, #ledgerBox, #txModalContent, #aiResponseBox, #listTemplateContainer, #pageProfil, #pocketCreateModal, #lightboxModal {
+        #pageHome, #pocketsGrid, #ledgerBox, #txModalContent, #aiResponseBox, #listTemplateContainer, #pageProfil, #pocketCreateModal, #lightboxModal {
             touch-action: pan-y;
             -webkit-overflow-scrolling: touch;
         }
@@ -376,7 +376,7 @@
                         <h4 class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Kantong Keuangan Keluarga 💳</h4>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-2" id="pocketsGrid">
+                    <div class="flex flex-col space-y-2 max-h-52 overflow-y-auto no-scrollbar pr-1 overscroll-contain" id="pocketsGrid">
                         <!-- Dynamic Pockets render inside -->
                     </div>
                 </div>
@@ -1091,29 +1091,35 @@
                 }
 
                 container.innerHTML += `
-                    <div onclick="selectPocketFilter('${pos.ID_Pos}')" class="glass-card ${pos.Color_Class} ${activeBorder} rounded-2xl p-3.5 flex flex-col justify-between h-28 cursor-pointer relative overflow-hidden active:scale-95 transition-all">
-                        <div class="flex justify-between items-start shrink-0 z-10">
-                            <h5 class="font-black text-xs text-slate-200 truncate pr-2">${pos.Nama_Pos}</h5>
-                            <div class="flex items-center space-x-1 shrink-0">
-                                <span class="text-[6.5px] font-black px-1.5 py-0.5 rounded text-indigo-400 bg-indigo-950/60 uppercase tracking-wider">${pos.Kategori}</span>
+                    <div onclick="selectPocketFilter('${pos.ID_Pos}')" class="glass-card ${pos.Color_Class} ${activeBorder} rounded-xl p-3 flex flex-col cursor-pointer active:scale-[0.98] transition-all duration-200 space-y-2 relative overflow-hidden shrink-0">
+                        <div class="flex items-center justify-between z-10">
+                            <div class="flex items-center space-x-2.5 truncate">
+                                <div class="w-7 h-7 rounded-lg bg-slate-900/60 border border-slate-800/40 flex items-center justify-center shrink-0">
+                                    <span class="text-xs">${pos.Kategori === 'Bisnis' ? '🥬' : pos.Kategori === 'Tabungan' ? '🦄' : '💳'}</span>
+                                </div>
+                                <div class="truncate">
+                                    <h5 class="font-extrabold text-xs text-slate-200 truncate pr-1">${pos.Nama_Pos}</h5>
+                                    <span class="text-[7px] font-extrabold px-1.5 py-0.2 rounded text-indigo-400 bg-indigo-950/60 uppercase tracking-wider">${pos.Kategori}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2 shrink-0">
+                                <div class="text-right">
+                                    <span class="text-[7px] uppercase tracking-widest text-slate-500 font-black block">Saldo</span>
+                                    <span class="text-xs font-extrabold text-slate-100 font-mono">${displaySaldo}</span>
+                                </div>
                                 ${deleteIconHtml}
                             </div>
                         </div>
-                        
                         ${goalTrackerHtml}
-
-                        <div class="flex flex-col justify-end mt-auto pt-1 shrink-0 z-10">
-                            <span class="text-[7.5px] uppercase tracking-widest text-slate-500 font-extrabold block">Saldo Aktif</span>
-                            <span class="text-xs font-bold text-slate-100 font-mono">${displaySaldo}</span>
-                        </div>
                     </div>
                 `;
             });
 
             container.innerHTML += `
-                <div onclick="openCreatePocketModal()" class="glass-card border-dashed border-2 border-slate-800 rounded-2xl flex flex-col items-center justify-center h-28 cursor-pointer hover:border-purple-500/50 hover:bg-purple-950/5 active:scale-95 transition-all text-slate-500 hover:text-purple-400">
-                    <span class="text-2xl font-light">+</span>
-                    <span class="text-[9px] font-bold uppercase tracking-widest mt-1">Kantong Baru</span>
+                <div onclick="openCreatePocketModal()" class="glass-card border-dashed border border-slate-800 rounded-xl flex items-center justify-center p-3 cursor-pointer hover:border-purple-500/50 hover:bg-purple-950/5 active:scale-[0.98] transition-all text-slate-500 hover:text-purple-400 gap-2 shrink-0">
+                    <span class="text-sm font-light">+</span>
+                    <span class="text-[9px] font-bold uppercase tracking-widest">Tambah Kantong Baru</span>
                 </div>
             `;
         }
@@ -2400,7 +2406,7 @@
         logout();
 
         document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('#pageHome') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#listTemplateContainer') || e.target.closest('#pageProfil') || e.target.closest('#pocketCreateModal') || e.target.closest('#lightboxModal')) {
+            if (e.target.closest('#pageHome') || e.target.closest('#pocketsGrid') || e.target.closest('#ledgerBox') || e.target.closest('#txModalContent') || e.target.closest('#aiResponseBox') || e.target.closest('#listTemplateContainer') || e.target.closest('#pageProfil') || e.target.closest('#pocketCreateModal') || e.target.closest('#lightboxModal')) {
                 return;
             }
             e.preventDefault();
